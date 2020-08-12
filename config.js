@@ -2,7 +2,7 @@ const ip = require("ip").address();
 
 var publicPath = '';
 var databaseCF = {
-    connectStr: 'mongodb://localhost:27017/bazan',
+    connectStr: 'mongodb://139.180.185.249:27017/bds-toduong',
     options: {
         keepAlive: true,
         reconnectTries: Number.MAX_VALUE,
@@ -15,10 +15,10 @@ var databaseCF = {
     }
 
 }
-if (ip == '45.77.44.244') {
+if (ip == '139.180.185.249') {
     console.log(' o server');
     databaseCF = {
-        connectStr: 'mongodb://45.77.44.244:27017,45.32.29.46:27017/bazan',
+        connectStr: 'mongodb://139.180.185.249:27017/bds-toduong',
         options: {
             keepAlive: true,
             reconnectTries: Number.MAX_VALUE,
@@ -27,8 +27,8 @@ if (ip == '45.77.44.244') {
             useNewUrlParser: true,
             // useUnifiedTopology: true,
             replicaSet: 'rs0',
-            user: 'bazan',
-            pass: 'bazan!@#@123'
+            user: 'toduong',
+            pass: 'toduong!@#@123'
         }
     }
     publicPath = '/root/home/demo/';
