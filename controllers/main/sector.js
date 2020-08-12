@@ -76,6 +76,9 @@ router.post('/filter-all', function(req, res, next) {
     if (req.body.districtID) {
         options['districtID'] = parseInt(req.body.districtID);
     }
+    if (req.body.list) {
+        options['ID'] = { $in: req.body.list };
+    }
     // console.log(options);
     ListProvince.aggregate([
         { $match: options },
@@ -96,7 +99,7 @@ router.post('/filter-all', function(req, res, next) {
                 districtTitleLink: { $ifNull: ["$districtTitleLink", ""] },
             }
         },
-        { $sort: { type: 1, title: 1 } }
+        { $sort: { type: 1, ID: 1 } }
     ]).exec(function(err, result) {
         res.json(result);
     });

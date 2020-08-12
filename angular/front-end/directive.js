@@ -122,11 +122,18 @@ var initProvince = function($scope, $compile, $http) {
         method: 'POST',
         url: '/sector/filter-all',
         data: {
-            type: "1"
+            type: "1",
+            list: [4, 23, 12]
         }
     }
     submitFrontEnd(params, $http, function(provinces) {
         $scope.listProvinces = provinces;
+        var abc = provinces.filter(function(obj) {
+            return (obj.ID === 4);
+        });
+        $scope['selectedprovince'] = abc[0].title;
+        $scope.searchForm['province'] = abc[0];
+        initDistrict($scope, $compile, $http);
         // setAutoComplete('province', $scope, $compile, $http);
     });
 }
@@ -234,6 +241,21 @@ app.directive('searchFormDirective', function() {
 
             $scope.submitSearchForm = function() {
                 console.log($scope.searchForm);
+                let params = {
+                    method: 'POST',
+                    url: '/product/search-form',
+                    data: {
+                        searchForm: $scope.searchForm
+                    }
+                }
+                submitFrontEnd(params, $http, function(res) {
+                    console.log('search form', res);
+                    if (res.status == false) alert(res.mes);
+                    else {
+                        window.location = res.urlRedirect;
+                    }
+                    // setAutoComplete('province', $scope, $compile, $http);
+                });
             }
 
             var self = this;

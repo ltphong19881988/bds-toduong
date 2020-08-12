@@ -82,6 +82,26 @@ router.get('/category/all-category', async(req, res, next) => {
     });
 })
 
+router.post('/search-form', async(req, res, next) => {
+    console.log(req.body.searchForm);
+    var local = null;
+    if (!req.body.searchForm.idCategory) return res.json({ status: false, mes: "Vui lòng chọn loại bất động sản" });
+    // if (!req.body.searchForm.province && !req.body.searchForm.province && !req.body.searchForm.province) return res.json({ status: false, mes: "Vui lòng chọn loại bất động sản" });
+    if (req.body.searchForm.province) local = req.body.searchForm.province;
+    if (req.body.searchForm.district) local = req.body.searchForm.district;
+    if (req.body.searchForm.ward) local = req.body.searchForm.ward;
+    var idCategory = mongoose.Types.ObjectId(req.body.searchForm.idCategory);
+    // var cate = await Category.findOne({_id : idCategory});
+    var postCate = await Post.findOne({ idCategory: idCategory, postType: 0 });
+    console.log(postCate);
+    var postCateContent = await PostContent.findOne({ idPost: postCate._id, languageCode: 'vn' });
+    var urlRedirect = postCateContent.oneLvlUrl;
+    if (local != null) {
+        urlRedirect = urlRedirect + '-' + local.link;
+    }
+    res.json({ status: true, mes: 'OK', urlRedirect });
+})
+
 router.post('/product-type/filter-all', async(req, res, next) => {
     var options = {};
     if (req.body.groupType) {
