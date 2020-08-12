@@ -1,0 +1,90 @@
+<html lang="{{ lang }}" ng-app="authPage">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Bootstrap Website Templates">
+    <title ng-bind="pageTitle"></title>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/main/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Plugin CSS -->
+    <link href="/main/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css" rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,700,900" rel="stylesheet">
+
+    <!--css customn login-->
+    <!-- CSS -->
+    <!-- Bootstrap -->
+    <!-- <link href="/Content/login/bootstrap.min.css" rel="stylesheet">
+        <link href="/Content/login/jquery.dataTables.min.css" rel="stylesheet"> -->
+    <!-- Simple line icons -->
+    <!-- <link href="/Content/login/simple-line-icons.css" rel="stylesheet"> -->
+    <!-- <link href="/Content/login/cryptocoins.css" rel="stylesheet"> -->
+
+    <!-- Custom Style -->
+    <!-- <link href="/css/authpage/custom.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="/css/authpage/media.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link id="ui-current-skin" href="/css/authpage/skin-yellow.css" rel="stylesheet"> -->
+    <!-- Custom Font -->
+    <link rel="stylesheet" type="text/css" media="all" href="/css/authpage/authPage.css">
+
+    <!-- <link href="/Content/login/skin-switcher.css" rel="stylesheet"> -->
+    <!--end css custom login-->
+
+
+
+
+</head>
+
+<body class="login">
+    <!-- Modal -->
+    <div class="modal show" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="hide">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loadingModalTitle">Loading ....</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-view></ng-view>
+
+
+
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="/main/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="/main/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script src="/angular.min.js"></script>
+    <script src="/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.js"></script>
+    <!-- <script src="https://gitcdn.xyz/cdn/angular/bower-material/v1.1.20/angular-material.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="/front-end/Lib.js"></script>
+    <script src="/front-end/App.js"></script>
+    <script src="/front-end/Controller.js"></script>
+
+</body>
+
+</html>

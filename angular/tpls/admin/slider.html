@@ -1,0 +1,148 @@
+<style>
+    .slider-item {
+        border: 1px solid #dedede;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 0px;
+    }
+    
+    .slider-item .col {
+        padding: 0px;
+    }
+    
+    .slider-item .col .btn {
+        position: absolute;
+    }
+    
+    .slider-item .col .btn.edit {
+        left: 0px;
+    }
+    
+    .slider-item .col .btn.delete {
+        right: 0px;
+    }
+    
+    .slider-item .col .btn.visible {
+        left: 0px;
+        bottom: 0px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header bg-dark">
+                    <strong class="card-title text-light">Cấu hình website</strong>
+                </div>
+                <div class="card-body ">
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Hình ảnh: </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <button type="button" class="btn btn-primary" ng-click="prepareGallery()">Chọn từ thư viện</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Tải ảnh lên</button>
+                            <img ng-src="{{item.videoUrl}}" style="max-width: 300px;" />
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Link đích :  </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <input type="text " placeholder="ex : gooogle.com " ng-model='item.nameKey' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Hiển thị :  </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <input type="checkbox" name="checkVisible" checked ng-click="checkVisibleTonggle($event)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit " class="btn btn-success " ng-click="submitAddSlider($event) ">
+                                <i class="fa fa-dot-circle-o "></i> Thêm mới
+                            </button>
+                    <button type="reset " class="btn btn-danger pull-right" ng-click="cancelUpdateSiteConfig($event)" style="margin-right: 10px;"> 
+                                <i class=" fa fa-ban "></i> Hủy
+                        </button>
+                    <button type="reset " class="btn btn-info pull-right" ng-click="submitUpdateSlider($event)" style="margin-right: 20px;"> 
+                                <i class=" fa fa-ban "></i> Thay đổi
+                        </button>
+
+                </div>
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+<div class="row ">
+    <div class="col-sm-12 col-md-12 ">
+        <aside class="profile-nav alt ">
+            <section class="card ">
+                <div class="card-header bg-dark ">
+                    <strong class="card-title text-light ">Danh sách slider</strong>
+                </div>
+
+                <div class="card-body">
+                    <div class="col-md-12 slider-item" ng-repeat="item in listSliders">
+                        <div class="col col-md-4 col-lg-3 ">
+                            <img ng-src="{{item.videoUrl}}" />
+                            <button class="btn edit btn-primary btn-sm" ng-click="prepareEdit($event, item)">
+                                <i title="Sửa slider" class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn delete btn-danger btn-sm" ng-click="prepareDelete($event, item)">
+                                <i title="Xóa slider" class="fa fa-close"></i>
+                            </button>
+                            <button ng-if="item.normalPrice == 1" class="btn visible btn-success btn-sm" ng-click="tonggleVisible($event, item)">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                            <button ng-if="item.normalPrice == 0" class="btn visible btn-dark btn-sm" ng-click="tonggleVisible($event, item)">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+
+                        </div>
+                        <div class="col col-md-8 col-lg-9">
+                            <p style="padding: 5px 10px;">{{item.nameKey}}</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+<div id="galleryModal" class="example-modal modal fade">
+    <div class="modal modal-primary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" style="position: absolute;">Enter Folder Name :</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group" style="background-color : #fff;">
+                        <span class="input-group-addon">public\uploads\media\</span>
+                        <select class="form-control" name="folderName">
+                        <option value="">slider-banner</option>
+                    </select>
+                    </div>
+                    <ul id="listFiles">
+
+                    </ul>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" ng-click="addImgToPost($event)" class="btn btn-primary ">Chèn ảnh vào bài</button>
+                </div> -->
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>

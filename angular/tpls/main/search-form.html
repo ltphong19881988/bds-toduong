@@ -1,0 +1,131 @@
+<style>
+    div#listCategory {
+        z-index: 9999;
+        border: 1px solid #009188;
+        max-height: 150px;
+        overflow-y: scroll;
+        text-align: left;
+    }
+    
+    div#listCategory>.node>ul {
+        padding-left: 5px;
+    }
+</style>
+
+<form>
+    <!-- <div class="form-group col-md-12">
+
+    </div> -->
+
+    <div class="row" style="margin:0px;">
+        <div class="form-group col-md-6">
+            <!-- <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Loại tin rao" auto-complete class="form-control" ui-items="listProvinces" ng-model="selected" key='province' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                    <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div> -->
+            <div class="search-item">
+                <input class="form-control" placeholder="nhập từ khóa tìm kiếm" ng-model="searchForm.title" />
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input class="form-control" name="idCategory" ng-click='showHideCategory()' />
+                <div id='listCategory' status="0" style="display:none;">
+
+                </div>
+                <!-- <input type="text" placeholder="Loại nhà đất" auto-complete class="form-control" ui-items="listCategory" ng-model="selectedcategory" key='category' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-category ui-autocomplete" ng-show="showlistcategory">
+                    <li ng-repeat="item in listCategory  | filter: selectedcategory track by $index" ng-click="selectedCategory($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin:0px;">
+        <div class="form-group col-md-4">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Thành phố" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                    <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Quận huyện" class="form-control" auto-complete ui-items="listDistricts" ng-model="selecteddistrict" key='district' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-district ui-autocomplete" ng-show="showlistdistrict">
+                    <li ng-repeat="item in listDistricts  | filter: selecteddistrict track by $index" ng-click="selectedDistrict($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Phường xã" class="form-control" auto-complete ui-items="listWards" ng-model="selectedward" key='ward' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-ward ui-autocomplete" ng-show="showlistward">
+                    <li ng-repeat="item in listWards  | filter: selectedward track by $index" ng-click="selectedWard($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin:0px;">
+        <div class="form-group col-md-4">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Diện tích" auto-complete class="form-control" ui-items="listAcreages" ng-model="selectedacreage" key='acreage' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-acreage ui-autocomplete" ng-show="showlistacreage">
+                    <li ng-repeat="item in listAcreages  | filter: selectedacreage track by $index" ng-click="selectedAcreage($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Mức giá" auto-complete class="form-control" ui-items="listPrices" ng-model="selectedprice" key='price' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-price ui-autocomplete" ng-show="showlistprice">
+                    <li ng-repeat="item in listPrices  | filter: selectedprice track by $index" ng-click="selectedPrice($event, item)">
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="search-item">
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                <input type="text" placeholder="Hướng nhà" auto-complete class="form-control" ui-items="listDirections" ng-model="selecteddirection" key='direction' ng-click='showHideList($event)' />
+                <ul class="showlist showlist-direction ui-autocomplete" ng-show="showlistdirection">
+                    <li ng-repeat="item in listDirections  | filter: selecteddirection track by $index" ng-click="selectedDirection($event, item)">
+                        {{item.name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group col-md-12">
+        <div class="search-item">
+            <button class="btn btn-primary btn-sm" style="background: #02518c;" ng-click="submitSearchForm()">Tìm kiếm</button>
+        </div>
+    </div>
+
+</form>

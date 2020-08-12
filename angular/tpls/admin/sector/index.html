@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header bg-dark">
+                    <strong class="card-title text-light">THêm mới chỉnh sửa khu vực</strong>
+                </div>
+                <div class="card-body ">
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Loại: </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <select class="form-control" ng-model='item.type'>
+                                <option value="1" ng-selected="selected" >Tỉnh thành</option>
+                                <option value="2">Quận huyện</option>
+                                <option value="3">Phường xã</option>
+                                <option value="4">Đường</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">ID : </label></div>
+                        <div class="col-12 col-md-9 ">
+                            <input type="text " placeholder="kiểu số" ng-model='item.ID' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Tiêu đề : </label></div>
+                        <div class="col-12 col-md-9 ">
+                            <input type="text " placeholder="kiểu chữ" ng-model='item.title' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Loại dữ liệu (Không nên sửa) : </label></div>
+                        <div class="col-12 col-md-9 ">
+                            <input type="text " placeholder="type " ng-model='item.dataType' class="form-control ">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit " class="btn btn-success " ng-click="submitAddSector($event) ">
+                                <i class="fa fa-dot-circle-o "></i> Thêm mới
+                            </button>
+                    <button type="reset " class="btn btn-danger pull-right" ng-click="cancelUpdateSiteConfig($event)" style="margin-right: 10px;"> 
+                                <i class=" fa fa-ban "></i> Hủy
+                        </button>
+                    <button type="reset " class="btn btn-info pull-right" ng-click="submitUpdateSiteConfig($event)" style="margin-right: 20px;"> 
+                                <i class=" fa fa-ban "></i> Thay đổi
+                        </button>
+
+                </div>
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+<div class="row ">
+    <div class="col-sm-12 col-md-12 ">
+        <aside class="profile-nav alt ">
+            <section class="card ">
+                <div class="card-header bg-dark ">
+                    <strong class="card-title text-light ">Histories</strong>
+                </div>
+
+                <div class="card-body ">
+                    <div class="table-responsive ">
+                        <table datatable=" " dt-options="dtOptions " dt-columns="dtColumns " class="row-border hover ">
+
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+    jQuery("#username ").autocomplete({
+        source: function(request, response) {
+            jQuery.ajax({
+                type: "POST ",
+                url: "/user/autocomplete ",
+                data: {
+                    q: request.term
+                },
+                success: function(data) {
+                    response(jQuery.map(data, function(item) {
+                        return {
+                            label: item.username,
+                            value: item.username,
+                            id: item._id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            //console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+    });
+</script>

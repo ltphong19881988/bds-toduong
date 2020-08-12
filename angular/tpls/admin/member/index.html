@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header bg-dark">
+                    <strong class="card-title text-light">Tất cả thành viên</strong>
+                    <!-- <button style="float:right;" class="right btn btn-sm btn-success" data-toggle="modal" data-target="#addPromotionModal">
+                            <i title="Add new product" class="fa fa-plus"></i> Thêm mới mã khuyến mãi
+                        </button> -->
+                </div>
+
+                <div class="card-body">
+                    <div id="listMembers">
+                        <div class="table-responsive">
+                            <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="row-border hover"></table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="card-footer">
+                        <button type="submit" class="btn btn-primary ">
+                            <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-danger ">
+                            <i class="fa fa-ban"></i> Cancel
+                        </button>
+                    </div> -->
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+
+<div id="editModal" class="example-modal modal fade">
+    <div class="modal modal-primary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" style="position: absolute;">Sửa thông tin thành viên :</h4>
+                </div>
+                <div class="modal-body">
+                    <edit-Member-Template></edit-Member-Template>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" ng-click="editFolder('add')" class="btn btn-success">Add Folder</button> -->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+
+<script>
+    jQuery("#username").autocomplete({
+        source: function(request, response) {
+            jQuery.ajax({
+                type: "POST",
+                url: "/user/autocomplete",
+                data: {
+                    q: request.term
+                },
+                success: function(data) {
+                    response(jQuery.map(data, function(item) {
+                        return {
+                            label: item.username,
+                            value: item.username,
+                            id: item._id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            //console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+    });
+</script>

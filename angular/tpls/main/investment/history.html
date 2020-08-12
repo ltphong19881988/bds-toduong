@@ -1,0 +1,132 @@
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="card">
+            <div class="twt-feed bg-dark">
+                <div class="corner-ribon black-ribon">
+                    <i class="fa fa-history"></i>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="text-white display-6">Lịch sử ký gửi</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" style=" overflow-x: scroll;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ngày tạo</th>
+                            <th>Gói đầu tư</th>
+                            <th>Số tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in allUserInvests">
+                            <td ng-bind="item.datecreate | date:'dd/MM/yyyy' "></td>
+                            <td ng-bind="item.investPackage.typeText">0</td>
+                            <td>
+                                <span ng-bind="item.amount | currency :'$':0"></span> (<span ng-bind="item.amount*24000 | currency :'':0"></span> VNĐ)
+                            </td>
+                            <td ng-bind="item.statusText">tình trạng</td>
+                            <td ng-bind="item.dateStart | date:'dd/MM/yyyy' "></td>
+                            <td ng-bind="item.dateEnd | date:'dd/MM/yyyy' "></td>
+                            <td>
+                                <a ng-if="item.status == false" title="View details" href="#" ng-click="deleteInvest(item, $event)" data-toggle="modal">
+                                    <button class="btn btn-danger">Hủy bỏ</button>
+                                </a>
+
+                                <a title="View details" href="#" ng-click="viewDetails(item, $event)" data-toggle="modal" data-target="#viewDetailsModal">
+                                    <button class="btn btn-info">Xem hợp đồng</button>
+                                </a>
+                                <a ng-if="item.status == true && item.investPackage.type == 1" title="Chốt giá" href="#" ng-click="pricePeg(item, $event)" data-toggle="modal" data-target="#pricePegModal">
+                                    <button class="btn btn-success">Chốt giá</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="viewDetailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="hide">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewDetailsModalTitle">Thông tin của hợp đồng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success alert-dismissible in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                    <strong>Thông tin của hợp đồng được quản trị viên cập nhật. Nếu chưa thấy, vui lòng liên hệ công ty.</strong>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-3 ui-widget">
+                        <label class="form-control-label">Mã hợp đồng</label>
+                    </div>
+                    <div class="col-sm-12 col-md-9 ui-widget">
+                        <label class="form-control-label"><b ng-bind="investDetails.contract.id"></b></label>
+                    </div>
+                </div>
+
+                <div ng-if="investDetails.contract.loainongsan.length > 0" ng-repeat="item in investDetails.contract.loainongsan" class="row form-group">
+                    <div class="col-sm-12 col-md-3 ui-widget">
+                        <label class="form-control-label">Tên nông sản</label>
+                    </div>
+                    <div class="col-sm-12 col-md-9 ui-widget">
+                        <label class="form-control-label"><b ng-bind="item.name"></b></label>
+                    </div>
+                    <div class="col-sm-12 col-md-3 ui-widget">
+                        <label class="form-control-label">Giá</label>
+                    </div>
+                    <div class="col-sm-12 col-md-9 ui-widget">
+                        <label class="form-control-label"><b ng-bind="item.price"></b> <b>(VNĐ)</b></label>
+                    </div>
+                    <div class="col-sm-12 col-md-3 ui-widget">
+                        <label class="form-control-label">Số lượng</label>
+                    </div>
+                    <div class="col-sm-12 col-md-9 ui-widget">
+                        <label class="form-control-label"><b ng-bind="item.quantity"></b> <b>(kg)</b></label>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-3 ui-widget">
+                        <label class="form-control-label">Hình ảnh </label>
+                    </div>
+                    <div id="contractImagesView" class="col-sm-12 col-md-9 ui-widget">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    h2 {
+        font-size: 32px !important;
+        line-height: 35px !important;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        font-weight: bold;
+        color: #fff !important;
+    }
+</style>

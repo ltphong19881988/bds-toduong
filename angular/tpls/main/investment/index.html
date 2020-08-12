@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="card">
+            <div class="twt-feed bg-dark">
+                <div class="corner-ribon black-ribon">
+                    <i class="fa fa-money"></i>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="text-white display-6">Các gói đầu tư</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" style="height: 400px; overflow: scroll;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ngày tạo</th>
+                            <th>Gói đầu tư</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in allUserInvests">
+                            <td ng-bind="item.datecreate | date:'dd/MM/yyyy' "></td>
+                            <td ng-bind="item.investPackage.min">0</td>
+                            <td ng-bind="item.statusText">tình trạng</td>
+                            <td ng-bind="item.dateStart | date:'dd/MM/yyyy' "></td>
+                            <td ng-bind="item.dateEnd | date:'dd/MM/yyyy' "></td>
+                            <td>
+                                <a ng-if="item.status == false" title="View details" href="#" ng-click="deleteInvest(item, $event)" data-toggle="modal">
+                                    <button class="btn btn-danger">Hủy bỏ</button>
+                                </a>
+
+                                <a ng-if="item.status == true" title="View details" href="#" ng-click="viewDetails(item, $event)" data-toggle="modal" data-target="#viewDetailsModal">
+                                    <button class="btn btn-info">Xem hợp đồng</button>
+                                </a>
+                                <a ng-if="item.status == true && item.investPackage.type == 1" title="Chốt giá" href="#" ng-click="pricePeg(item, $event)" data-toggle="modal" data-target="#pricePegModal">
+                                    <button class="btn btn-success">Chốt giá</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="card">
+            <div class="twt-feed bg-dark">
+                <div class="corner-ribon black-ribon">
+                    <i class="fa fa-sitemap"></i>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="text-white display-6">Hệ thống</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Hoa hồng trực tiếp và lãi trên lãi được tính theo cây dưới đây.</strong> <br/>Hệ thống sẽ tự chọn vị trí cho gói đầu tư đầu tiên của bạn. Từ gói đầu tư thứ 2 bạn có thể tự chọn vị trí đặt gói đầu tư của mình.
+                </div>
+                <div id="tree" class="col-lg-8 col-md-12" style="height:400px; margin-top: 20px; background: #dfdfdf;"></div>
+                <div class="col-lg-4 col-md-12" style="margin-top: 20px;">
+                    <p>Username giới thiệu bạn : <b class="pull-right" ng-bind="logedUser.sponsor"></b></p>
+                    <p>Gói đầu tư đặt dưới : <b class="pull-right" ng-bind="treeparent.treeAddress"></b></p>
+                    <p>Chọn hình thức đầu tư:</p>
+                    <br/>
+                    <div class="col-md-12" style="margin-bottom: 20px;">
+                        <a href="/investment/escrow?type=0">
+                            <button type="button" class="btn btn-success btn-lg" style="width:100%;">
+                                Hợp tác đầu tư
+                            </button>
+                        </a>
+                    </div>
+
+                    <div class="col-md-12">
+                        <a href="/investment/escrow?type=1">
+                            <button type="button" class="btn btn-info btn-lg" style="width:100%;">
+                                Ký gửi nông sản
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    h2 {
+        font-size: 32px !important;
+        line-height: 35px !important;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        font-weight: bold;
+        color: #fff !important;
+    }
+</style>

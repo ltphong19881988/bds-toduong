@@ -1,0 +1,159 @@
+var curtoken = localStorage.getItem('token');
+if (curtoken) {
+    jQuery.ajaxSetup({
+        headers: {
+            'x-access-token': curtoken
+        }
+    });
+}
+
+var adminApp = angular.module('adminApp', [
+    'ngRoute',
+    'ui.router',
+    'datatables',
+    'datatables.buttons',
+    'datatables.light-columnfilter',
+    'ui.bootstrap',
+    'ui.bootstrap.datetimepicker',
+]);
+
+adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
+
+    $routeProvider
+        .when("/index", {
+            templateUrl: "/tpls/admin/dashboard.html",
+            controller: "dashboardCtrl"
+        })
+        .when("/banner-slider", {
+            templateUrl: "/tpls/admin/slider.html",
+            controller: "sliderCtrl"
+        })
+        .when("/media", {
+            templateUrl: "/tpls/admin/media.html",
+            controller: "mediaCtrl"
+        })
+        .when("/media", {
+            templateUrl: "/tpls/admin/media.html",
+            controller: "mediaCtrl"
+        })
+        .when("/category", {
+            templateUrl: "/tpls/admin/category.html",
+            controller: "categoryCtrl"
+        })
+        .when("/post", {
+            templateUrl: "/tpls/admin/post.html",
+            controller: "postCtrl"
+        })
+        .when("/sector", {
+            templateUrl: "/tpls/admin/sector/index.html",
+            controller: "sectorCtrl"
+        })
+        .when("/product-type", {
+            templateUrl: "/tpls/admin/product/product-type.html",
+            controller: "productTypeCtrl"
+        })
+        .when("/product", {
+            templateUrl: "/tpls/admin/product/product.html",
+            controller: "productCtrl"
+        })
+        .when("/product/:productId/:action", {
+            templateUrl: "/tpls/admin/product/product-details.html",
+            controller: "productCtrl",
+            params: {
+                productId: { squash: true, value: null },
+            }
+        })
+        .when("/service", {
+            templateUrl: "/tpls/admin/service/index.html",
+            controller: "serviceCtrl"
+        })
+        .when("/site-config", {
+            templateUrl: "/tpls/admin/site-config.html",
+            controller: "siteConfigCtrl"
+        })
+        // .when("/hair-sample/:hairId/:action", {
+        //     templateUrl: "/tpls/admin/hair-sample/hair-sample-detail.html",
+        //     controller: "hairSampleCtrl",
+        //     params: {
+        //         productId: { squash: true, value: null },
+        //     }
+        // })
+        .when("/promotion", {
+            templateUrl: "/tpls/admin/promotion/index.html",
+            controller: "promotionCtrl"
+        })
+        .when("/order/cart", {
+            templateUrl: "/tpls/admin/order/cart-index.html",
+            controller: "orderCtrl",
+        })
+        .when("/video", {
+            templateUrl: "/tpls/admin/video/index.html",
+            controller: "videoCtrl"
+        })
+        .when("/notification", {
+            templateUrl: "/tpls/admin/notification/index.html",
+            controller: "notificationCtrl"
+        })
+        .when("/member", {
+            templateUrl: "/tpls/admin/member/index.html",
+            controller: "memberCtrl"
+        })
+        .when("/moderator", {
+            templateUrl: "/tpls/admin/member/moderator.html",
+            controller: "memberCtrl"
+        })
+        // .when("/user-invest", {
+        //     templateUrl: "/tpls/admin/member/user-invest.html",
+        //     controller: "userInvestCtrl"
+        // })
+
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    }).hashPrefix('*');
+
+
+});
+
+// Run a function for init the app ( before content loaded )
+adminApp.run(function($rootScope, $http) {
+
+    // getUserInfo($http, function(result){
+    //     console.log(result);
+    //     $rootScope.userinfo = result;
+    //     $rootScope.referralLink = document.location.host + "/register?u=" + $rootScope.userinfo.username;
+    // });
+
+    //alert("I'm global foo!");
+    $rootScope.$on("$locationChangeStart", function(event, next, current) {
+        // handle route changes     
+        menuChanged(next);
+    });
+
+});
+
+
+// app.config(['$routeProvider', '$stateProvider' , '$locationProvider', function($routeProvider, $stateProvider, $locationProvider) {
+//     //$routeProvider.otherwise('/');
+
+//     $stateProvider
+//     .state("/", {
+//         url : '/',
+//         templateUrl : "/tpls/main/dashboard.html"
+//     })
+//     .state("abc", {
+//         url : '/abc',
+//         templateUrl : "/tpls/main/abc.html"
+//     })
+//     // .when("/green", {
+//     //   templateUrl : "green.htm"
+//     // })
+//     // .when("/blue", {
+//     //   templateUrl : "blue.htm"
+//     // });
+//     $locationProvider.html5Mode({
+//         enabled: true,
+//         requireBase: false
+//       }).hashPrefix('*');
+//   }]);

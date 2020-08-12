@@ -1,0 +1,200 @@
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="card">
+            <div class="twt-feed bg-dark">
+                <div class="corner-ribon black-ribon">
+                    <i class="fa fa-sitemap"></i>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="text-white display-6">Hợp tác đầu tư</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible in" role="alert" style="background-color: #ffe2ba; color: #d64228; border-color: #d64228;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Hoa hồng trực tiếp và lãi trên lãi được tính theo cây dưới đây.</strong> <br/>Hệ thống sẽ tự chọn vị trí cho gói đầu tư đầu tiên của bạn. Từ gói đầu tư thứ 2 bạn có thể tự chọn vị trí đặt gói đầu tư của mình.
+                </div>
+                <div id="tree" class="col-md-12 " style="height:500px; margin-top: 20px; background: #ffe2ba;"></div>
+                <div class="col-md-12" style="margin-top: 20px; padding-left: 0px; padding-right: 0px;">
+                    <p>Username giới thiệu bạn : <b class="pull-right" ng-bind="logedUser.sponsor"></b></p>
+                    <p>Gói đầu tư đặt dưới : <b class="pull-right" ng-bind="treeparent.treeAddress"></b></p>
+                    <p>Chọn hình thức đầu tư:</p>
+                    <!-- <br/> -->
+                    <select class="form-control" ng-options="item as item.min for item in allPackages" ng-model="package" ng-change="changePackage(package)"></select>
+                    <!-- <select class="form-control">
+                        <option ng-repeat="item in allPackages" value="{{item._id}}">$ {{item.min}}</option>
+                    </select> -->
+                    <br/>
+
+                    <div class="pricing pricing--palden" style="display: block;">
+                        <div class="pricing__item">
+                            <div class="pricing__deco" style="background-color: #FF6347;">
+                                <svg class="pricing__deco-img" version="1.1" id="Layer_1" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="300px" height="100px" viewBox="0 0 300 100" enable-background="new 0 0 300 100"
+                                    xml:space="preserve">
+                                    <path class="deco-layer deco-layer--1" opacity="0.6" fill="#FFFFFF" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
+                    c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z"></path>
+                                    <path class="deco-layer deco-layer--2" opacity="0.6" fill="#FFFFFF" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
+                    c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z"></path>
+                                    <path class="deco-layer deco-layer--3" opacity="0.7" fill="#FFFFFF" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
+                    H42.401L43.415,98.342z"></path>
+                                    <path class="deco-layer deco-layer--4" fill="#FFFFFF" d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
+                    c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z"></path>
+                                          </svg>
+                                <div class="pricing__price" style="font-size:2em;">
+                                    <span class="pricing__currency"></span>
+                                    <span ng-bind="package.name"></span>
+                                    <span class="pricing__period"></span>
+                                </div>
+                                <h2 class=""><span ng-bind="package.min | currency :'$ ':0"></span> (
+                                    <span ng-bind="package.min*24000 | currency :'':0"> </span> VNĐ)
+                                </h2>
+                            </div>
+                            <ul class="pricing__feature-list">
+                                <li class="pricing__feature">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest" rowspan="6" style="vertical-align:middle">
+                                                    <h3 class="pricing__title text-bold">Lãi suất</h3>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">{{package.interestCash}}% Ví lãi suất</td>
+                                            </tr>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">{{package.interestShopping}}% Ví tiêu dùng</td>
+                                            </tr>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">1% Ví cổ phiếu</td>
+                                            </tr>
+
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">0.3% Ví đào tạo</td>
+                                            </tr>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">0.2% Ví du lịch</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="pricing__feature">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest" rowspan="2" style="vertical-align:middle">
+                                                    <h3 class="pricing__title text-bold">Hoa hồng giới thiệu </h3>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">
+                                                    {{package.sponsorCash}}% Ví hoa hồng , {{package.sponsorShopping}}% Ví tiêu dùng
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="pricing__feature">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest" rowspan="2" style="vertical-align:middle">
+                                                    <h3 class="pricing__title text-bold">Hoa hồng gián tiếp</h3>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">10% F1, 7% F2, 4% F3, 1% F4->F10</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="pricing__feature text-bold pricing__feature_name">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">
+                                                    <h3 class="pricing__title text-bold">Khuyến mãi BLG theo thời gian ký gửi</h3>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </li>
+                                <li class="pricing__feature text-bold pricing__feature_name">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">
+                                                    <select class="form-control" ng-options="size as size.name for size in packageMonth" ng-model="item" ng-change="changePackageMonth(item, package)"></select>
+                                                </td>
+                                                <td id="td-invest"><span ng-bind='item.bonus'></span>% giá trị ký gửi</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="pricing__feature text-bold pricing__feature_name">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">
+                                                    <h3 class="pricing__title text-bold">Chọn loại nông sản</h3>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </li>
+                                <li class="pricing__feature text-bold pricing__feature_name">
+                                    <table id="tb-invest">
+                                        <tbody>
+                                            <tr id="tr-invest">
+                                                <td id="td-invest">
+                                                    <div class="col-sm-4" ng-repeat="x in escrowPrice">
+                                                        <input type="checkbox" style="width:15px; height:15px;" ng-model="selectedEscrow[$index]" ng-true-value="{{x}}" /> {{x.name}} (
+                                                        <span ng-bind="x.price | currency :'':0"></span> VNĐ)
+                                                        <!-- <input type="number" class="form-control" ng-model="selectedEscrow[$index].quantity" /> (kg) -->
+                                                    </div>
+
+                                                    <div class="col-sm-12 alert alert-success alert-dismissible in" role="alert" style="background-color: #ffe2ba; color: #d64228; border-color: #d64228; margin: 10px 0px 0px 0px; ">
+                                                        </button> Đây chỉ là giá tham khảo theo ngày hiện tại, giá cuối cùng là giá được ký trong hợp đồng.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </li>
+
+
+
+                            </ul>
+                            <form class="form-horizontal margin-none " style="text-align:center " ng-submit="submitInvestment(package, $event) ">
+                                <button type="submit " class="pricing__action " style="padding: 5px 2.2em;cursor: pointer; background-color: #FF6347; ">
+                                    <i class="fa fa-registered "></i> {{ 'REGISTER ' | translate}}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    h2 {
+        font-size: 32px !important;
+        line-height: 35px !important;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0px;
+        font-weight: bold;
+        color: #fff !important;
+    }
+</style>

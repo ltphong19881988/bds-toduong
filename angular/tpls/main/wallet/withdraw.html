@@ -1,0 +1,204 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="twt-feed bg-dark">
+                <div class="corner-ribon black-ribon">
+                    <i class="fa fa-cloud-upload"></i>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="text-white display-6">Rút tiền</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" style="padding:0.5rem;">
+                <div class="custom-tab">
+                    <nav>
+                        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-item nav-link active" id="withdraw-cash-tab" data-toggle="tab" role="tab" aria-controls="withdraw-cash" aria-selected="true">Hoa Hồng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-item nav-link" id="withdraw-bonus-tab" data-toggle="tab" role="tab" aria-controls="withdraw-bonus" aria-selected="false">Lãi ngày</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="tab-content pl-3 pt-2" id="nav-tabContent" style="border: 1px solid #dee2e6; border-top: none; float: left; width: 100%; padding-left: 0rem !important;">
+
+                        <div class="tab-pane fade show active" id="withdraw-cash" role="tabpanel" aria-labelledby="withdraw-cash-tab">
+                            <div class="col-md-12">
+                                <div class="card-header" style="background-color: #00443f;">
+                                    <strong class="card-title text-light">Số dư : 
+                                            <span ng-bind="cashBalance | currency :'$ ':2 " ></span> (
+                                            <span ng-bind="cashBalance*24000 | currency :'':0 " > </span> VNĐ )
+                                        </strong>
+                                </div>
+                                <div class="alert alert-success alert-dismissible in" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                    <strong>Hoa hồng rút thứ 2 hàng tuần, trong vòng 24h công ty sẽ chuyển tiền về tài khoản ngân hàng của bạn.</strong> <br/> $1 = 24.000 VNĐ
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Số tiền rút ($): </label>
+                                    <input type="number" ng-model="cashWithdrawAmount" class="form-control">
+                                    <label class=" form-control-label"> = <span ng-bind="cashWithdrawAmount*24000 | currency :'':0 "></span> (VND)</label>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary " ng-click='submitWithdraw("cash")'>
+                                                <i class="fa fa-dot-circle-o"></i> Rút hoa hồng
+                                            </button>
+                                    <!-- <button type="reset" class="btn btn-danger ">
+                                                <i class="fa fa-ban"></i> Cancel
+                                            </button> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="withdraw-bonus" role="tabpanel" aria-labelledby="withdraw-bonus-tab">
+
+                            <div class="col-md-12">
+                                <div class="card-header" style="background-color: #d64228;">
+                                    <strong class="card-title text-light">Số dư : 
+                                            <span ng-bind="commissionBalance | currency :'$ ':2 " ></span> (
+                                            <span ng-bind="commissionBalance*24000 | currency :'':0 " > </span> VNĐ )
+                                        </strong>
+                                    <!-- <strong class="card-title text-light">Số dư : $ <span ng-bind="commissionBalance"></span></strong> -->
+                                </div>
+                                <div class="alert alert-success alert-dismissible in" role="alert" style="background-color: #ffe2ba; color: #d64228; border-color: #d64228;">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                    <strong>Tiền lãi rút từ mùng 5 đến mùng 10 hàng tháng, trong vòng 48h công ty sẽ chuyển tiền về tài khoản ngân hàng của bạn.</strong> <br/> $1 = 24.000 VNĐ
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Số tiền rút ($): </label>
+                                    <input type="number" ng-model="commissionWithdrawAmount" class="form-control">
+                                    <label class=" form-control-label"> = <span ng-bind="commissionWithdrawAmount*24000 | currency :'':0 "></span> (VND)</label>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" ng-click='submitWithdraw("commission")'>
+                                                <i class="fa fa-dot-circle-o"></i> Rút lãi ngày
+                                            </button>
+                                    <!-- <button type="reset" class="btn btn-danger">
+                                                <i class="fa fa-ban"></i> Cancel
+                                            </button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="twt-feed bg-dark">
+                <div class="corner-ribon black-ribon">
+                    <i class="fa fa-history"></i>
+                </div>
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="text-white display-6">Lịch sử rút tiền</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success alert-dismissible in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                    <strong>Sau khi tạo lệnh rút tiền, vui lòng nhấp "Mã xác nhận" bên dưới để nhập mã được gửi qua email .</strong>
+                </div>
+                <!-- <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ngày tạo</th>
+                            <th>Số tiền</th>
+                            <th>Loại hoa hồng</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in withdrawTransactions">
+                            <td ng-bind="item.datecreate | date:'dd/MM/yyyy' "></td>
+                            <td>
+                                <span ng-bind="item.amount"></span>$ ( <span ng-bind="item.amount*24000 | currency :'':0 "></span> VNĐ )
+                            </td>
+                            <td ng-bind="item.walletType"></td>
+                            <td>
+                                <span ng-if="item.status != 2" ng-bind="item.statusText"></span>
+                                <button ng-if="item.status == 2" class="btn btn-success" data-toggle="modal" data-target="#withdrawEmailModal" ng-click="preEmailVerify(item, $event)">Mã xác nhận</button>
+                            </td>
+                            <td>
+                                <a ng-if="item.status != 1" title="View details" href="#" ng-click="deleteInvest(item, $event)" data-toggle="modal">
+                                    <button class="btn btn-danger">Hủy bỏ</button>
+                                </a>
+
+                                <a ng-if="item.status == 1" title="View details" href="#" ng-click="viewDetails(item, $event)" data-toggle="modal" data-target="#viewDetailsModal">
+                                    <button class="btn btn-info">Xem </button>
+                                </a>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+
+                <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="row-border hover">
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="withdrawEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="hide">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="withdrawEmailModalTitle">Nhập mã xác thực qua email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success alert-dismissible in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                    <strong>Nếu bạn chưa nhận được email, vui lòng click vào nút sau</strong>
+                    <button class="btn btn-sm btn-info" ng-click="resendVerifyEmail()">Gửi lại email</button>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12 col-md-9 ui-widget">
+                        <input type="text" ng-model="withdrawVerifyCode" placeholder="Mã xác thực" class="form-control ">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info " ng-click="submitVerifyEmail()">
+                        <i class="fa fa-dot-circle-o"></i> Xác nhận
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .tab-pane {}
+    
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+
+<script>
+    jQuery(document).on('click', 'a.nav-item', function() {
+        var name = jQuery(this).attr('aria-controls');
+        jQuery('.tab-pane').removeClass('show').removeClass('active');
+        jQuery('#' + name).addClass('show').addClass('active');
+    })
+</script>

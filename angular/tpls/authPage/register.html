@@ -1,0 +1,78 @@
+<style>
+    .showlist {
+        position: absolute;
+        top: 40px;
+        border: 1px solid #333;
+        padding: 0px;
+        background: #fff;
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+    
+    ul.showlist li {
+        list-style: none;
+        padding: 5px;
+    }
+</style>
+
+<div class="row">
+
+    <div class="login_wrapper">
+
+        <div id="register" class="animate form registration_form">
+            <section class="login_content">
+                <form id="formRegister">
+                    <img class="logo" src="/main/images/logo.png" />
+                    <h1>{{ 'CREATE_ACCOUNT' | translate}}</h1>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model='username' placeholder="{{ 'USERNAME' | translate}}" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" ng-model='email' placeholder="{{ 'EMAIL' | translate}}" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" ng-model='password' placeholder="{{ 'PASS_WORD' | translate}}" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" ng-model='passwordConfirm' placeholder="{{ 'PASS_WORD_CONFIRM' | translate}}" />
+                    </div>
+                    <!-- <div class="row" style="position: relative;">
+                        <input type="text" class="form-control col-md-4" auto-complete ui-items="names" ng-model="selected" placeholder="{{ 'COUNTRY' | translate}}">
+                        <ul class="showlist" ng-show="showlist">
+                            <li ng-repeat="name in names  | filter: selected track by $index" ng-click="selectedItem($event, name)">
+                                {{name.name}}
+                            </li>
+                        </ul>
+                        <input type="text" class="form-control col-md-8" ng-model='phone' placeholder="{{ 'PHONE' | translate}}" style="float: right;" />
+                    </div> -->
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model='refId' placeholder="{{ ' REFERRAL_ID ' | translate}}" />
+                    </div>
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6LfZfc0UAAAAAHbEE3-ah__E0LaGZUssj_tGeAba"></div>
+                    </div>
+                    <div class="">
+                        <button ng-click="submitRegister()" class="btn btn-default submit">{{ 'REGISTER ' | translate}}</button>
+                        <button ng-click="resetRegister()" class="btn btn-default submit">{{ 'CANCEL ' | translate}}</button>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br/>
+                    <div class="separator">
+                        <p class="change_link">Bạn đã có tài khoản ?
+                            <a href="/login" class="to_register"> Đăng nhập </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                        <br />
+
+                        <!-- <div>
+                            <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                            <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                        </div> -->
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>

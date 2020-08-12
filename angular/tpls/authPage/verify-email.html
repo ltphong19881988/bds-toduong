@@ -1,0 +1,44 @@
+<style>
+    .showlist {
+        position: absolute;
+        top: 40px;
+        border: 1px solid #333;
+        padding: 0px;
+        background: #fff;
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+    
+    ul.showlist li {
+        list-style: none;
+        padding: 5px;
+    }
+</style>
+
+<div class="row">
+
+    <div class="login_wrapper">
+
+        <div id="register" class="animate form registration_form">
+            <section class="login_content">
+                <img class="logo" src="/main/images/logo.png" />
+                <h1>{{ 'VERIFY_EMAIL' | translate}}</h1>
+                <div class="col-md-12">
+                    <label>Chúng tôi đã gửi một đường link xác thực tài khoản đến địa chỉ email: <b ng-bind="verifyEmail"></b> . Vui lòng nhấp vào đường dẫn trong email để xác thực tài khoản trước</label>
+                    <br/>
+                    <p>Nếu bạn không nhận được email nào từ chúng tôi, vui lòng click vào nút dưới đây</p>
+                    <br/>
+                    <button ng-click="resendEmail()" class="btn btn-info">Gửi lại email kích hoạt</button>
+                    <!-- <a href="{{verifyLink}}">Link xác thực</a> -->
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="separator">
+
+                    <div class="clearfix"></div>
+                    <br />
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

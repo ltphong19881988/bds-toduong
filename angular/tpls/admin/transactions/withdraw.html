@@ -1,0 +1,143 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header bg-dark">
+                    <strong class="card-title text-light">Tất cả yêu cầu rút tiền</strong>
+                    <!-- <button style="float:right;" class="right btn btn-sm btn-success" data-toggle="modal" data-target="#addPromotionModal">
+                            <i title="Add new product" class="fa fa-plus"></i> Thêm mới mã khuyến mãi
+                        </button> -->
+                </div>
+
+                <div class="card-body">
+                    <div id="listUserInvest">
+                        <div class="table-responsive">
+                            <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="row-border hover">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+
+<div id="editTransactionModal" class="example-modal modal fade">
+    <div class="modal modal-primary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" style="position: absolute;">Sửa thông tin giao dịch :</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="" class="form-horizontal" ng-submit="submiteditUserInvest($event)">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Username : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <label class=" form-control-label" ng-bind='tranDetails.user.username'> </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Loại ví : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <label class=" form-control-label" ng-bind='tranDetails.walletType'> </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Loại giao dịch : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <label class=" form-control-label" ng-bind='tranDetails.method'> </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Số tiền : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <label class=" form-control-label" ng-bind='tranDetails.amount'> </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Ngày tạo: </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <label class=" form-control-label" ng-bind='tranDetails.datecreate | date:"dd-MM-yyyy HH:mm:ss" '> </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Trạng thái : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <div ng-repeat="status in listStatus track by $index">
+                                    <input type="radio" name="statusChecked" ng-value="status" ng-model="model.selectedStatus" />
+                                    <label>{{ status }}</label>
+                                </div>
+                                <!-- <pre>{{model.selectedStatus}}</pre> -->
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Ngày duyệt : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <label class=" form-control-label" ng-bind='tranDetails.dateApprove'> </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Mã chuyển tiền : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <input type='text' class=" form-control" ng-model='tranDetails.contract.id' />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Hình ảnh : </label></div>
+                            <div class="col-12 col-md-9 ui-widget">
+                                <button class="btn btn-info" ng-click='addPicture()'>Thêm ảnh</button>
+                                <input style="display: none;" id="contractImages" type="file" multiple class="form-control multiple " onchange="angular.element(this).scope().fileNameChanged(angular.element(this))">
+                                <div id='contractImagesView'></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" ng-click="updateWithdrawContract(tranDetails)">
+                            <i class="fa fa-dot-circle-o"></i> Submit
+                        </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" ng-click="editFolder('add')" class="btn btn-success">Add Folder</button> -->
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<style>
+    .form-group .col-md-3 label.form-control-label:first-child {
+        font-weight: bold;
+    }
+    
+    #contractImagesView .imgBlock {
+        position: relative;
+        margin: 10px;
+        display: inline-block;
+    }
+    
+    #contractImagesView .imgBlock .close {
+        font-size: 2em;
+        background: #e72727;
+        padding: 5px 10px;
+        color: #fff;
+        position: absolute;
+        right: 0px;
+        opacity: 0.7;
+    }
+    
+    table th input[type=date] {
+        font-size: 12px;
+    }
+</style>

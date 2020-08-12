@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2 ng-bind='walletTypeText'></h2>
+                <img class="cc TR-alt" title="Cash Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span ng-bind='balance'> 00.00</span>
+                <a class="cc TR-alt" href="/wallet/index">Quay lại</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="twt-feed bg-dark">
+                    <div class="corner-ribon black-ribon"> <i class="fa fa-list"></i> </div>
+                    <h3 class="card-title text-light">Lịch sử</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="row-border hover">
+
+                        </table>
+                    </div>
+
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" ng-repeat="trans in transactions">
+                            <span ng-if="trans.source == 'plus'" class="badge badge-success pull-right" ng-bind="'+' + trans.amount"></span>
+                            <span ng-if="trans.source == 'minus'" class="badge badge-danger pull-right" ng-bind="trans.amount"></span>
+                            <span ng-bind="trans.datecreate"></span>
+                            <span ng-bind="trans.method"></span>
+                            <span ng-bind="trans.methodType"></span>
+                            <span ng-bind="trans.description"></span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+
+
+<style>
+    .badge {
+        font-size: 13px;
+    }
+    
+    .dataTables_filter {
+        display: none;
+    }
+    
+    @media (max-width: 575.99px) {
+        .media-body {
+            margin: 15px 0px 0px 0px;
+        }
+    }
+</style>
+<script>
+    // var replaceIcon = function(){
+    //     jQuery(".badge-success").html("<i class=\"fa fa-download\"></i>");
+    //     jQuery(".badge-danger").html("<i class=\"fa fa-upload\"></i>");
+    //     jQuery(".badge-warning").html("<i class=\"fa fa-send\"></i>");
+    // }
+    // if(jQuery(window).width() <= 700){
+    //     replaceIcon();
+    // }
+    // jQuery( window ).resize(function() {
+    //     if(jQuery(window).width() <= 700){
+    //         replaceIcon();
+    //     }else{
+    //         jQuery(".badge-success").html("Deposit");
+    //         jQuery(".badge-danger").html("Withdraw");
+    //         jQuery(".badge-warning").html("Send");
+    //     }
+    // });
+
+    jQuery("input[name='username']").autocomplete({
+        source: function(request, response) {
+            jQuery.ajax({
+                type: "POST",
+                url: "/user/autocomplete",
+                data: {
+                    q: request.term
+                },
+                success: function(data) {
+                    response(jQuery.map(data, function(item) {
+                        return {
+                            label: item.username,
+                            value: item.username,
+                            id: item._id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            //console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+    });
+</script>

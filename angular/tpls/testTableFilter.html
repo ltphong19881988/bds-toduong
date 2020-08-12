@@ -1,0 +1,7 @@
+<table datatable dt-options="vm.dtOptions" dt-columns="vm.dtColumns" class="table table-striped table-bordered table-hover responsive nowrap" style="width:100%">
+    <thead ng-if="vm.dtColumnFilters">
+        <tr ng-repeat="header in [0, 1]" ng-hide="header === 1">
+            <th ng-repeat="col in vm.config.columns" ng-if="!col.hidden">{{ col.title }}</th>
+        </tr>
+    </thead>
+</table>

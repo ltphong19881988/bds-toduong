@@ -1,0 +1,34 @@
+<section id="{{key}}" class="product">
+    <div class="container">
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2> {{title}} <a class="view-more" href="{{linkViewmore}}">Xem thêm</a> </h2>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        <div class="row product-container">
+            <div class=" col-lg-6 col-md-12" ng-repeat="item in newProducts">
+                <div class="product-item">
+                    <div class="pi-img">
+                        <img ng-src="{{item.pictures[0]}}" />
+                    </div>
+                    <div class="pi-content">
+                        <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
+                            {{item.productContent.title}}
+                  </a>
+                        <div class="wrap">
+                            <span class="wrap-price">
+                    <span class="price"> Giá: <strong class="product-price">1.8 tỷ</strong></span>
+                            <span class="area"> Diện tích: <strong class="product-area">100 m²</strong></span></span>
+                            <span class="contact floatright"></span>
+                            <span class="p-district"> Quận/Huyện: <strong class="product-city-dist"><span ng-bind="item.district.title"></span>, <span ng-bind="item.province.title"></span></strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

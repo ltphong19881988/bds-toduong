@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2>Hoa hồng</h2>
+                <img class="cc TR-alt" title="Commission Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span>$ <span ng-bind='cashBalance'> 00.00</span></span>
+                <a class="cc TR-alt" href="/wallet/details/cash">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2>Lãi ngày</h2>
+                <img class="cc TR-alt" title="Interest Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span>$ <span ng-bind='commissionBalance'> 00.00</span></span>
+                <a class="cc TR-alt" href="/wallet/details/commission">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2>Tiêu Dùng</h2>
+                <img class="cc TR-alt" title="Shopping Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span>$ <span ng-bind='shoppingBalance'> 00.04</span></span>
+                <a class="cc TR-alt" href="/wallet/details/shopping">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2>Du Lịch</h2>
+                <img class="cc TR-alt" title="Travel Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span>$ <span ng-bind='travelBalance'>s00.04</span></span>
+                <a class="cc TR-alt" href="/wallet/details/travel">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2>Đào Tạo</h2>
+                <img class="cc TR-alt" title="EDU Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span>$ <span ng-bind='eduBalance'> 00.04</span></span>
+                <a class="cc TR-alt" href="/wallet/details/education">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="box bg_secondary box-wallet-items mb-4">
+            <div class="box-head d-flex align-items-center justify-content-between">
+                <h2>Tích lũy (BLG)</h2>
+                <img class="cc TR-alt" title="BLG Wallet" src="/main/images/wallet.png" style="max-height: 58px; ">
+            </div>
+            <div class="box-body d-flex align-items-center justify-content-between">
+                <span><span ng-bind='stockBalance'> 00.04</span> BLG</span>
+                <a class="cc TR-alt" href="/wallet/details/stock">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    .badge {
+        font-size: 13px;
+    }
+    
+    @media (max-width: 575.99px) {
+        .media-body {
+            margin: 15px 0px 0px 0px;
+        }
+    }
+</style>
+<script>
+    // var replaceIcon = function(){
+    //     jQuery(".badge-success").html("<i class=\"fa fa-download\"></i>");
+    //     jQuery(".badge-danger").html("<i class=\"fa fa-upload\"></i>");
+    //     jQuery(".badge-warning").html("<i class=\"fa fa-send\"></i>");
+    // }
+    // if(jQuery(window).width() <= 700){
+    //     replaceIcon();
+    // }
+    // jQuery( window ).resize(function() {
+    //     if(jQuery(window).width() <= 700){
+    //         replaceIcon();
+    //     }else{
+    //         jQuery(".badge-success").html("Deposit");
+    //         jQuery(".badge-danger").html("Withdraw");
+    //         jQuery(".badge-warning").html("Send");
+    //     }
+    // });
+
+    jQuery("input[name='username']").autocomplete({
+        source: function(request, response) {
+            jQuery.ajax({
+                type: "POST",
+                url: "/user/autocomplete",
+                data: {
+                    q: request.term
+                },
+                success: function(data) {
+                    response(jQuery.map(data, function(item) {
+                        return {
+                            label: item.username,
+                            value: item.username,
+                            id: item._id
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+            //console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+    });
+</script>

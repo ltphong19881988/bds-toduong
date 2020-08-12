@@ -1,0 +1,17 @@
+{
+    "CREATE_ACCOUNT": "CREATE ACCOUNT",
+    "USER_NAME": "Username",
+    "EMAIL": "Email",
+    "PASS_WORD": "Password",
+    "PHONE": "Phone number",
+    "REGISTER": "Register",
+    "FOO": "This is a paragraph.",
+    "BUTTON_LANG": "tiếng việt",
+
+    "LOGIN": "Login",
+    "VERIFY_EMAIL": "Verify email",
+
+    "WALLET": "Ví Điện Tử",
+    "MEMBER": "Member",
+    "INVEST": "Ký Gửi Nông Sản"
+}

@@ -1,0 +1,18 @@
+{
+    "CREATE_ACCOUNT": "TẠO TÀI KHOẢN",
+    "USER_NAME": "Tên đăng nhập",
+    "EMAIL": "Email",
+    "PASS_WORD": "Mật khẩu",
+    "PHONE": "Số điện thoại",
+    "REGISTER": "Đăng ký",
+    "FOO": "Đây là một đoạn văn.",
+    "BUTTON_LANG": "english",
+
+    "LOGIN": "Đăng nhập",
+    "VERIFY_EMAIL": "Xác thực email",
+
+    "WALLET": "Ví Điện Tử",
+    "MEMBER": "Thành viên",
+    "INVEST": "INVESTMENT"
+
+}

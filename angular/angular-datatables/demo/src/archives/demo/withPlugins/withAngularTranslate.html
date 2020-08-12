@@ -1,0 +1,68 @@
+ne FTS5_MAIN_PREFIX '0'
+
+#if FTS5_MAX_PREFIX_INDEXES > 31
+# error "FTS5_MAX_PREFIX_INDEXES is too large"
+#endif
+
+/*
+** Details:
+**
+** The %_data table managed by this module,
+**
+**     CREATE TABLE %_data(id INTEGER PRIMARY KEY, block BLOB);
+**
+** , contains the following 5 types of records. See the comments surrounding
+** the FTS5_*_ROWID macros below for a description of how %_data rowids are 
+** assigned to each fo them.
+**
+** 1. Structure Records:
+**
+**   The set of segments that make up an index - the index structure - are
+**   recorded in a single record within the %_data table. The record consists
+**   of a single 32-bit configuration cookie value followed by a list of 
+**   SQLite varints. If the FTS table features more than one index (because
+**   there are one or more prefix indexes), it is guaranteed that all share
+**   the same cookie value.
+**
+**   Immediately following the configuration cookie, the record begins with
+**   three varints:
+**
+**     + number of levels,
+**     + total number of segments on all levels,
+**     + value of write counter.
+**
+**   Then, for each level from 0 to nMax:
+**
+**     + number of input segments in ongoing merge.
+**     + total number of segments in level.
+**     + for each segment from oldest to newest:
+**         + segment id (always > 0)
+**         + first leaf page number (often 1, always greater than 0)
+**         + final leaf page number
+**
+** 2. The Averages Record:
+**
+**   A single record within the %_data table. The data is a list of varints.
+**   The first value is the number of rows in the index. Then, for each column
+**   from left to right, the total number of tokens in the column for all
+**   rows of the table.
+**
+** 3. Segment leaves:
+**
+**   TERM/DOCLIST FORMAT:
+**
+**     Most of each segment leaf is taken up by term/doclist data. The 
+**     general format of term/doclist, starting with the first term
+**     on the leaf page, is:
+**
+**         varint : size of first term
+**         blob:    first term data
+**         doclist: first doclist
+**         zero-or-more {
+**           varint:  number of bytes in common with previous term
+**           varint:  number of bytes of new term data (nNew)
+**           blob:    nNew bytes of new term data
+**           doclist: next doclist
+**         }
+**
+**     d

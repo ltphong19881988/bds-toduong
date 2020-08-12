@@ -1,0 +1,252 @@
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <aside class="profile-nav alt">
+            <!-- <form id="formUpdateProfiles" ng-submit="formUpdateProfiles($event)"> -->
+            <input style="display: none;" id="avatarBase64" type="file" />
+            <input type="hidden" value="" name="avatar" />
+            <section class="card">
+
+                <div class="twt-feed bg-dark">
+                    <div class="corner-ribon black-ribon">
+                        <i class="fa fa-info-circle"></i>
+                    </div>
+                    <div class="media">
+                        <a href="#" id="changeAvatar">
+                            <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px; border-width: 3px; border-style: solid;" alt="" ng-src="{{userinfo.info.avatar}}">
+                            <button type="button" class="btn btn-warning btn-sm"><i class="fa fa-magic"></i>&nbsp; Change</button>
+                        </a>
+                        <div class="media-body">
+                            <h3 class="text-light display-6" ng-bind="userinfo.username"></h3>
+                            <!-- <p class="text-light display-6" ng-bind="userinfo.sponsor">Basic member</p> -->
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Người giới thiệu 
+                                <span class="pull-right" ng-bind="userinfo.sponsor"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Email 
+                                <span class="pull-right" ng-bind="userinfo.email"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Tên 
+                                <input style="display: none;"  class="pull-right editProfiles" ng-model="userinfo.fullname.first_name" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.fullname.first_name"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Họ và tên đệm 
+                                <input style="display: none;"  class="pull-right editProfiles" ng-model="userinfo.fullname.last_name" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.fullname.last_name"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                CMND (*) 
+                                <input style="display: none;"  class="pull-right editProfiles" ng-model="userinfo.info.IdNumber" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.info.IdNumber"></span>
+                            </strong>
+                    </li>
+
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Điện thoại (*)
+                                <input style="display: none;"  class="pull-right editProfiles" ng-model="userinfo.info.phone" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.info.phone"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Quốc gia 
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.info.country.name"></span>
+                            </strong>
+                        <div class="pull-right editProfiles" layout="column" ng-cloak>
+                            <md-content layout-padding layout="column">
+                                <!-- md-search-text="ctrlCountry.searchText" -->
+                                <md-autocomplete id="custom-template" ng-disabled="ctrlCountry.isDisabled" md-no-cache="ctrlCountry.noCache" md-selected-item="ctrlCountry.selectedItem" md-search-text="ctrlCountry.searchText" md-search-text-change="ctrlCountry.searchTextChange(ctrlCountry.searchText)"
+                                    md-selected-item-change="ctrlCountry.selectedItemChange(item)" md-items="item in ctrlCountry.querySearch(ctrlCountry.searchText)" md-item-text="item.name" md-min-length="0" md-escape-options="clear" input-aria-label="Current Repository"
+                                    md-menu-class="autocomplete-custom-template" md-menu-container-class="custom-container">
+                                    <md-item-template>
+                                        <span class="item-title">
+                                                <img style="width: 40px; margin-right: 5px;" src="{{item.flag}}" alt="{{item.name}}">
+                                          <span> {{item.name}} </span>
+                                        </span>
+                                    </md-item-template>
+                                </md-autocomplete>
+                            </md-content>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Tỉnh thành 
+                                <input style="display: none;" class="pull-right editProfiles" ng-model="userinfo.info.province" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.info.province"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Tên ngân hàng (*)
+                                <input style="display: none;"  class="pull-right editProfiles" ng-model="userinfo.bankInfo.bankName" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.bankInfo.bankName"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Số tài khoản (*)
+                                <input style="display: none;" class="pull-right editProfiles" ng-model="userinfo.bankInfo.bankAccountNumber" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.bankInfo.bankAccountNumber"></span>
+                            </strong>
+                    </li>
+                    <li class="list-group-item">
+                        <strong class="card-title"> 
+                                Chủ tài khoản (*)
+                                <input style="display: none;" class="pull-right editProfiles" ng-model="userinfo.bankInfo.bankAccountHolder" />
+                                <span style="font-size: 14px;" class="badge badge-success pull-right" ng-bind="userinfo.bankInfo.bankAccountHolder"></span>
+                            </strong>
+                    </li>
+                    <!-- <li class="list-group-item">
+                            <a href="#"> <i class="fa fa-tasks"></i> Recent Activity <span class="badge badge-danger pull-right">0</span></a>
+                        </li> -->
+                    <li class="list-group-item change-info">
+                        <button type="button" class="btn btn-info" ng-click="preUpdateProfiles($event)">
+                            <i class="fa fa-dot-circle-o"></i> Thay đổi
+                        </button>
+                        <button type="button" class="btn btn-danger editProfiles pull-right" style="margin-left: 20px;" ng-click="cancelUpdate($event)">
+                            <i class="fa fa-dot-circle-o"></i> Hủy
+                        </button>
+                        <button type="button" class="btn btn-success editProfiles pull-right" ng-click="formUpdateProfiles($event)">
+                             Thực hiện
+                        </button>
+                    </li>
+
+                </ul>
+            </section>
+            <!-- </form> -->
+
+        </aside>
+    </div>
+
+
+
+    <div class="col-sm-12 col-md-6" style="padding:0px;">
+        <div class="col-sm-12 ">
+            <div class="card">
+                <div class="twt-feed bg-dark">
+                    <div class="corner-ribon black-ribon"><i class="fa fa-link"></i></div>
+                    <h3 class="card-title text-light">Giới thiệu bạn bè : </h3>
+                </div>
+                <div class="card-body">
+                    <span id="referralLink" class="card-text" ng-bind="referralLink"></span>
+                    <button style="float: right; border-radius: 5px; " class="btn btn-success copyButton" copyTarget="referralLink"><i class="fa fa-copy"></i> Copy</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 ">
+            <div class="card">
+                <form name="formChangePassword" ng-submit="changePassword(formChangePassword, $event)" class="form-horizontal">
+                    <div class="twt-feed bg-dark">
+                        <div class="corner-ribon black-ribon">
+                            <i class="fa fa-unlock-alt"></i>
+                        </div>
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="text-white display-6">Change Password</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row form-group">
+                            <div class="col col-md-4"><label for="hf-email" class=" form-control-label">Mật khẩu hiện tại</label></div>
+                            <div class="col-12 col-md-8">
+                                <input type="password" name="currentPassword" placeholder="Current password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-4"><label for="hf-email" class=" form-control-label">Mật khẩu mới</label></div>
+                            <div class="col-12 col-md-8">
+                                <input type="password" name="newPassword" placeholder="New password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-4"><label for="hf-email" class=" form-control-label">Xác nhận mật khẩu mới</label></div>
+                            <div class="col-12 col-md-8">
+                                <input type="password" name="confirmPassword" placeholder="Confirm new password" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer" style="height: 60px;">
+                        <button type="submit" class="btn btn-info pull-right">
+                            <i class="fa fa-dot-circle-o"></i> Đổi mật khẩu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    .editProfiles {
+        padding: 5px 10px;
+    }
+    
+    md-autocomplete {
+        height: 41px;
+    }
+    
+    md-autocomplete#custom-template {
+        width: 200px;
+    }
+    
+    .autocomplete-custom-template .md-autocomplete-suggestion {
+        border-bottom: 1px solid #ccc;
+        height: auto;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        white-space: normal;
+    }
+    
+    .autocomplete-custom-template .md-autocomplete-suggestion:last-child {
+        border-bottom-width: 0;
+    }
+    
+    .autocomplete-custom-template .item-title,
+    .autocomplete-custom-template .item-metadata {
+        display: block;
+        line-height: 2;
+    }
+    
+    .autocomplete-custom-template .item-title md-icon {
+        height: 18px;
+        width: 18px;
+    }
+    
+    .custom-container {
+        min-width: 300px !important;
+    }
+    
+    .layout-padding,
+    .layout-padding-gt-sm,
+    .layout-padding-md,
+    .layout-padding>*,
+    .layout-padding-gt-sm>*,
+    .layout-padding-md>*,
+    .layout-padding>.flex,
+    .layout-padding>.flex-gt-sm,
+    .layout-padding>.flex-md {
+        padding: 1px;
+    }
+</style>
