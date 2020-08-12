@@ -31,7 +31,7 @@ if (ip == '139.180.185.249') {
             pass: 'toduong!@#@123'
         }
     }
-    publicPath = '/home/demo/';
+    publicPath = '/home/bds-toduong/';
 }
 
 
