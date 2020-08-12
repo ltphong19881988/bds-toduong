@@ -240,7 +240,7 @@ router.post('/all-site-config', async(req, res, next) => {
     console.log(req.body);
     AppConfig.aggregate([
         // { $match: options },
-        { $sort: { datecreate: -1 } }
+        { $sort: { key: 1 } }
     ]).exec(function(err, result) {
         // console.log(err, result);
         if (err) result = [];

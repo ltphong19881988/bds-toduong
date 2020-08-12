@@ -12,6 +12,8 @@ var databaseCF = {
         // useFindAndModify: false,
         // useUnifiedTopology: true,
         replicaSet: 'rs0',
+        user: 'toduong',
+        pass: 'toduong!@#@123'
     }
 
 }
