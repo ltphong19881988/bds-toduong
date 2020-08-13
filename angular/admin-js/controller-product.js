@@ -360,7 +360,14 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
 
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('_id').withTitle('ID').notVisible(),
-            DTColumnBuilder.newColumn('nameKey').withTitle('Mã'),
+            // DTColumnBuilder.newColumn('nameKey').withTitle('Mã'),
+            DTColumnBuilder.newColumn('productType').withTitle('Loại BDS').renderWith(function(data, type, full) {
+                var text = '';
+                full.productType.forEach(element => {
+                    text += element.value + ', '
+                });
+                return text;
+            }),
             DTColumnBuilder.newColumn('title').withTitle('Tiêu đề').withOption('width', '35%'),
             DTColumnBuilder.newColumn('categoryName').withTitle('Danh mục'),
             // DTColumnBuilder.newColumn('datecreate').withTitle('Ngày tạo').renderWith(function(data, type, full) {

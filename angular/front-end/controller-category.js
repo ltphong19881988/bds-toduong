@@ -48,27 +48,44 @@ app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $ro
     }
     submitFrontEnd(params, $http, function(res) {
         console.log('result', res);
-        $scope.cate = res.cate;
-        $scope.cateContent = res.cateContent;
-        $scope.searchForm["idCategory"] = $scope.cate._id;
-        jQuery('input[name="idCategory"]').val($scope.cateContent.title);
+        if (url.indexOf('san-pham-moi') == 0) {
+            $scope['cateContent'] = { oneLvlUrl: 'san-pham-moi', title: "Sản phẩm mới" };
+            $scope.products = res;
+        } else {
+            $scope.cate = res.cate;
+            $scope.cateContent = res.cateContent;
+            $scope.searchForm["idCategory"] = $scope.cate._id;
+            jQuery('input[name="idCategory"]').val($scope.cateContent.title);
 
-        $scope.local = res.local;
-        $scope.products = res.result;
-        MetadataService.setMetaTags('description', $scope.cateContent.title);
-        MetadataService.setMetaTags('keywords', $scope.cateContent.title);
-        if (res.redirect) {
-            var redirectLink = "";
-            if (res.postContent) redirectLink += res.postContent.oneLvlUrl;
-            if (res.local) {
-                redirectLink += "-" + res.local.link;
+            $scope.local = res.local;
+            $scope.products = res.result;
+            MetadataService.setMetaTags('description', $scope.cateContent.title);
+            MetadataService.setMetaTags('keywords', $scope.cateContent.title);
+            if (res.redirect) {
+                var redirectLink = "";
+                if (res.postContent) redirectLink += res.postContent.oneLvlUrl;
+                if (res.local) {
+                    redirectLink += "-" + res.local.link;
+                }
+                if (path.length == 5) {
+                    redirectLink += '/' + path[1] + '/' + path[2] + '/' + path[3] + '/' + path[4];
+                }
+                console.log(redirectLink);
+                window.location.href = '/' + redirectLink;
             }
-            if (path.length == 5) {
-                redirectLink += '/' + path[1] + '/' + path[2] + '/' + path[3] + '/' + path[4];
-            }
-            console.log(redirectLink);
-            window.location.href = '/' + redirectLink;
         }
+
+        setTimeout(function() {
+            jQuery('.pi-img').each(function() {
+                if (jQuery(this).find('img').eq(0).height() < jQuery(this).find('img').eq(0).width()) {
+                    jQuery(this).find('img').eq(0).css("width", "auto");
+                    jQuery(this).find('img').eq(0).css("height", "100%");
+                } else {
+                    jQuery(this).find('img').eq(0).css("width", "100%");
+                    jQuery(this).find('img').eq(0).css("height", "auto");
+                }
+            })
+        }, 300);
     });
 
 

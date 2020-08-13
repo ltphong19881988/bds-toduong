@@ -115,8 +115,56 @@ router.post('/product-type/filter-all', async(req, res, next) => {
     });
 })
 
+var GetNewProduct = async function(req, res, next) {
+    var options = {};
+    var skip = 0;
+    var limit = 10;
+    if (req.body.skip && typeof req.body.skip === 'number' && (req.body.skip % 1) === 0) {
+        skip = parseInt(req.body.skip);
+    }
+    if (req.body.limit && typeof req.body.limit === 'number' && (req.body.limit % 1) === 0) {
+        limit = parseInt(req.body.limit);
+    }
+    var exUrl = req.body.url.split('san-pham-moi')[1];
+    if (exUrl.length > 2) {
+        exUrl = exUrl.replace('-', '');
+    }
+    var local = await ListProvince.findOne({ link: exUrl });
+    if (local) {
+        options['$or'] = [
+            { 'province.link': local['link'] },
+            { 'district.link': local['link'] },
+            { 'ward.link': local['link'] },
+        ]
+    }
+    Product.aggregate([{
+            $match: options,
+        },
+        {
+            $sort: { datecreate: 1 }
+        },
+        {
+            $lookup: {
+                from: "productcontents",
+                localField: "_id",
+                foreignField: "idProduct",
+                as: "productContent"
+            },
+        },
+        { $unwind: "$productContent" },
+        { "$skip": skip },
+        { "$limit": skip + limit },
+
+    ], function(err, result) {
+        res.json(result);
+    });
+}
+
 router.post('/filter-url', async(req, res, next) => {
     console.log(req.body.url);
+    if (req.body.url.indexOf('san-pham-moi') == 0) {
+        return GetNewProduct(req, res, next);
+    }
     if (req.body.extOpts) {
 
     }
@@ -148,7 +196,7 @@ router.post('/filter-url', async(req, res, next) => {
 
         },
         {
-            $sort: { datecreate: 1 }
+            $sort: { productType: -1, datecreate: -1 }
         },
         // {
         //     $lookup: {
@@ -183,17 +231,6 @@ router.post('/filter-url', async(req, res, next) => {
         // console.log('result', result);
         res.json({ cateContent, cate, local, result, redirect: false });
     });
-    // res.json({ postContent, cate, local, redirect: false });
-    // var p = [];
-    // abc.map(element => {
-    //     if (req.body.url.indexOf(element.oneLvlUrl) > -1) {
-    //         p.push(getCategoryOfPost(element.idPost));
-    //     }
-    // });
-    // Promise.all(p).then((values) => {
-    //     console.log(values);
-    //     res.json(values);
-    // });
 
 })
 
@@ -296,6 +333,7 @@ router.get('/name-key/:key', async(req, res, next) => {
         res.json(result[0]);
     });
 })
+
 
 
 module.exports = router

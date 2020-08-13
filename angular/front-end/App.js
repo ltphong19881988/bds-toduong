@@ -146,10 +146,11 @@ var InitSiteConfig = function($rootScope, $http) {
 
     submitFrontEnd(params, $http, function(res) {
         // console.log('site-config', res);
-        $rootScope['webPhone'] = res.filter(x => x.key == 'phone-number')[0];
-        $rootScope['webEmail'] = res.filter(x => x.key == 'email')[0];
-        $rootScope['webAddress'] = res.filter(x => x.key == 'web-address')[0];
-        $rootScope['logoInfo'] = res.filter(x => x.key == 'logo-info')[0];
+        $rootScope['pageTitle'] = res.filter(x => x.key == 'web-name-totnhat')[0].value;
+        $rootScope['webPhone'] = res.filter(x => x.key == 'phone-number-totnhat')[0];
+        $rootScope['webEmail'] = res.filter(x => x.key == 'email-totnhat')[0];
+        $rootScope['webAddress'] = res.filter(x => x.key == 'web-address-totnhat')[0];
+        $rootScope['logoInfo'] = res.filter(x => x.key == 'logo-info-totnhat')[0];
     });
 }
 

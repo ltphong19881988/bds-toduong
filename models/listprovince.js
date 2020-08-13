@@ -16,6 +16,7 @@ var ListProvince = new Schema({
     districtID: Number,
     districtTitle: String,
     districtTitleLink: String,
+    priority: Number,
 });
 ListProvince.index({ ID: 1, type: 1 }, { unique: true });
 var ListProvince = mongoose.model('ListProvince', ListProvince);

@@ -12,7 +12,12 @@ var GetHotProduct = function(filter, $http, callback) {
 }
 
 app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bất động sản Tô Dương - Trang chủ";
+    var listener = $rootScope.$watch('pageTitle', function() {
+        if ($rootScope.pageTitle != undefined) {
+            $rootScope.pageTitle += " - Trang chủ";
+            listener();
+        }
+    });
     let params = {
         method: 'POST',
         url: '/get-slider',
@@ -41,16 +46,18 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
         },
         templateUrl: '/tpls/main/product/directive-hot-product.html',
         controller: function($scope, $compile, $http) {
+            $scope.linkViewmore = 'nha-dat-ban';
             let filter_ban = {
                 idCategory: "5f2cd118c5f37520ec555734",
                 productType: 'hot',
             };
             if ($scope.key == "thue_hot") {
+                $scope.linkViewmore = 'nha-dat-cho-thue';
                 filter_ban.idCategory = "5f336b87ae16cf08a0b6ee6d";
             }
             GetHotProduct(filter_ban, $http, function(res) {
                 $scope.productHot = res;
-                $scope.linkViewmore = '#';
+
 
                 setTimeout(function() {
                     // console.log(jQuery('.testimonial-img').eq(0).width());
@@ -101,7 +108,7 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
         },
         templateUrl: '/tpls/main/product/directive-new-product.html',
         controller: function($scope, $compile, $http) {
-            $scope.linkViewmore = '#';
+            $scope.linkViewmore = '/san-pham-moi';
             let filter_ban = {
                 idCategoryType: "5f166a011ab04a0e50f990b3",
                 skip: 0,

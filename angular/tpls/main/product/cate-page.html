@@ -26,10 +26,10 @@
                             </a>
                             <div class="wrap">
                                 <span class="wrap-price">
-                        <span class="price"> Giá: <strong class="product-price" ng-bind="item.normalPrice">1.8 tỷ</strong></span>
+                        <span class="price"> <i class="fa fa-tags" aria-hidden="true"></i>: <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong></span>
                                 <span class="area"> Diện tích: <strong class="product-area">{{item.acreage}} m²</strong></span></span>
-                                <span class="contact floatright"></span>
-                                <span class="p-district"> Quận/Huyện: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
+                                <span class="contact floatright"></span> <br/>
+                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i>: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
                             </div>
                         </div>
                     </div>

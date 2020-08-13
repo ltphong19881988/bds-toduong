@@ -4,13 +4,13 @@ var publicPath = '';
 var databaseCF = {
     connectStr: 'mongodb://139.180.185.249:27017/bds-toduong',
     options: {
-        keepAlive: true,
-        reconnectTries: Number.MAX_VALUE,
+        // keepAlive: true,
+        // reconnectTries: Number.MAX_VALUE,
         // useMongoClient: true,
         useCreateIndex: true,
         useNewUrlParser: true,
-        // useFindAndModify: false,
-        // useUnifiedTopology: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true,
         replicaSet: 'rs0',
         user: 'toduong',
         pass: 'toduong!@#@123'
@@ -27,7 +27,8 @@ if (ip == '139.180.185.249') {
             // useMongoClient: true,
             useCreateIndex: true,
             useNewUrlParser: true,
-            // useUnifiedTopology: true,
+            useFindAndModify: false,
+            useUnifiedTopology: true,
             replicaSet: 'rs0',
             user: 'toduong',
             pass: 'toduong!@#@123'

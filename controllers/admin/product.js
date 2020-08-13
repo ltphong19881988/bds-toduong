@@ -74,6 +74,7 @@ router.post('/all-product', function(req, res, next) {
         {
             $project: {
                 "categoryName": '$category.name',
+                "productType": 1,
                 "nameKey": 1,
                 "normalPrice": 1,
                 "pictures": 1,
