@@ -520,7 +520,7 @@ section {
 
 .section-title {
     text-align: center;
-    padding-bottom: 30px;
+    padding-bottom: 15px;
 }
 
 .section-title h2 {
@@ -1736,7 +1736,7 @@ a.footer-logo img {
         /* float: left; */
     }
     #header .logo img {
-        max-height: 35px;
+        max-height: 40px;
     }
     .nav-menu a {
         font-size: 12px;
@@ -1798,6 +1798,15 @@ a.footer-logo img {
     .popup-overlay-close {
         right: 15px;
     }
+    #header {
+        padding: 10px 15px;
+    }
+    #header .search_btn {
+        top: 6px;
+    }
+    .mobile-nav-toggle {
+        right: 5px;
+    }
 }
 
 @media (max-width: 420px) {
@@ -1823,18 +1832,18 @@ a.footer-logo img {
         padding-right: 5px;
     }
     .section-title h2 {
-        font-size: 20px;
-        line-height: 42px;
-        height: 40px;
+        font-size: 22px;
+        line-height: 41px;
+        height: 45px;
     }
     .section-title h2::before {
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
         font-size: 25px;
     }
     .section-title h2 .view-more {
-        line-height: 45px;
+        line-height: 50px;
         margin-right: 10px;
     }
 }
