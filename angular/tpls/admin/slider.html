@@ -47,13 +47,19 @@
                     <div class="row form-group ">
                         <div class="col col-md-3 "><label class=" form-control-label ">Link đích :  </label></div>
                         <div class="col-12 col-md-9 ui-widget ">
-                            <input type="text " placeholder="ex : gooogle.com " ng-model='item.nameKey' class="form-control ">
+                            <input type="text " placeholder="ví dụ : gooogle.com " ng-model='item.nameKey' class="form-control ">
                         </div>
                     </div>
                     <div class="row form-group ">
                         <div class="col col-md-3 "><label class=" form-control-label ">Hiển thị :  </label></div>
                         <div class="col-12 col-md-9 ui-widget ">
                             <input type="checkbox" name="checkVisible" checked ng-click="checkVisibleTonggle($event)">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">website :  </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <input type="text " placeholder="ví dụ : bds-totnhat hay bds-toduong " ng-model='item.videoTitle' class="form-control ">
                         </div>
                     </div>
                 </div>
@@ -104,7 +110,8 @@
 
                         </div>
                         <div class="col col-md-8 col-lg-9">
-                            <p style="padding: 5px 10px;">{{item.nameKey}}</p>
+                            <p style="padding: 5px 10px;">Link : <a href="{{item.nameKey}}" target="_blank"> {{item.nameKey}}</a></p>
+                            <p style="padding: 5px 10px;">website : {{item.videoTitle}}</p>
                         </div>
                     </div>
                 </div>

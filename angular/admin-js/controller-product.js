@@ -338,7 +338,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             .withOption('processing', true)
             .withOption('stateSave', true)
             .withOption('bInfo', false)
-            .withOption('searching', false)
+            .withOption('searching', true)
             // .withOption('order', [
             //     [0, 'asc'],
             //     [1, 'asc']
@@ -352,9 +352,9 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                 '1': { html: 'input', regexp: true, type: 'text', time: 500 },
                 '2': { html: 'input', regexp: true, type: 'text', time: 500 },
                 // '3': { html: 'input', regexp: true, type: 'datetime' },
-                '3': { html: 'input', regexp: true, type: 'text', time: 500 },
-                '4': { html: 'input', regexp: true, type: 'text', time: 500 },
-                '5': { html: 'input', regexp: true, type: 'text' },
+                '3': { html: 'input', regexp: true, type: 'text', time: 1000 },
+                '4': { html: 'input', regexp: true, type: 'text', time: 1000 },
+                '5': { html: 'input', regexp: true, type: 'text', time: 1000 },
                 '6': { html: 'input', regexp: true, type: 'text' },
             });
 

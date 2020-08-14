@@ -273,7 +273,7 @@ router.put('/slider', async(req, res, next) => {
     })
 })
 
-router.put('/delete', async(req, res, next) => {
+router.delete('/slider', async(req, res, next) => {
     if (!req.body._id) return res.json({ status: false, mes: 'Xóa thất bại' });
     var id = mongoose.Types.ObjectId(req.body._id);
     Post.findOneAndUpdate({ _id: id }, req.body).exec(function(err, post) {
@@ -282,30 +282,19 @@ router.put('/delete', async(req, res, next) => {
 })
 
 router.post('/slider/all', async(req, res, next) => {
-    Post.find({ postType: 2 }, function(err, posts) {
+    Post.find({ postType: 2 }).sort({ videoTitle: 1 }).exec(function(err, posts) {
         res.json(posts);
     });
 
 })
 
-router.get('/lock', function(req, res, next) {
-    var username = req.query.username;
-    var value = req.query.value;
-    User.update({ username: username }, { $set: { lock: value } }, { upsert: true }, function(err, result) {
-        console.log(err, result);
-        res.json(result);
-    })
-})
+
 
 
 
 router.get('/*', function(req, res, next) {
     res.render("layout/admin");
 })
-
-// GetTotalDeposit(true, function(result){
-//     console.log(result);
-// })
 
 
 module.exports = router

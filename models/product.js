@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 var async = require('async');
 const Tool = require('./helpers/tool');
 const ProductContent = require('./product-content');
+const Category = require('./category');
+const Post = require('./post');
+const PostContent = require('./post-content');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Types.ObjectId;
 
@@ -43,6 +46,41 @@ var createProductContent = async function(product_content, opts) {
         product_content = new ProductContent(product_content);
         resolve(product_content.save(opts));
     });
+}
+
+var anAsyncMapFunction = async function(item) {
+    return functionWithPromise(item)
+}
+
+var filterCategoryFromName = async function(name) {
+    return PostContent.aggregate([
+            { $match: { title: { $regex: name, $options: 'iu' } } },
+            {
+                $lookup: {
+                    from: "posts",
+                    localField: "idPost",
+                    foreignField: "_id",
+                    as: "post"
+                },
+            },
+            { $unwind: "$post" },
+            {
+                $match: { 'post.postType': 0 }
+            }
+        ]).exec()
+        .then(result => {
+            return new Promise(resolve => {
+                Promise.all(result.map(async function(item) {
+                    return item.post.idCategory;
+                })).then(abc => {
+                    resolve(abc);
+                });
+            });
+        })
+        .catch(err => {
+            console.log('err', err);
+        });
+
 }
 
 module.exports.AddProduct = async function(product, product_content) {
@@ -106,4 +144,77 @@ module.exports.UpdateProduct = async function(product, product_content) {
     // Tweet.findOne({}, {}, { sort: { 'created_at': 1 } }, function(err, post) {
     //     cb(null, post.created_at.getTime());
     // });
+}
+
+module.exports.FilterDataTableProduct = async function(data) {
+    console.log(data);
+    let options = {}
+        // if (req.body.idCategoryType) {
+        //     options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);
+        // }
+    var hot = data[1].value.filter(item => item.data == 'productType')[0];
+    if (hot && hot.search.value) {
+        options['productType'] = { $elemMatch: { value: hot.search.value } };
+    }
+    var province = data[1].value.filter(item => item.data == 'province.title')[0];
+    if (province && province.search.value) {
+        options['province.title'] = { $regex: province.search.value, $options: 'ui' };
+    }
+    var district = data[1].value.filter(item => item.data == 'district.title')[0];
+    if (district && district.search.value) {
+        options['district.title'] = { $regex: district.search.value, $options: 'ui' };
+    }
+    var categoryName = data[1].value.filter(item => item.data == 'categoryName')[0];
+    if (categoryName && categoryName.search.value) {
+        var listCate = await filterCategoryFromName(categoryName.search.value);
+        console.log('listCate', listCate);
+        options['idCategory'] = { $in: listCate };
+    }
+
+
+    return Product.aggregate([{
+            $match: options,
+        },
+        {
+            $sort: { datecreate: 1 }
+        },
+        {
+            $lookup: {
+                from: "categories",
+                localField: "idCategory",
+                foreignField: "_id",
+                as: "category"
+            },
+        },
+        // { $unwind: "$category" },
+        {
+            $lookup: {
+                from: "productcontents",
+                localField: "_id",
+                foreignField: "idProduct",
+                as: "productContent"
+            },
+        },
+        { $unwind: "$productContent" },
+        {
+            $project: {
+                "categoryName": '$category.name',
+                "productType": 1,
+                "nameKey": 1,
+                "normalPrice": 1,
+                "pictures": 1,
+                "salePrice": 1,
+                "datecreate": 1,
+                "title": '$productContent.title',
+                "province": 1,
+                "district": 1,
+                "ward": 1,
+            }
+        },
+    ], function(err, result) {
+        // console.log('product', err, result);
+        if (err) result = [];
+        return (result);
+    })
+
 }

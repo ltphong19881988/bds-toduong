@@ -41,62 +41,16 @@ var change_alias = function(alias) {
     return str;
 }
 
-router.post('/all-product', function(req, res, next) {
-    console.log(req.body);
-    let options = {}
-    if (req.body.idCategoryType) {
-        options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);
-    }
-    Product.aggregate([{
-            $match: options,
-        },
-        {
-            $sort: { datecreate: 1 }
-        },
-        {
-            $lookup: {
-                from: "categories",
-                localField: "idCategory",
-                foreignField: "_id",
-                as: "category"
-            },
-        },
-        // { $unwind: "$category" },
-        {
-            $lookup: {
-                from: "productcontents",
-                localField: "_id",
-                foreignField: "idProduct",
-                as: "productContent"
-            },
-        },
-        { $unwind: "$productContent" },
-        {
-            $project: {
-                "categoryName": '$category.name',
-                "productType": 1,
-                "nameKey": 1,
-                "normalPrice": 1,
-                "pictures": 1,
-                "salePrice": 1,
-                "datecreate": 1,
-                "title": '$productContent.title',
-                "province": 1,
-                "district": 1,
-                "ward": 1,
-            }
-        },
-    ], function(err, result) {
-        // res.json(result);
-        if (err) result = [];
-        var records = {
-            'draw': req.body.aoData[0].value,
-            'recordsTotal': 2,
-            'recordsFiltered': 0,
-            'data': result
-        };
-        res.json(records);
-    })
+router.post('/all-product', async function(req, res, next) {
+    // console.log(req.body.aoData);
+    var result = await Product.FilterDataTableProduct(req.body.aoData);
+    var records = {
+        'draw': req.body.aoData[0].value,
+        'recordsTotal': 2,
+        'recordsFiltered': 0,
+        'data': result
+    };
+    res.json(records);
 })
 
 router.post("/item", async(req, res, next) => {
