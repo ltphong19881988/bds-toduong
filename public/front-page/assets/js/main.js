@@ -29,9 +29,9 @@
                 if ($(this).attr("href") == '#header') {
                     scrollto = 0;
                 }
-                $('html, body').animate({
-                    scrollTop: scrollto
-                }, 1500, 'easeInOutExpo');
+                // $('html, body').animate({
+                //     scrollTop: scrollto
+                // }, 1500, 'easeInOutExpo');
                 if ($(this).parents('.nav-menu, .mobile-nav').length) {
                     $('.nav-menu .active, .mobile-nav .active').removeClass('active');
                     $(this).closest('li').addClass('active');
@@ -157,16 +157,16 @@
     });
 
     // Toggle .header-scrolled class to #header when page is scrolled
-    $(window).scroll(function() {
-        if ($(this).scrollTop() > 100) {
-            $('#header').addClass('header-scrolled');
-        } else {
-            $('#header').removeClass('header-scrolled');
-        }
-    });
-    if ($(window).scrollTop() > 100) {
-        $('#header').addClass('header-scrolled');
-    }
+    // $(window).scroll(function() {
+    //     if ($(this).scrollTop() > 100) {
+    //         $('#header').addClass('header-scrolled');
+    //     } else {
+    //         $('#header').removeClass('header-scrolled');
+    //     }
+    // });
+    // if ($(window).scrollTop() > 100) {
+    //     $('#header').addClass('header-scrolled');
+    // }
 
     // Back to top button
     $(window).scroll(function() {
@@ -207,7 +207,6 @@
 
     // Initiate venobox (lightbox feature used in portofilo)
     $(document).ready(function() {
-        console.log('document ready');
         $('.venobox').venobox();
     });
 
@@ -246,7 +245,6 @@
         });
     }
     $(window).on('load', function() {
-        console.log('window on load');
         aos_init();
     });
 

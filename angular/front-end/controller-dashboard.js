@@ -32,8 +32,6 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
                 items: 1
             });
         }, 100);
-
-
         console.log('slider ', res);
     })
 
@@ -57,7 +55,6 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
             }
             GetHotProduct(filter_ban, $http, function(res) {
                 $scope.productHot = res;
-
 
                 setTimeout(function() {
                     // console.log(jQuery('.testimonial-img').eq(0).width());
@@ -119,7 +116,9 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
                 // console.log($scope.newProducts);
                 setTimeout(function() {
                     jQuery("#" + $scope.key + ' .pi-img').each(function() {
-                        if (jQuery(this).find('img').eq(0).height() < jQuery(this).find('img').eq(0).width()) {
+                        var a = jQuery(this).height() / jQuery(this).width();
+                        var b = jQuery(this).find('img').eq(0).height() / jQuery(this).find('img').eq(0).width();
+                        if (a > b) {
                             jQuery(this).find('img').eq(0).css("width", "auto");
                             jQuery(this).find('img').eq(0).css("height", "100%");
                         } else {
@@ -133,23 +132,4 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
         },
 
     }
-});
-
-
-app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile, $routeParams) {
-    $rootScope.pageTitle = "Bất động sản Tô Dương - ";
-    // console.log('category', $routeParams);
-    // console.log('location', location.pathname);
-    var abc = location.pathname.split('-pr');
-    console.log('abc', abc);
-    let params = {
-        method: 'GET',
-        url: '/product/name-key/' + 'pr' + abc[1],
-    };
-    submitFrontEnd(params, $http, function(res) {
-        console.log('details', res);
-        $rootScope.pageTitle += res.productContent.title;
-        $scope.product = res;
-    })
-
 });

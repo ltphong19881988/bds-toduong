@@ -77,12 +77,14 @@ app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $ro
 
         setTimeout(function() {
             jQuery('.pi-img').each(function() {
-                if (jQuery(this).find('img').eq(0).height() < jQuery(this).find('img').eq(0).width()) {
-                    jQuery(this).find('img').eq(0).css("width", "auto");
-                    jQuery(this).find('img').eq(0).css("height", "100%");
-                } else {
+                var a = jQuery(this).height() / jQuery(this).width();
+                var b = jQuery(this).find('img').eq(0).height() / jQuery(this).find('img').eq(0).width();
+                if (a < b) {
                     jQuery(this).find('img').eq(0).css("width", "100%");
                     jQuery(this).find('img').eq(0).css("height", "auto");
+                } else {
+                    jQuery(this).find('img').eq(0).css("width", "auto");
+                    jQuery(this).find('img').eq(0).css("height", "100%");
                 }
             })
         }, 300);

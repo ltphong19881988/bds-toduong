@@ -81,6 +81,13 @@ app.run(function($rootScope, $window, $http, $location) {
         }
         // console.log($window.innerWidth);
     });
+
+    angular.element($window).on('load', function() {
+        console.log('angular window load, scroll to top');
+        angular.element('html, body').animate({
+            scrollTop: 0
+        }, 1500, 'easeInOutExpo');
+    })
 });
 
 app.service('MetadataService', function($rootScope, $window) {

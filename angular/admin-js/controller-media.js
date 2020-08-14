@@ -73,6 +73,7 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
     $scope.prepareUpload = function(e) {
         jQuery("#uploadBtn").val(null);
         jQuery("#uploadBtn").click();
+        jQuery('#uploadProcess .btn-success').prop('disabled', false);
     }
 
     $scope.selectedFiles = function(element) {
@@ -82,7 +83,7 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
 
     $scope.doUpload = function(e) {
         // console.log('feafewa');
-        jQuery(e.currentTarget).prop('disabled', true).remove();
+        jQuery(e.currentTarget).prop('disabled', true);
         $scope.countUpload = 0;
         var imgs = jQuery("#uploadProcess form img");
         $scope.checkCountUpload = imgs.length;
