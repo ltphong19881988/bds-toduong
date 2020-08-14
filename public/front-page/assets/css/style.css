@@ -520,7 +520,7 @@ section {
 
 .section-title {
     text-align: center;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
 }
 
 .section-title h2 {
@@ -631,7 +631,7 @@ section {
 .about {
     background: url("../img/about-bg.jpg") center center no-repeat;
     background-size: cover;
-    padding: 30px 0;
+    padding: 15px 0;
     position: relative;
 }
 
