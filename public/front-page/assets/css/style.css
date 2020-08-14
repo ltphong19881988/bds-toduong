@@ -1125,7 +1125,7 @@ section {
     /* box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1); */
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: none;
-    height: 180px;
+    height: 145px;
 }
 
 .testimonials .testimonial-item .nd .info {
@@ -1150,6 +1150,10 @@ section {
 .testimonials .testimonial-item .nd h3,
 .testimonials .testimonial-item .nd h4 {
     text-align: left;
+}
+
+.testimonials .testimonial-item .nd p a {
+    color: #e95309;
 }
 
 .testimonials .testimonial-item p::after {
@@ -1813,6 +1817,25 @@ a.footer-logo img {
     .product-item .pi-content {
         width: 60%;
         font-size: 12px;
+    }
+    .container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .section-title h2 {
+        font-size: 20px;
+        line-height: 42px;
+        height: 40px;
+    }
+    .section-title h2::before {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 25px;
+    }
+    .section-title h2 .view-more {
+        line-height: 45px;
+        margin-right: 10px;
     }
 }
 
