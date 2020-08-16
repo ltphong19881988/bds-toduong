@@ -595,7 +595,7 @@ section {
     font-weight: 600;
     color: #03528c;
     text-transform: uppercase;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .breadcrumbs h2 {
@@ -1572,7 +1572,7 @@ section {
 .hotline-phone-ring-wrap {
     position: fixed;
     bottom: -10px;
-    left: -10px;
+    left: -15px;
     z-index: 999999;
 }
 
@@ -1694,6 +1694,7 @@ section {
     letter-spacing: 1px;
     line-height: 33px;
     font-family: Arial;
+    margin-left: -5px;
 }
 
 a.footer-logo img {
@@ -1956,6 +1957,9 @@ a.footer-logo img {
     .mobile-nav-toggle {
         right: 5px;
     }
+    .breadcrumbs h1 {
+        font-size: 17px;
+    }
 }
 
 @media (max-width: 420px) {
@@ -1994,6 +1998,9 @@ a.footer-logo img {
     .section-title h2 .view-more {
         line-height: 50px;
         margin-right: 10px;
+    }
+    .hotline-bar {
+        display: none;
     }
 }
 

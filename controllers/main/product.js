@@ -141,7 +141,7 @@ var GetNewProduct = async function(req, res, next) {
             $match: options,
         },
         {
-            $sort: { datecreate: 1 }
+            $sort: { datecreate: -1 }
         },
         {
             $lookup: {
@@ -256,7 +256,7 @@ router.post('/filter-product', async(req, res, next) => {
             $match: options,
         },
         {
-            $sort: { datecreate: 1 }
+            $sort: { datecreate: -1 }
         },
         // {
         //     $lookup: {

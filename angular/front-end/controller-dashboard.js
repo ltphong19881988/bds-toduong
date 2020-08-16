@@ -21,6 +21,9 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
     let params = {
         method: 'POST',
         url: '/get-slider',
+        data: {
+            webname: 'bds-totnhat'
+        }
     }
     submitFrontEnd(params, $http, function(res) {
         $scope.sliders = res;
@@ -60,7 +63,7 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
                     // console.log(jQuery('.testimonial-img').eq(0).width());
                     jQuery("#" + $scope.key + " .testimonials-carousel").owlCarousel({
                         autoplay: true,
-                        dots: true,
+                        dots: false,
                         loop: true,
                         responsive: {
                             0: {

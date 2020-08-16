@@ -77,6 +77,9 @@ router.post('/site-config', async(req, res, next) => {
 
 router.post('/get-slider', async(req, res, next) => {
     var options = { postType: 2 };
+    if (req.body.webname) {
+        options['videoTitle'] = req.body.webname;
+    }
     Post.aggregate([
         { $match: options },
         { $sort: { datecreate: -1 } }
