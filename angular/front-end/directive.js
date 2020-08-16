@@ -334,3 +334,37 @@ app.directive('autoScroll', function($document, $timeout, $location) {
         }
     };
 });
+
+app.directive('orientimgload', function() {
+    return {
+        link: function(scope, element, attrs) {
+            element.bind("load", function(e) {
+                var parent = jQuery(this).parent();
+                var a = parent.height() / parent.width();
+                var b = jQuery(this).height() / jQuery(this).width();
+                if (a > b) {
+                    jQuery(this).css("width", "auto");
+                    jQuery(this).css("height", "100%");
+                } else {
+                    jQuery(this).css("width", "100%");
+                    jQuery(this).css("height", "auto");
+                }
+            });
+
+            angular.element(window).on('resize', function() {
+                element.each(function(e) {
+                    var parent = jQuery(this).parent();
+                    var a = parent.height() / parent.width();
+                    var b = jQuery(this).height() / jQuery(this).width();
+                    if (a > b) {
+                        jQuery(this).css("width", "auto");
+                        jQuery(this).css("height", "100%");
+                    } else {
+                        jQuery(this).css("width", "100%");
+                        jQuery(this).css("height", "auto");
+                    }
+                })
+            })
+        }
+    }
+});

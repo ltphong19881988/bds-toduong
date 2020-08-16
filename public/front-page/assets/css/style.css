@@ -1074,7 +1074,7 @@ section {
 
 .testimonials .testimonial-item {
     box-sizing: content-box;
-    text-align: center;
+    text-align: justify;
     min-height: 320px;
 }
 
@@ -1113,10 +1113,11 @@ section {
 }
 
 .testimonials .testimonial-item .nd {
-    font-style: italic;
-    /* margin: 0 15px 15px 15px; */
+    /* font-style: italic; */
+    font-size: 15px;
+    text-transform: uppercase;
     width: 95%;
-    padding: 10px;
+    padding: 5px;
     background: #fff;
     position: relative;
     margin: 0 auto;
@@ -1131,6 +1132,7 @@ section {
 .testimonials .testimonial-item .nd .info {
     position: absolute;
     bottom: 5px;
+    left: 10px;
 }
 
 .testimonials .testimonial-item .nd .info span {

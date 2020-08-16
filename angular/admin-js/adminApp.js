@@ -41,8 +41,19 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
             controller: "categoryCtrl"
         })
         .when("/post", {
-            templateUrl: "/tpls/admin/post.html",
+            templateUrl: "/tpls/admin/post/index.html",
             controller: "postCtrl"
+        })
+        .when("/post/:posttId/:action", {
+            templateUrl: "/tpls/admin/post/post-details.html",
+            controller: "postCtrl",
+            params: {
+                posttId: { squash: true, value: null },
+            }
+        })
+        .when("/project", {
+            templateUrl: "/tpls/admin/project/index.html",
+            controller: "projectCtrl"
         })
         .when("/sector", {
             templateUrl: "/tpls/admin/sector/index.html",
@@ -63,11 +74,8 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
                 productId: { squash: true, value: null },
             }
         })
-        .when("/service", {
-            templateUrl: "/tpls/admin/service/index.html",
-            controller: "serviceCtrl"
-        })
-        .when("/site-config", {
+
+    .when("/site-config", {
             templateUrl: "/tpls/admin/site-config.html",
             controller: "siteConfigCtrl"
         })

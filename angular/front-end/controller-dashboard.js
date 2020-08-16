@@ -11,6 +11,27 @@ var GetHotProduct = function(filter, $http, callback) {
     })
 }
 
+var fixImgSlider = function($scope) {
+    jQuery("#" + $scope.key + ' .testimonial-img').each(function() {
+        var width = jQuery(this).width();
+        if (width <= 250) {
+            jQuery(this).height(width);
+        } else {
+            jQuery(this).height(250);
+        }
+        var a = jQuery(this).height() / jQuery(this).width();
+        var img = jQuery(this).find('img').eq(0);
+        var b = img.height() / img.width();
+        if (a > b) {
+            img.css("width", "auto");
+            img.css("height", "100%");
+        } else {
+            img.css("width", "100%");
+            img.css("height", "auto");
+        }
+    })
+}
+
 app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
     var listener = $rootScope.$watch('pageTitle', function() {
         if ($rootScope.pageTitle != undefined) {
@@ -65,6 +86,12 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
                         autoplay: true,
                         dots: false,
                         loop: true,
+                        onInitialized: function(e) {
+                            fixImgSlider($scope);
+                        },
+                        onRefreshed: function(e) {
+                            fixImgSlider($scope);
+                        },
                         responsive: {
                             0: {
                                 items: 1
@@ -75,25 +102,10 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
                             992: {
                                 items: 3
                             },
-                            1200: {
-                                items: 4
-                            }
                         }
                     });
+
                 }, 100);
-
-                setTimeout(function() {
-
-                    jQuery("#" + $scope.key + ' .testimonial-img').each(function() {
-                        var width = jQuery(this).width();
-                        jQuery(this).height(width);
-                        if (jQuery(this).find('img').eq(0).height() < jQuery(this).find('img').eq(0).width()) {
-                            jQuery(this).find('img').eq(0).css("width", "auto");
-                            jQuery(this).find('img').eq(0).css("height", "100%");
-                        }
-                        // console.log(jQuery(this).find('img').eq(0).width(), jQuery(this).find('img').eq(0).height());
-                    })
-                }, 500);
 
             })
         },
@@ -117,19 +129,19 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
             GetHotProduct(filter_ban, $http, function(res) {
                 $scope.newProducts = res;
                 // console.log($scope.newProducts);
-                setTimeout(function() {
-                    jQuery("#" + $scope.key + ' .pi-img').each(function() {
-                        var a = jQuery(this).height() / jQuery(this).width();
-                        var b = jQuery(this).find('img').eq(0).height() / jQuery(this).find('img').eq(0).width();
-                        if (a > b) {
-                            jQuery(this).find('img').eq(0).css("width", "auto");
-                            jQuery(this).find('img').eq(0).css("height", "100%");
-                        } else {
-                            jQuery(this).find('img').eq(0).css("width", "100%");
-                            jQuery(this).find('img').eq(0).css("height", "auto");
-                        }
-                    })
-                }, 100);
+                // setTimeout(function() {
+                //     jQuery("#" + $scope.key + ' .pi-img').each(function() {
+                //         var a = jQuery(this).height() / jQuery(this).width();
+                //         var b = jQuery(this).find('img').eq(0).height() / jQuery(this).find('img').eq(0).width();
+                //         if (a > b) {
+                //             jQuery(this).find('img').eq(0).css("width", "auto");
+                //             jQuery(this).find('img').eq(0).css("height", "100%");
+                //         } else {
+                //             jQuery(this).find('img').eq(0).css("width", "100%");
+                //             jQuery(this).find('img').eq(0).css("height", "auto");
+                //         }
+                //     })
+                // }, 100);
 
             })
         },

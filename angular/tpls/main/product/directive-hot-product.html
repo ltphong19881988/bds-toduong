@@ -15,7 +15,7 @@
 
                     <p>
                         <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                        <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><span ng-bind="item.productContent.title"></span></a>
+                        <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><span ng-bind="item.productContent.title | titleFilter"></span></a>
                         <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                     </p>
                     <div class="info">
@@ -26,7 +26,9 @@
                     </div>
                 </div>
                 <div class="testimonial-img">
-                    <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}"></a>
+                    <!-- <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"> -->
+                    <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                    <!-- </a> -->
                 </div>
 
             </div>

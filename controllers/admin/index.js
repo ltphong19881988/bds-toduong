@@ -72,7 +72,7 @@ router.use('/category', require('./category'));
 router.use('/sector', require('./sector'));
 router.use('/product-type', require('./product-type'));
 router.use('/product', require('./product'));
-// router.use('/xcode', require('./xcode'));
+router.use('/post', require('./post'));
 // router.use('/member', require('./member'));
 // router.use('/transactions', require('./transactions'));
 // router.use('/promotion', require('./promotion'));

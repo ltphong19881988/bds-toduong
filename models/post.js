@@ -17,7 +17,7 @@ var Post = new Schema({
     salePrice: Number,
     pictures: [],
     tags: [],
-
+    visible: { type: Number, default: 1 }, // 1 is visible
 });
 var Post = mongoose.model('Post', Post);
 module.exports = Post;

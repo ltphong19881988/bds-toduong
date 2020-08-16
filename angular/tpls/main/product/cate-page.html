@@ -18,7 +18,7 @@
                 <div class=" col-md-12 ">
                     <div class="product-item" ng-repeat="item in products">
                         <div class="pi-img">
-                            <img ng-src="{{item.pictures[0]}}" />
+                            <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
                         </div>
                         <div class="pi-content">
                             <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">

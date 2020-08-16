@@ -126,6 +126,14 @@ app.filter("productPrice", ['$sce', function($sce) {
     }
 }]);
 
+app.filter("titleFilter", ['$sce', function($sce) {
+    return function(htmlCode) {
+        console.log(htmlCode, htmlCode.length);
+        if (htmlCode.length > 120) htmlCode = htmlCode.substr(0, 120) + ' **';
+        return htmlCode;
+    }
+}]);
+
 
 function httpInterceptors() {
     return {
