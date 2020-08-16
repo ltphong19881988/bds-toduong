@@ -7,8 +7,8 @@
             <li class="drop-down" ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
                 <a href="/nha-dat-ban-{{item.link}}">{{item.title}}</a>
                 <ul ng-if="item.title.toLowerCase().indexOf('quận') != -1">
-                    <li><a href="/ban-nha-mat-tien-{{item.link}}">Nhà mặt tiền</a></li>
-                    <li><a href="/ban-nha-trong-hem-{{item.link}}">Nhà trong hẻm</a></li>
+                    <li><a href="/ban-nha-mat-tien-{{item.link}}">Nhà đất mặt tiền</a></li>
+                    <li><a href="/ban-nha-trong-hem-{{item.link}}">Nhà đất trong hẻm</a></li>
                 </ul>
                 <ul ng-if="item.title.toLowerCase().indexOf('quận') == -1">
                     <li><a href="/nha-dat-ban-{{item.link}}">Bán kho xưởng</a></li>

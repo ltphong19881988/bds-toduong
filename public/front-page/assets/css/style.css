@@ -2000,7 +2000,7 @@ a.footer-logo img {
         margin-right: 10px;
     }
     .hotline-bar {
-        display: none;
+        display: block;
     }
 }
 
