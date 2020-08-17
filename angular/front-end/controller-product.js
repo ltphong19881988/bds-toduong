@@ -28,19 +28,25 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         $scope.product = res;
 
         setTimeout(function() {
-            jQuery('#big_img').on('load', function() {
-                console.log('cac', jQuery('#big_img').width(), jQuery('#big_img').height());
-            });
-            console.log(jQuery('#big_img').attr('ng-src'));
             $(".gallery .owl-carousel").owlCarousel({
                 autoPlay: false,
-                navigation: true,
-                autoHeight: true,
+                nav: true,
+                navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+                // autoHeight: true,
                 autoWidth: true,
                 margin: 10,
-                transitionStyle: "fade"
+                items: 1,
+                onInitialized: function(e) {
+                    // jQuery('.owl-nav.disabled').removeClass('disabled');
+                },
             });
         }, 300);
     })
+
+    $scope.viewFullImg = function(src) {
+        // console.log(src);
+        $('body').append(`<div class="search-overly"><img src="` + src + `" style="width:98%; margin-left: 1%; margin-top: 60px;" /></div>`);
+        $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
+    }
 
 });

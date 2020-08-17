@@ -129,7 +129,7 @@
 
     $(document).on('click', '.popup-overlay-close', function(e) {
         $(this).remove();
-        $('.search-overly').remove();
+        $('.search-overly').html('').remove();
         $('.search_popup').removeClass('popup_active');
     })
 

@@ -32,7 +32,7 @@ var fixImgSlider = function($scope) {
     })
 }
 
-app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
+app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
     var listener = $rootScope.$watch('pageTitle', function() {
         if ($rootScope.pageTitle != undefined) {
             $rootScope.pageTitle += " - Trang chủ";
@@ -56,7 +56,7 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http) {
                 items: 1
             });
         }, 100);
-        console.log('slider ', res);
+        // console.log('slider ', res);
     })
 
 }).directive('hotProduct', function() {
