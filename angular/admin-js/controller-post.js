@@ -36,13 +36,13 @@ var shiftCategoryArr = function(arr, $scope, $compile) {
 
 }
 
-var initCategory = function($scope, $compile, $http) {
+var initCategoryNews = function($scope, $compile, $http) {
     let params = {
         method: 'GET',
         url: '/admin/category/all-category?idCategoryType=5f166a011ab04a0e50f990b5',
     }
     submitBackend(params, $http, function(res) {
-        // console.log('all category', res);
+        console.log('all category', res);
         $scope.arrCategory = res;
         var html = `
             <div class="node" parent="null" >
@@ -55,9 +55,9 @@ var initCategory = function($scope, $compile, $http) {
     });
 }
 
-var tonggleCategory = function() {
-    if (!isVisible(jQuery("#formAddProduct div#listCategory")[0])) jQuery("#formAddProduct div#listCategory").show();
-    else jQuery("#formAddProduct div#listCategory").hide();
+var tonggleCategoryPost = function() {
+    if (!isVisible(jQuery("#formAddPost div#listCategory")[0])) jQuery("#formAddPost div#listCategory").show();
+    else jQuery("#formAddPost div#listCategory").hide();
 }
 
 var loopSelectedCategory = function(idParent, arrCate) {
@@ -122,82 +122,8 @@ var setAutoComplete = function(key, $scope, $compile, $http) {
     }
 }
 
-var initProvince = function($scope, $compile, $http) {
-    let params = {
-        method: 'POST',
-        url: '/admin/sector/filter-all',
-        data: {
-            type: "1"
-        }
-    }
-    submitBackend(params, $http, function(provinces) {
-        $scope.listProvinces = provinces;
-        // setAutoComplete('province', $scope, $compile, $http);
-    });
-}
-
-var initDistrict = function($scope, $compile, $http) {
-    if (!$scope.productItem.province) return;
-    let params = {
-        method: 'POST',
-        url: '/admin/sector/filter-all',
-        data: {
-            type: "2",
-            provinceID: $scope.productItem.province.ID
-        }
-    }
-    submitBackend(params, $http, function(districts) {
-        // setAutoComplete('district', $scope, $compile, $http);
-        $scope.listDistricts = districts;
-    });
-}
-
-var initWard = function($scope, $compile, $http) {
-    if (!$scope.productItem.province || !$scope.productItem.district) return;
-    let params = {
-        method: 'POST',
-        url: '/admin/sector/filter-all',
-        data: {
-            type: "3",
-            provinceID: $scope.productItem.province.ID,
-            districtID: $scope.productItem.district.ID,
-        }
-    }
-    submitBackend(params, $http, function(wards) {
-        // setAutoComplete('district', $scope, $compile, $http);
-        $scope.listWards = wards;
-    });
-}
-
-var initDirecton = function($scope, $compile, $http) {
-    let params = {
-        method: 'POST',
-        url: '/admin/product-type/filter-all',
-        data: {
-            groupType: "huong-nha",
-        }
-    }
-    submitBackend(params, $http, function(directions) {
-        $scope.listDirections = directions;
-    });
-}
-
-var initProductType = function($scope, $compile, $http) {
-    let params = {
-        method: 'POST',
-        url: '/admin/product-type/filter-all',
-        data: {
-            groupType: "productType",
-        }
-    }
-    submitBackend(params, $http, function(productType) {
-        // console.log('productType', productType);
-        $scope.productTypeHot = productType.filter(type => type.value == 'hot')[0];
-    });
-}
-
 adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $routeParams, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
-    console.log($routeParams);
+    // console.log($routeParams);
     $scope.rootFolderPath = 'public/uploads/media/';
     $scope.acviteFolderPath = 'public/uploads/media/';
     $scope.checkSelect = 0;
@@ -205,54 +131,40 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
     $scope.listImgsPost = [];
     if ($routeParams.action == "add") $rootScope.pageTitle = "Admin - Thêm mới bài viết";
     if ($routeParams.action == "edit") {
-        $rootScope.pageTitle = "Admin - Sửa sản phẩm";
+        $rootScope.pageTitle = "Admin - Sửa bài viết";
         let params = {
             method: 'GET',
-            url: '/admin/product/item/' + $routeParams.productId,
+            url: '/admin/post/item/' + $routeParams.posttId,
         }
         submitBackend(params, $http, function(res) {
-            console.log('get product item', res);
-            if (res.productType && res.productType.filter(type => type.value == 'hot').length > 0) {
-                $scope.checkHot = true;
-            }
+            console.log('get post item', res);
             if (res.visible == 1) $scope.checkVisible = true;
-            $scope.productItem = res;
-            if (res && res.productContent) {
-                CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
-                CKEDITOR.instances['editorContent'].setData(res.productContent.content);
+            $scope.postItem = res;
+            if (res && res.postContent) {
+                CKEDITOR.instances['editorDescription'].setData(res.postContent.descriptions);
+                CKEDITOR.instances['editorContent'].setData(res.postContent.content);
             }
-            loopSelectedCategory(null, $scope.productItem.category);
-            if ($scope.productItem.province)
-                $scope['selectedprovince'] = $scope.productItem.province.title;
-            if ($scope.productItem.district)
-                $scope['selecteddistrict'] = $scope.productItem.district.title;
-            if ($scope.productItem.ward)
-                $scope['selectedward'] = $scope.productItem.ward.title;
-            if ($scope.productItem.direction)
-                $scope['selecteddirection'] = $scope.productItem.direction.name;
-            jQuery('#productCategory option').text(res.category.name);
-            jQuery('#productCategory option').val(res.category._id);
+            loopSelectedCategory(null, $scope.postItem.category);
+            // jQuery('#productCategory option').text(res.category.name);
+            // jQuery('#productCategory option').val(res.category._id);
         });
     }
 
     if ($routeParams.action != null) {
-        $scope.productItem = {};
-        // initCategory($scope, $compile, $http);
-        initProvince($scope, $compile, $http);
-        initDirecton($scope, $compile, $http);
-        initProductType($scope, $compile, $http);
+        $scope.postItem = {};
+        initCategoryNews($scope, $compile, $http)
 
         uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
-        // remove pic from products img
-        selectedImgRemoveListener("#productImgs .divImg .fa-close");
+        // remove pic from post img
+        selectedImgRemoveListener("#postImgs .divImg .fa-close");
 
-        $scope.addImgsToPost = function() {
-            jQuery("#uploadModal button.close").click();
-            appendSelectedImg(jQuery("#productImgs"), jQuery("#uploadProcess ul li img"), 'name');
+        $scope.addImgsToPostNews = function() {
+            jQuery("#galleryModal button.close").click();
+            appendSelectedImg(jQuery("#postImgs"), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
         }
 
         // Click to Open modal get pics from gallery
-        jQuery(document).on("click", "#formAddProduct button[data-target='#galleryModal']", function() {
+        jQuery(document).on("click", "#formAddPost button[data-target='#galleryModal']", function() {
             selectChangeListener($scope, $http, $compile);
         })
 
@@ -268,7 +180,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                 };
                 // console.log($scope.listGallerySelect);
             })
-            // Event submit selected images from gallery and add images to main add product content
+            // Event submit selected images from gallery and add images to main add post content
 
         jQuery(document).on("click", "#galleryModal .btn-primary", function() {
 
@@ -283,47 +195,22 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
 
         $scope.showHideCategory = function() {
             // jQuery("div.node")[0] is type HTML Element, jQuery("div.node").eq(0) is not T__T
-            tonggleCategory();
+            tonggleCategoryPost();
         }
 
         $scope.selectCategory = function(e) {
-            $scope.productItem["idCategory"] = [jQuery(e.currentTarget).data('id')];
+            $scope.postItem["idCategory"] = [jQuery(e.currentTarget).data('id')];
             jQuery('input[name="idCategory"]').val(jQuery(e.currentTarget).text());
 
             var listParent = jQuery(e.currentTarget).parents('.node');
             for (var i = 0; i < listParent.length; i++) {
                 if (listParent.eq(i).attr('parent') != "null")
-                    $scope.productItem["idCategory"].push(listParent.eq(i).attr('parent'));
+                    $scope.postItem["idCategory"].push(listParent.eq(i).attr('parent'));
             }
-            tonggleCategory();
-            console.log($scope.productItem);
+            tonggleCategoryPost();
+            console.log($scope.postItem);
         }
 
-        $scope.selectedProvince = function($event, item) {
-            $scope['selectedprovince'] = item.title;
-            $scope['showlistprovince'] = false;
-            $scope.productItem['province'] = item;
-            initDistrict($scope, $compile, $http);
-        }
-
-        $scope.selectedDistrict = function($event, item) {
-            $scope['selecteddistrict'] = item.title;
-            $scope['showlistdistrict'] = false;
-            $scope.productItem['district'] = item;
-            initWard($scope, $compile, $http);
-        }
-
-        $scope.selectedWard = function($event, item) {
-            $scope['selectedward'] = item.title;
-            $scope['showlistward'] = false;
-            $scope.productItem['ward'] = item;
-        }
-
-        $scope.selectedDirection = function($event, item) {
-            $scope['selecteddirection'] = item.name;
-            $scope['showlistdirection'] = false;
-            $scope.productItem['direction'] = item;
-        }
 
     } else {
         $scope.dtOptions = DTOptionsBuilder.newOptions()
@@ -360,21 +247,10 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
 
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('_id').withTitle('ID').notVisible(),
-            // DTColumnBuilder.newColumn('nameKey').withTitle('Mã'),
-            DTColumnBuilder.newColumn('productType').withTitle('Loại BDS').renderWith(function(data, type, full) {
-                var text = '';
-                full.productType.forEach(element => {
-                    text += element.value + ', '
-                });
-                return text;
-            }),
+            DTColumnBuilder.newColumn('nameKey').withTitle('Mã'),
             DTColumnBuilder.newColumn('title').withTitle('Tiêu đề').withOption('width', '35%'),
             DTColumnBuilder.newColumn('categoryName').withTitle('Danh mục'),
-            // DTColumnBuilder.newColumn('datecreate').withTitle('Ngày tạo').renderWith(function(data, type, full) {
-            //     return moment(new Date(full.datecreate)).format('DD-MM-YYYY');
-            // }),
-            DTColumnBuilder.newColumn('province.title').withTitle('Tỉnh thành'),
-            DTColumnBuilder.newColumn('district.title').withTitle('Quận huyện'),
+            DTColumnBuilder.newColumn('visible').withTitle('Ẩn/Hiện'),
             DTColumnBuilder.newColumn('datecreate').withTitle('Ngày đăng').renderWith(function(data, type, full) {
                 return moment(new Date(full.datecreate)).format('DD-MM-YYYY');
             }),
@@ -388,81 +264,43 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
 
     $scope.goToEdit = function(id) {
         // console.log(id);
-        window.location = '/admin/product/' + id + '/edit';
+        window.location = '/admin/post/' + id + '/edit';
     }
 
-    $scope.submitProduct = function(e) {
-        $scope.productItem.idCategoryType = "5f166a011ab04a0e50f990b3";
-        $scope.productItem.productContent.descriptions = CKEDITOR.instances['editorDescription'].getData();
-        $scope.productItem.productContent.content = CKEDITOR.instances['editorContent'].getData();
-        var ImgElements = jQuery("#productImgs .divImg img");
-        if ($scope.checkHot && $scope.checkHot == true) {
-            $scope.productItem.productType = [$scope.productTypeHot];
-        } else {
-            $scope.productItem.productType = [];
-        }
+    $scope.submitPost = function(e) {
+        $scope.postItem.idCategoryType = "5f166a011ab04a0e50f990b5";
+        $scope.postItem.postContent.descriptions = CKEDITOR.instances['editorDescription'].getData();
+        $scope.postItem.postContent.content = CKEDITOR.instances['editorContent'].getData();
+        var ImgElements = jQuery("#postImgs .divImg img");
+
         if ($scope.checkVisible && $scope.checkVisible == true) {
-            $scope.productItem.visible = 1;
+            $scope.postItem.visible = 1;
         } else {
-            $scope.productItem.visible = 0;
+            $scope.postItem.visible = 0;
         }
 
-        $scope.productItem.pictures = [];
+        $scope.postItem.pictures = [];
         for (var i = 0; i < ImgElements.length; i++) {
             console.log(ImgElements.eq(i).attr('src'));
-            $scope.productItem.pictures.push(ImgElements.eq(i).attr('src'));
+            $scope.postItem.pictures.push(ImgElements.eq(i).attr('src'));
         }
         let params = {
             method: 'POST',
-            url: '/admin/product/item',
+            url: '/admin/post/item',
             data: {
-                product: $scope.productItem
+                post: $scope.postItem
             }
         }
         if ($routeParams.action == "edit") params.method = "PUT";
-        // console.log(params);
+        console.log(params);
         submitBackend(params, $http, function(res) {
             alert(res.mes);
             if (res.status == true) {
                 window.location.reload();
             }
             console.log(res);
-            // setAutoComplete('province', $scope, $compile, $http);
         });
         e.preventDefault();
     }
 
-
-
-
-
-}).directive('autoComplete', function($timeout) {
-    return function(scope, iElement, iAttrs) {
-        // console.log(iElement, iAttrs);
-        var key = iAttrs.key;
-        var $scope = scope;
-
-        jQuery('.showlist-' + key).clickOff(function() {
-            // console.log(document.activeElement, iElement);
-            if ($scope['showlist' + key] == true && document.activeElement != iElement.context) {
-                // console.log('vo', $scope.listProvinces);
-                if ($scope.productItem[key] && $scope.productItem[key].title)
-                    $scope['selected' + key] = $scope.productItem[key].title;
-                else if ($scope.productItem[key] && $scope.productItem[key].name)
-                    $scope['selected' + key] = $scope.productItem[key].name;
-                else
-                    $scope['selected' + key] = undefined;
-                $scope['showlist' + key] = false;
-                $scope.$apply();
-            }
-        });
-
-        iElement.bind("keypress", function(e) {
-            scope['showlist' + key] = true;
-        });
-        iElement.bind("focus", function(e) {
-            scope['showlist' + key] = true;
-
-        })
-    };
 });

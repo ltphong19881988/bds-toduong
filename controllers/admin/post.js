@@ -41,9 +41,9 @@ var change_alias = function(alias) {
     return str;
 }
 
-router.post('/all-product', async function(req, res, next) {
+router.post('/all-post', async function(req, res, next) {
     // console.log(req.body.aoData);
-    var result = await Product.FilterDataTableProduct(req.body.aoData);
+    var result = await Post.FilterDataTablePost(req.body.aoData);
     var records = {
         'draw': req.body.aoData[0].value,
         'recordsTotal': 2,
@@ -55,51 +55,31 @@ router.post('/all-product', async function(req, res, next) {
 
 router.post("/item", async(req, res, next) => {
     console.log(req.body);
-    if (!req.body.product.productContent.title) {
+    if (!req.body.post.postContent.title) {
         return res.json({ status: false, mes: "Vui lòng nhập tiêu đề ( tên ) sản phẩm" })
     }
-    if (!req.body.product.idCategory) {
+    if (!req.body.post.idCategory) {
         return res.json({ status: false, mes: "Vui lòng chọn danh mục sản phẩm" })
     }
-    if (!req.body.product.normalPrice) {
-        return res.json({ status: false, mes: "Vui lòng nhập giá thường " })
-    }
-    if (!req.body.product.acreage) {
-        return res.json({ status: false, mes: "Vui lòng nhập diện tích " })
-    }
-    // if (!req.body.product.province) {
-    //     return res.json({ status: false, mes: "Vui lòng nhập tỉnh thành" })
-    // }
-    // if (!req.body.product.district) {
-    //     return res.json({ status: false, mes: "Vui lòng nhập quận huyện " })
-    // }
 
-    var product = {
+    var post = {
         nameKey: '',
-        idCategory: req.body.product.idCategory,
-        idCategoryType: req.body.product.idCategoryType,
-        normalPrice: req.body.product.normalPrice,
-        salePrice: req.body.product.salePrice,
-        pictures: req.body.product.pictures,
-        tags: req.body.product.tags,
-        acreage: req.body.product.acreage,
-        alleyWidth: req.body.product.alleyWidth,
-        direction: req.body.product.direction,
-        province: req.body.product.province,
-        district: req.body.product.district,
-        ward: req.body.product.ward,
-        productType: req.body.product.productType
+        idCategory: req.body.post.idCategory,
+        idCategoryType: req.body.post.idCategoryType,
+        pictures: req.body.post.pictures,
+        tags: req.body.post.tags,
+        postType: 1
     };
-    var product_content = {
-        title: req.body.product.productContent.title,
+    var post_content = {
+        title: req.body.post.postContent.title,
         // oneLvlUrl: { type: String, unique: true },
-        descriptions: req.body.product.productContent.descriptions,
-        content: req.body.product.productContent.content,
-        seoKeyWord: req.body.product.productContent.seoKeyWord,
-        seoDescriptions: req.body.product.productContent.seoDescriptions,
+        descriptions: req.body.post.postContent.descriptions,
+        content: req.body.post.postContent.content,
+        seoKeyWord: req.body.post.postContent.seoKeyWord,
+        seoDescriptions: req.body.post.postContent.seoDescriptions,
     };
 
-    var result = await Product.AddProduct(product, product_content);
+    var result = await Post.AddPost(post, post_content);
     res.json(result);
 
 })
@@ -109,7 +89,7 @@ router.get("/item/:id", function(req, res, next) {
     let options = {
         _id: id,
     }
-    Product.aggregate([{
+    Post.aggregate([{
             $match: options,
         },
         {
@@ -123,15 +103,15 @@ router.get("/item/:id", function(req, res, next) {
         // { $unwind: "$category" },
         {
             $lookup: {
-                from: "productcontents",
+                from: "postcontents",
                 localField: "_id",
-                foreignField: "idProduct",
-                as: "productContent"
+                foreignField: "idPost",
+                as: "postContent"
             },
         },
-        { $unwind: "$productContent" },
+        { $unwind: "$postContent" },
     ], function(err, result) {
-        // console.log('get product', result);
+        // console.log('get post', result);
         if (result.length > 0)
             res.json(result[0]);
         else res.json(null);
@@ -139,11 +119,11 @@ router.get("/item/:id", function(req, res, next) {
 })
 
 router.put("/item", async(req, res, next) => {
-    let product = req.body.product;
-    let productContent = product.productContent;
-    delete product.category;
-    delete product.productContent;
-    var result = await Product.UpdateProduct(product, productContent);
+    let post = req.body.post;
+    let postContent = post.postContent;
+    delete post.category;
+    delete post.postContent;
+    var result = await Post.UpdatePost(post, postContent);
     res.json(result);
 })
 

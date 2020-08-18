@@ -373,6 +373,7 @@ var selectChangeListener = function($scope, $http, $compile) {
 }
 
 var appendSelectedImg = function(divAppend, listImgs, field) {
+    // console.log(divAppend, listImgs, field);
     for (var i = 0; i < listImgs.length; i++) {
         divAppend.append(`
             <div class='divImg'>

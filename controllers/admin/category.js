@@ -42,8 +42,18 @@ var getCookies = function(cookie, cname) {
     return "";
 }
 
-// router.get('/abc-xyz', function(req, res, next){
-//     CategoryType.Init();
+// router.get('/abc', function(req, res, next) {
+//     Post.aggregate([{
+//             $match: { postType: 0 },
+//         }
+
+//     ], function(err, result) {
+//         result.forEach(element => {
+//             Post.findOneAndUpdate({ _id: element._id }, { visible: 1, idCategory: [element.idCategory] }, function(err, doc) {
+//                 console.log('update', err, doc);
+//             })
+//         });
+//     })
 // })
 
 router.get("/all-category", function(req, res, next) {
@@ -85,7 +95,7 @@ router.post("/add-category", async(req, res, next) => {
     var checkNameKey = Tool.change_alias(req.body.name);
     if (req.body.idParent && req.body.idParent != '') {
         idParent = mongoose.Types.ObjectId(req.body.idParent);
-        var postCateParent = await Post.findOne({ idCategory: idParent, postType: 0 }).exec();
+        var postCateParent = await Post.findOne({ idCategory: [idParent], postType: 0 }).exec();
         console.log('postCateParent', postCateParent);
         var postContentCateParent = await PostContent.findOne({ idPost: postCateParent._id }).exec();
         console.log('postContentCateParent', postContentCateParent);
@@ -103,7 +113,7 @@ router.post("/add-category", async(req, res, next) => {
             // console.log(err, results);
             var post = {
                 // nameKey: nameKey,
-                idCategory: results._id,
+                idCategory: [results._id],
                 idCategoryType: results.idCategoryType,
                 postType: 0,
                 pictures: [],
@@ -134,7 +144,7 @@ router.get("/:id", function(req, res, next) {
             });
         },
         getPost: function(callback) {
-            Post.findOne({ idCategory: id, postType: 0 }).exec(function(err, post) {
+            Post.findOne({ idCategory: [id], postType: 0 }).exec(function(err, post) {
                 if (post) {
                     PostContent.findOne({ idPost: post._id }).exec(function(err, postContent) {
                         callback(null, { post: post, postContent: postContent });
@@ -167,11 +177,11 @@ router.put("/:id", function(req, res, next) {
             })
         },
     }, function(err, results) {
-        Post.findOne({ idCategory: id, postType: 0 }).exec(function(err, doc) {
+        Post.findOne({ idCategory: [id], postType: 0 }).exec(function(err, doc) {
             if (!doc) {
                 var item = {
                     // nameKey: results.getNameKey,
-                    idCategory: id,
+                    idCategory: [id],
                     idCategoryType: results.updateCate.idCategoryType,
                     postType: 0,
                     pictures: req.body.imgs,
@@ -215,7 +225,7 @@ router.delete("/:id", function(req, res, next) {
             res.json({ status: false, mes: "Lỗi : không tìm thấy id category" });
             return;
         } else {
-            Post.findOne({ idCategory: cate._id, postType: 0 }).exec(function(err, post) {
+            Post.findOne({ idCategory: [cate._id], postType: 0 }).exec(function(err, post) {
                 if (post) {
                     PostContent.deleteMany({ idPost: post._id }).exec(function() {});
                     Post.deleteOne({ _id: post._id }).exec(function(err, result) {
