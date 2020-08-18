@@ -26,6 +26,17 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         console.log('details', res);
         $rootScope.pageTitle += res.productContent.title;
         $scope.product = res;
+        $scope.nearestCate = JSON.parse(localStorage.getItem('nearestCate'));
+        // $scope.nearestCate = res.category.reduce(function(prev, current) {
+        //     if (+current.priority > +prev.priority) {
+        //         return current;
+        //     } else {
+        //         return prev;
+        //     }
+        // });
+        $scope.nearestLocal = res.province;
+        if (res.district && res.district.link) $scope.nearestLocal = res.district;
+        if (res.ward && res.ward.link) $scope.nearestLocal = res.ward;
 
         setTimeout(function() {
             $(".gallery .owl-carousel").owlCarousel({

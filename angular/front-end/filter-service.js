@@ -37,19 +37,23 @@ app.filter("trust", ['$sce', function($sce) {
 }]);
 
 app.filter("productPrice", ['$sce', function($sce) {
+
     return function(htmlCode) {
-        var chuoi = htmlCode.toString();
-        var pre = "";
-        if (chuoi.length > 6 && chuoi.length < 10) {
-            htmlCode = htmlCode / 1000000;
-            pre = " triệu";
+        if (htmlCode) {
+            var chuoi = htmlCode.toString();
+            var pre = "";
+            if (chuoi.length > 6 && chuoi.length < 10) {
+                htmlCode = htmlCode / 1000000;
+                pre = " triệu";
+            }
+            if (chuoi.length >= 10) {
+                htmlCode = htmlCode / 1000000000;
+                pre = " tỷ";
+            }
+            // console.log(htmlCode.toString().length);
+            return htmlCode.toString().replace('.', ',') + pre;
         }
-        if (chuoi.length >= 10) {
-            htmlCode = htmlCode / 1000000000;
-            pre = " tỷ";
-        }
-        // console.log(htmlCode.toString().length);
-        return htmlCode + pre;
+
     }
 }]);
 

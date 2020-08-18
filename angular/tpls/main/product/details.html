@@ -54,25 +54,27 @@
                 </div>
                 <span class="diadiem-title mar-right-15">
                         <b>Khu vực:</b> 
-                        <a href="#">Bán căn hộ chung cư tại La Casta Văn Phú</a> - 
+                        <a href="/{{nearestCate.oneLvlUrl}}-{{nearestLocal.link}}">{{nearestCate.title}} tại {{nearestLocal.title}}</a> - 
                         <span ng-bind="product.district.title"></span> - <span ng-bind="product.province.title"></span>
                 </span>
                 <br/>
-                <span style="display: inline-block;"><span class="gia-title mar-right-15">
+                <div style="display: inline-block;">
+                    <span class="gia-title mar-right-15">
                             <b>
                             Giá:</b>
                             <strong>
-                            28 triệu/m²
-                            </strong>
-                            </span>
-                <span class="gia-title">
+                                {{product.normalPrice | productPrice}}<span ng-if="product.idCategory.indexOf('5f336b87ae16cf08a0b6ee6d') != -1">/tháng</span>
+                    </strong>
+                    </span>
+                    <span class="gia-title">
                             <b>
                             Diện tích:</b>
                             <strong>
                                 <span ng-bind="product.acreage"></span> m²
-                </strong>
-                </span>
-                </span>
+                    </strong>
+                    </span>
+                </div>
+
                 </br/><br/>
                 <div class="pr-mota">
                     Thông tin chi tiết

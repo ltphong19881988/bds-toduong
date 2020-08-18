@@ -54,6 +54,8 @@ app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $ro
         } else {
             $scope.cate = res.cate;
             $scope.cateContent = res.cateContent;
+            localStorage.setItem('nearestCate', JSON.stringify(res.cateContent));
+
             $scope.searchForm["idCategory"] = $scope.cate._id;
             jQuery('input[name="idCategory"]').val($scope.cateContent.title);
 
