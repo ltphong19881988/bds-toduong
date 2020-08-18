@@ -55,7 +55,13 @@
     </li>
     <li><a href="#services">Dự án</a></li>
     <li><a href="#portfolio">Hợp tác</a></li>
-    <li><a href="#team">Tin tức - Kinh nghiệm</a></li>
+    <li class="drop-down"><a href="javascript:void(0)">Tin tức - Kinh nghiệm</a>
+        <ul>
+            <li ng-repeat="item in menuNews" ng-if="item.priority == 2">
+                <a href="/news/{{item.catePostContent.oneLvlUrl}}">{{item.name}}</a>
+            </li>
+        </ul>
+    </li>
     <li><a href="#contact">Phong thủy</a></li>
 
 </ul>

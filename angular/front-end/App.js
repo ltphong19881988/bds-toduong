@@ -28,27 +28,37 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: "/tpls/main/index.html",
             controller: "dashboardCtrl"
         })
-        .when("/:page[-pr]", {
-            templateUrl: "/tpls/main/product/details.html",
-            controller: "productDetailCtrl"
+        .when("/news", {
+            templateUrl: "/tpls/main/post/cate-page.html",
+            controller: "postCategoryCtrl"
         })
-        .when("/:page[-nr]", {
-            templateUrl: "/tpls/main/product/details.html",
-            controller: "postDetailCtrl"
+        .when("/news/:page", {
+            templateUrl: "/tpls/main/post/cate-page.html",
+            controller: "postCategoryCtrl"
         })
-        .when("/portfolio", {
-            templateUrl: "/tpls/main/portfolio.html",
-            controller: "portfolioCtrl"
-        })
+        // .when("/news/:page[-nr]", {
+        //     templateUrl: "/tpls/main/post/details.html",
+        //     controller: "postDetailCtrl"
+        // })
         .when("/:page", {
             templateUrl: "/tpls/main/product/cate-page.html",
             controller: "categoryCtrl"
         })
+        .when("/:page[-pr]", {
+            templateUrl: "/tpls/main/product/details.html",
+            controller: "productDetailCtrl"
+        })
 
 
-    $route.routes['/:page'].regexp = /([a-z0-9-]{1,999})/;
+    // $route.routes['/news/:page'].regexp = /^\/(?:news\/(\d+))$/;
+    $route.routes['/news/:page'].regexp = /^\/(?:news)\/([a-z0-9-]{0,999})/;
+    // $route.routes['/news/:page[-nr]'].regexp = /([a-z0-9-])-nr[0-9]/;
+
+    // $route.routes['/:page'].regexp = /^((?!news).)*$/;
+    $route.routes['/:page'].regexp = /^\/(?!news|.*-pr)([a-z0-9-]{1,999})/;
     $route.routes['/:page[-pr]'].regexp = /([a-z0-9-]{1,999})-pr[0-9]/;
-    $route.routes['/:page[-nr]'].regexp = /([a-z0-9-])-nr[0-9]/;
+
+
 
     $locationProvider.html5Mode({
         enabled: true,
@@ -62,8 +72,8 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 // Run a function for init the app ( before content loaded )
 app.run(function($rootScope, $window, $http, $location) {
     console.log('app run');
-    InitSiteConfig($rootScope, $http);
-    InitMenuDistricts($rootScope, $http);
+    InitWebsite($rootScope, $http);
+    // InitMenuDistricts($rootScope, $http);
 
     $rootScope.$on('$viewContentLoaded', function() {
         //do your will
@@ -108,20 +118,28 @@ function httpInterceptors() {
     };
 }
 
-var InitSiteConfig = function($rootScope, $http) {
+var InitWebsite = function($rootScope, $http) {
     let params = {
         method: 'POST',
-        url: '/site-config',
-        data: {}
+        url: '/init-web',
+        data: {
+            menuDistrict: {
+                type: "2",
+                provinceID: 4
+            },
+        }
     }
 
     submitFrontEnd(params, $http, function(res) {
-        // console.log('site-config', res);
-        $rootScope['pageTitle'] = res.filter(x => x.key == 'web-name-totnhat')[0].value;
-        $rootScope['webPhone'] = res.filter(x => x.key == 'phone-number-totnhat')[0];
-        $rootScope['webEmail'] = res.filter(x => x.key == 'email-totnhat')[0];
-        $rootScope['webAddress'] = res.filter(x => x.key == 'web-address-totnhat')[0];
-        $rootScope['logoInfo'] = res.filter(x => x.key == 'logo-info-totnhat')[0];
+        console.log('init website', res);
+        $rootScope.menuDistrict = res.menuDistrict;
+        $rootScope.menuNews = res.listNews;
+
+        $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-totnhat')[0].value;
+        $rootScope['webPhone'] = res.siteConfig.filter(x => x.key == 'phone-number-totnhat')[0];
+        $rootScope['webEmail'] = res.siteConfig.filter(x => x.key == 'email-totnhat')[0];
+        $rootScope['webAddress'] = res.siteConfig.filter(x => x.key == 'web-address-totnhat')[0];
+        $rootScope['logoInfo'] = res.siteConfig.filter(x => x.key == 'logo-info-totnhat')[0];
     });
 }
 
@@ -130,8 +148,10 @@ var InitMenuDistricts = function($rootScope, $http) {
         method: 'POST',
         url: '/sector/filter-all',
         data: {
-            type: "2",
-            provinceID: 4
+            menuDistrict: {
+                type: "2",
+                provinceID: 4
+            },
         }
     }
     submitFrontEnd(params, $http, function(districts) {

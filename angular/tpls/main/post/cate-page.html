@@ -1,0 +1,206 @@
+<!-- ======= Breadcrumbs Section ======= -->
+<section class="breadcrumbs">
+    <div class="container">
+
+        <h1> <span ng-bind="cateContent.title"></span> <span ng-if="local">tại <span ng-bind="local.title"></span> </span>
+        </h1>
+
+    </div>
+</section>
+<!-- Breadcrumbs Section -->
+
+<!-- ======= Portfolio Details Section ======= -->
+
+<div class="container">
+    <div class="row">
+        <div id="main-left" class="" style="min-height: 500px; margin-bottom: 50px;">
+            <div class="row">
+                <div class=" col-md-12 ">
+                    <div class="product-item" ng-repeat="item in products">
+                        <div class="pi-img">
+                            <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                        </div>
+                        <div class="pi-content">
+                            <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
+                                {{item.productContent.title}}
+                            </a>
+                            <div class="wrap">
+                                <span class="wrap-price">
+                        <span class="price"> <i class="fa fa-tags" aria-hidden="true"></i>: <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong></span>
+                                <span class="area"> Diện tích: <strong class="product-area">{{item.acreage}} m²</strong></span></span>
+                                <span class="contact floatright"></span> <br/>
+                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i>: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <div id="main-right" class="">
+            <div id="product_search">
+                <div class="box-title">
+                    Tìm theo khu vực
+                </div>
+                <div class="box-content">
+                    <ul class="count-product">
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-1-tp-ho-chi-minh">
+                        Quận 1</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-2-tp-ho-chi-minh">
+                        Quận 2</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-3-tp-ho-chi-minh">
+                        Quận 3</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-4-tp-ho-chi-minh">
+                        Quận 4</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-5-tp-ho-chi-minh">
+                        Quận 5</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-6-tp-ho-chi-minh">
+                        Quận 6</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-7-tp-ho-chi-minh">
+                        Quận 7</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-8-tp-ho-chi-minh">
+                        Quận 8</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-9-tp-ho-chi-minh">
+                        Quận 9</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-10-tp-ho-chi-minh">
+                        Quận 10</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-11-tp-ho-chi-minh">
+                        Quận 11</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-12-tp-ho-chi-minh">
+                        Quận 12</a></h4>
+                        </li>
+                        <li>
+                            <h4 class="normal"><a href="/{{cateContent.oneLvlUrl}}-quan-binh-tan-tp-ho-chi-minh">
+                        Quận Bình Tân</a></h4>
+                        </li>
+
+
+                    </ul>
+                    <!-- <search-form-directive></search-form-directive> -->
+
+
+                    <!-- <div class="search-item">
+                        <input class="form-control" placeholder="nhập từ khóa tìm kiếm" />
+
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Loại tin rao" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Loại nhà đất" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Thành phố" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Quận huyện" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Phường xã" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Diện tích" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Mức giá" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <input type="text" placeholder="Hướng nhà" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                        <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                            <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                {{item.title}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-item">
+                        <button class="btn btn-primary btn-sm" style="background: #02518c;">Tìm kiếm</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- End Portfolio Details Section -->
+
+<script>
+    if (window.innerWidth < 992) {
+        jQuery('#main-left').attr("class", "col-md-12");
+        jQuery('#main-right').css("display", "none");
+    } else {
+        jQuery('#main-left').attr("class", "col-lg-9");
+        jQuery('#main-right').css("display", "block");
+        jQuery('#main-right').attr("class", "col-lg-3");
+    }
+</script>

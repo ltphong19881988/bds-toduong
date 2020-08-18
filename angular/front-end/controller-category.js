@@ -27,7 +27,7 @@ app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $ro
     // console.log('location', location.pathname, location.pathname.replace(/\//g, ''));
     var extOpts = {};
     var path = location.pathname.replace('/', '').split('/');
-    console.log('path', path, $scope.seoDescription);
+    console.log('path', path, $routeParams);
     var url = path[0];
 
     let params = {

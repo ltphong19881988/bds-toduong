@@ -252,7 +252,7 @@ app.directive('searchFormDirective', function() {
                     console.log('search form', res);
                     if (res.status == false) alert(res.mes);
                     else {
-                        window.location = res.urlRedirect;
+                        window.location = '/' + res.urlRedirect;
                     }
                     // setAutoComplete('province', $scope, $compile, $http);
                 });

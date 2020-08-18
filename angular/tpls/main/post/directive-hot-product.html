@@ -1,0 +1,55 @@
+<section id="{{key}}" class="testimonials about">
+    <div class="container">
+
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2> {{title}} <a class="view-more" href="{{linkViewmore}}">Xem thêm</a> </h2>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="owl-carousel testimonials-carousel">
+
+            <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100" ng-repeat="item in productHot">
+                <div class="nd">
+                    <!-- <h3>
+                        <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><span ng-bind="item.productContent.title"></span></a>
+                    </h3> -->
+
+                    <p>
+                        <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                        <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><span ng-bind="item.productContent.title | titleFilter"></span></a>
+                        <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <div class="info">
+                        <h4>
+                            <i class="fa fa-tags" aria-hidden="true"></i> : <span ng-bind="item.normalPrice | productPrice" style="margin-right: 10px; font-family: Arial, Helvetica, sans-serif;"></span> Diện tích : <span ng-bind="item.acreage"></span>                            <span>m²</span>
+                        </h4>
+                        <h4><i class="fa fa-map-marker" aria-hidden="true"></i> : <span ng-bind="item.district.title"></span>, <span ng-bind="item.province.title"></span></h4>
+                    </div>
+                </div>
+                <div class="testimonial-img">
+                    <!-- <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"> -->
+                    <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                    <!-- </a> -->
+                </div>
+
+            </div>
+
+
+            <!-- <div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="nd">
+                    <p>
+                        <i class="bx bxs-quote-alt-left quote-icon-left"></i> Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis
+                        <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    <div class="info">
+                        <h4><i class="fa fa-tags" aria-hidden="true"></i> : .... Diện tích : </h4>
+                        <h4><i class="fa fa-map-marker" aria-hidden="true"></i> : </h4>
+                    </div>
+                </div>
+                <div class="testimonial-img">
+                    <img src="front-page/assets/img/testimonials/testimonials-3.jpg" alt="">
+                </div>
+
+            </div> -->
+        </div>
+    </div>
+</section>

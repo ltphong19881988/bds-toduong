@@ -6,13 +6,16 @@ const speakeasy = require('speakeasy');
 // var async = require('async');
 var router = express.Router();
 var User = require('../../models/user');
-var Group = require('../../models/group');
+const ListProvince = require('../../models/listprovince');
+const Category = require('../../models/category');
 const Post = require('../../models/post');
+const PostContent = require('../../models/post-content');
 const AppConfig = require('../../models/app-config');
 const mw = require('../../models/helpers/my-middleware');
 var MyFunction = require('../../models/helpers/my-function');
 
 var config = require('../../config'); // get our config file
+const { resolve } = require('path');
 var secretKey = config.secret;
 
 router.use('/product', require('./product'));
@@ -63,6 +66,110 @@ function abc() {
 //     //     res.json(result);
 //     // })
 // })
+
+router.post('/init-web', async(req, res, next) => {
+    // console.log(req.body);
+    var menuDistrict = req.body.menuDistrict;
+    var options = {};
+    var siteConfig = new Promise(resolve => {
+        AppConfig.aggregate([
+            { $match: options },
+            { $sort: { datecreate: -1 } }
+        ]).exec(function(err, result) {
+            resolve(result);
+        });
+    });
+
+    options = {};
+    if (menuDistrict.type) {
+        options['type'] = menuDistrict.type.toString();
+    }
+    if (menuDistrict.provinceID) {
+        options['provinceID'] = parseInt(menuDistrict.provinceID);
+    }
+    if (menuDistrict.districtID) {
+        options['districtID'] = parseInt(menuDistrict.districtID);
+    }
+    if (menuDistrict.list) {
+        options['ID'] = { $in: menuDistrict.list };
+    }
+    var listDistrict = new Promise(resolve => {
+        ListProvince.aggregate([
+            { $match: options },
+            {
+                $project: {
+                    // _id: 1,
+                    ID: 1,
+                    // stt: 1,
+                    title: 1,
+                    // code: 1,
+                    type: 1,
+                    link: 1,
+                    provinceID: { $ifNull: ["$provinceID", -1] },
+                    provinceTitle: { $ifNull: ["$provinceTitle", ""] },
+                    provinceTitleLink: { $ifNull: ["$provinceTitleLink", ""] },
+                    districtID: { $ifNull: ["$districtID", -1] },
+                    districtTitle: { $ifNull: ["$districtTitle", ""] },
+                    districtTitleLink: { $ifNull: ["$districtTitleLink", ""] },
+                    priority: 1,
+                }
+            },
+            { $sort: { type: 1, priority: 1, ID: 1 } }
+        ]).exec(function(err, result) {
+            resolve(result);
+        });
+    });
+
+    var listNews = new Promise(resolve => {
+        Category.aggregate([{
+                $match: { idCategoryType: mongoose.Types.ObjectId('5f166a011ab04a0e50f990b5') },
+            },
+            {
+                $sort: { idParent: 1, priority: 1 }
+            },
+            {
+                $lookup: {
+                    from: "posts",
+                    localField: "_id",
+                    foreignField: "idCategory",
+                    as: "catePost"
+                },
+            },
+            { $unwind: "$catePost" },
+            {
+                $match: { 'catePost.postType': 0 },
+            },
+            {
+                $lookup: {
+                    from: "postcontents",
+                    localField: "catePost._id",
+                    foreignField: "idPost",
+                    as: "catePostContent"
+                },
+            },
+            { $unwind: "$catePostContent" },
+            // {
+            //     $project: {
+            //         "categoryType": 1,
+            //         "_id": 1,
+            //         "name": 1,
+            //         "priority": 1,
+            //         "idParent": 1,
+            //         "datecreate": 1,
+            //     }
+            // },
+
+        ], function(err, result) {
+            console.log('cate', result);
+            resolve(result);
+        })
+    })
+
+    Promise.all([siteConfig, listDistrict, listNews]).then(values => {
+        res.json({ siteConfig: values[0], menuDistrict: values[1], listNews: values[2] });
+    })
+
+})
 
 router.post('/site-config', async(req, res, next) => {
     console.log(req.body);
