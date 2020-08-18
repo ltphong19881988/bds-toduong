@@ -239,8 +239,20 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                 '1': { html: 'input', regexp: true, type: 'text', time: 500 },
                 '2': { html: 'input', regexp: true, type: 'text', time: 500 },
                 // '3': { html: 'input', regexp: true, type: 'datetime' },
+                '4': {
+                    html: 'select',
+                    values: [{
+                        value: '',
+                        label: 'Tất cả'
+                    }, {
+                        value: 0,
+                        label: 'Ẩn'
+                    }, {
+                        value: 1,
+                        label: 'Hiện'
+                    }]
+                },
                 '3': { html: 'input', regexp: true, type: 'text', time: 1000 },
-                '4': { html: 'input', regexp: true, type: 'text', time: 1000 },
                 '5': { html: 'input', regexp: true, type: 'text', time: 1000 },
                 '6': { html: 'input', regexp: true, type: 'text' },
             });
@@ -250,7 +262,10 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             DTColumnBuilder.newColumn('nameKey').withTitle('Mã'),
             DTColumnBuilder.newColumn('title').withTitle('Tiêu đề').withOption('width', '35%'),
             DTColumnBuilder.newColumn('categoryName').withTitle('Danh mục'),
-            DTColumnBuilder.newColumn('visible').withTitle('Ẩn/Hiện'),
+            DTColumnBuilder.newColumn('visible').withTitle('Ẩn/Hiện').renderWith(function(data, type, full) {
+                if (full.visible == 1) return '<div style="text-align:center;"><i class="fa fa-check-circle green" aria-hidden="true"></i></div>';
+                if (full.visible == 0) return '<div style="text-align:center;"><i class="fa fa-minus-circle red" aria-hidden="true"></i></div>';
+            }),
             DTColumnBuilder.newColumn('datecreate').withTitle('Ngày đăng').renderWith(function(data, type, full) {
                 return moment(new Date(full.datecreate)).format('DD-MM-YYYY');
             }),

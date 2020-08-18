@@ -71,6 +71,33 @@ module.exports.AddPost = async function(post, post_content) {
 
 }
 
+module.exports.UpdatePost = async function(post, post_content) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        post_content['oneLvlUrl'] = Tool.change_alias(post_content.title);
+        const opts = { session, new: true };
+        await Post.findOneAndUpdate({ _id: post._id }, post, opts);
+        await PostContent.findOneAndUpdate({ _id: post_content._id }, post_content, opts);
+
+        await session.commitTransaction();
+        session.endSession();
+        return { status: true, mes: 'Update bài viết thành công' };
+    } catch (error) {
+        console.log(error);
+        await session.abortTransaction();
+        session.endSession();
+        return { status: false, mes: error.message };
+        throw error; // Rethrow so calling function sees error
+    }
+
+
+    // Tweet.findOne({}, {}, { sort: { 'created_at': 1 } }, function(err, post) {
+    //     cb(null, post.created_at.getTime());
+    // });
+}
+
 module.exports.FilterDataTablePost = async function(data) {
     console.log(data);
     let options = { postType: 1 };
@@ -128,6 +155,7 @@ module.exports.FilterDataTablePost = async function(data) {
                 "nameKey": 1,
                 "pictures": 1,
                 "datecreate": 1,
+                visible: 1,
                 "title": '$postContent.title',
             }
         },

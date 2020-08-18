@@ -176,7 +176,7 @@ module.exports.FilterDataTableProduct = async function(data) {
             $match: options,
         },
         {
-            $sort: { datecreate: 1 }
+            $sort: { datecreate: -1 }
         },
         {
             $lookup: {
@@ -209,6 +209,7 @@ module.exports.FilterDataTableProduct = async function(data) {
                 "province": 1,
                 "district": 1,
                 "ward": 1,
+                visible: 1,
             }
         },
     ], function(err, result) {
