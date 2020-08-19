@@ -36,10 +36,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: "/tpls/main/post/cate-page.html",
             controller: "postCategoryCtrl"
         })
-        // .when("/news/:page[-nr]", {
-        //     templateUrl: "/tpls/main/post/details.html",
-        //     controller: "postDetailCtrl"
-        // })
+        .when("/news/:page[-nr]", {
+            templateUrl: "/tpls/main/post/details.html",
+            controller: "postDetailCtrl"
+        })
         .when("/:page", {
             templateUrl: "/tpls/main/product/cate-page.html",
             controller: "categoryCtrl"
@@ -52,7 +52,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 
     // $route.routes['/news/:page'].regexp = /^\/(?:news\/(\d+))$/;
     $route.routes['/news/:page'].regexp = /^\/(?:news)\/([a-z0-9-]{0,999})/;
-    // $route.routes['/news/:page[-nr]'].regexp = /([a-z0-9-])-nr[0-9]/;
+    $route.routes['/news/:page[-nr]'].regexp = /^\/(?:news)\/([a-z0-9-])-nr[0-9]/;
 
     // $route.routes['/:page'].regexp = /^((?!news).)*$/;
     $route.routes['/:page'].regexp = /^\/(?!news|.*-pr)([a-z0-9-]{1,999})/;

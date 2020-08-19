@@ -108,14 +108,7 @@ module.exports.FilterDataTablePost = async function(data) {
     if (hot && hot.search.value) {
         options['productType'] = { $elemMatch: { value: hot.search.value } };
     }
-    var province = data[1].value.filter(item => item.data == 'province.title')[0];
-    if (province && province.search.value) {
-        options['province.title'] = { $regex: province.search.value, $options: 'ui' };
-    }
-    var district = data[1].value.filter(item => item.data == 'district.title')[0];
-    if (district && district.search.value) {
-        options['district.title'] = { $regex: district.search.value, $options: 'ui' };
-    }
+
     var categoryName = data[1].value.filter(item => item.data == 'categoryName')[0];
     if (categoryName && categoryName.search.value) {
         var listCate = await filterCategoryFromName(categoryName.search.value);
@@ -128,7 +121,7 @@ module.exports.FilterDataTablePost = async function(data) {
             $match: options,
         },
         {
-            $sort: { datecreate: 1 }
+            $sort: { datecreate: -1 }
         },
         {
             $lookup: {

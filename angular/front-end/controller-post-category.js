@@ -25,6 +25,26 @@ app.controller("postCategoryCtrl", function($rootScope, $scope, $http, $compile,
     $rootScope.pageTitle = "Bất động sản Tô Dương - Category";
 
     console.log('location', location.pathname, '$routeParams', $routeParams);
+    if (location.pathname == "/news") location.href = "/news/tin-tuc";
 
+    let params = {
+        method: 'POST',
+        url: '/post/filter-url',
+        data: {
+            url: $routeParams.page,
+        }
+    };
+
+    submitFrontEnd(params, $http, function(res) {
+        console.log(res);
+        if (res.status) {
+            $scope.listPosts = res.listPost;
+            $scope.postCategory = res.category;
+        } else {
+
+        }
+
+
+    })
 
 });

@@ -1747,6 +1747,13 @@ a.footer-logo img {
     padding-right: 10px;
 }
 
+.product-item .des {
+    margin-top: 5px;
+    color: #333;
+    overflow: hidden;
+    max-height: 90px;
+}
+
 .product-item .product-price,
 .product-item .product-area,
 .product-item .product-city-dist {

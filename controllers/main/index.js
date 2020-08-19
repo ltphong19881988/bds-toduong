@@ -20,7 +20,7 @@ var secretKey = config.secret;
 
 router.use('/product', require('./product'));
 router.use('/sector', require('./sector'));
-// router.use('/wallet', require('./wallet'));
+router.use('/post', require('./post'));
 // router.use('/investment', require('./investment'));
 // router.use('/user', require('./user'));
 
@@ -160,7 +160,7 @@ router.post('/init-web', async(req, res, next) => {
             // },
 
         ], function(err, result) {
-            console.log('cate', result);
+            // console.log('cate', result);
             resolve(result);
         })
     })
