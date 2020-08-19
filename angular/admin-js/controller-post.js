@@ -141,8 +141,13 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             if (res.visible == 1) $scope.checkVisible = true;
             $scope.postItem = res;
             if (res && res.postContent) {
-                CKEDITOR.instances['editorDescription'].setData(res.postContent.descriptions);
-                CKEDITOR.instances['editorContent'].setData(res.postContent.content);
+                setTimeout(() => {
+                    CKEDITOR.instances['editorContent'].setData(res.postContent.content);
+                    CKEDITOR.instances['editorDescription'].setData(res.postContent.descriptions);
+                }, 100);
+
+
+
             }
             loopSelectedCategory(null, $scope.postItem.category);
             // jQuery('#productCategory option').text(res.category.name);
@@ -208,6 +213,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                     $scope.postItem["idCategory"].push(listParent.eq(i).attr('parent'));
             }
             tonggleCategoryPost();
+            // console.log('content', CKEDITOR.instances['editorContent'].getData());
             console.log($scope.postItem);
         }
 

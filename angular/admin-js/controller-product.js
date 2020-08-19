@@ -218,8 +218,11 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             if (res.visible == 1) $scope.checkVisible = true;
             $scope.productItem = res;
             if (res && res.productContent) {
-                CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
-                CKEDITOR.instances['editorContent'].setData(res.productContent.content);
+                setTimeout(() => {
+                    CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
+                    CKEDITOR.instances['editorContent'].setData(res.productContent.content);
+                }, 100);
+
             }
             loopSelectedCategory(null, $scope.productItem.category);
             if ($scope.productItem.province)

@@ -193,20 +193,10 @@ router.post('/filter-url', async(req, res, next) => {
     // console.log(options);
     Product.aggregate([{
             $match: options,
-
         },
         {
             $sort: { productType: -1, datecreate: -1 }
         },
-        // {
-        //     $lookup: {
-        //         from: "categories",
-        //         localField: "idCategory",
-        //         foreignField: "_id",
-        //         as: "category"
-        //     },
-        // },
-        // { $unwind: "$category" },
         {
             $lookup: {
                 from: "productcontents",
@@ -216,17 +206,8 @@ router.post('/filter-url', async(req, res, next) => {
             },
         },
         { $unwind: "$productContent" },
-        // {
-        //     $project: {
-        //         // "categoryName": '$category.name',
-        //         "nameKey": 1,
-        //         "normalPrice": 1,
-        //         "pictures": 1,
-        //         "salePrice": 1,
-        //         "datecreate": 1,
-        //         "title": '$postContent.title',
-        //     }
-        // },
+        { "$skip": skip },
+        { "$limit": skip + limit },
     ], function(err, result) {
         // console.log('result', result);
         res.json({ cateContent, cate, local, result, redirect: false });

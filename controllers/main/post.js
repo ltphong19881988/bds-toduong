@@ -165,13 +165,13 @@ router.get('/name-key/:key', async(req, res, next) => {
         },
         {
             $lookup: {
-                from: "productcontents",
+                from: "postcontents",
                 localField: "_id",
-                foreignField: "idProduct",
-                as: "productContent"
+                foreignField: "idPost",
+                as: "postContent"
             },
         },
-        { $unwind: "$productContent" },
+        { $unwind: "$postContent" },
         // {
         //     $project: {
         //         // "categoryName": '$category.name',
