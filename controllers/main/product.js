@@ -161,7 +161,7 @@ var GetNewProduct = async function(req, res, next) {
 }
 
 router.post('/filter-url', async(req, res, next) => {
-    console.log(req.body.url);
+    console.log(req.body);
     if (req.body.url.indexOf('san-pham-moi') == 0) {
         return GetNewProduct(req, res, next);
     }
@@ -191,6 +191,15 @@ router.post('/filter-url', async(req, res, next) => {
         ]
     }
     // console.log(options);
+
+    var skip = 0;
+    var limit = 10;
+    if (req.body.skip && typeof req.body.skip === 'number' && (req.body.skip % 1) === 0) {
+        skip = parseInt(req.body.skip);
+    }
+    if (req.body.limit && typeof req.body.limit === 'number' && (req.body.limit % 1) === 0) {
+        limit = parseInt(req.body.limit);
+    }
     Product.aggregate([{
             $match: options,
         },
@@ -206,11 +215,19 @@ router.post('/filter-url', async(req, res, next) => {
             },
         },
         { $unwind: "$productContent" },
-        { "$skip": skip },
-        { "$limit": skip + limit },
-    ], function(err, result) {
+        {
+            $facet: {
+                paginatedResults: [{ $skip: skip }, { $limit: limit }],
+                totalCount: [{
+                    $count: 'count'
+                }]
+            }
+        }
+    ], function(err, results) {
         // console.log('result', result);
-        res.json({ cateContent, cate, local, result, redirect: false });
+        var totalCount = 0;
+        if (results[0].totalCount[0]) totalCount = results[0].totalCount[0].count;
+        res.json({ cateContent, cate, local, results: results[0].paginatedResults, totalCount, redirect: false });
     });
 
 })

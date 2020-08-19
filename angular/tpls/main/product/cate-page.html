@@ -1,10 +1,11 @@
 <!-- ======= Breadcrumbs Section ======= -->
 <section class="breadcrumbs">
     <div class="container">
-
         <h1> <span ng-bind="cateContent.title"></span> <span ng-if="local">tại <span ng-bind="local.title"></span> </span>
         </h1>
-
+        <div ng-if="pagination.totalItems > 0" class="datetime" style="font-size: 13px;">
+            Tìm thấy <span ng-bind="pagination.totalItems"></span> sản phẩm phù hợp
+        </div>
     </div>
 </section>
 <!-- Breadcrumbs Section -->
@@ -13,10 +14,16 @@
 
 <div class="container">
     <div class="row">
-        <div id="main-left" class="" style="min-height: 500px; margin-bottom: 50px;">
+        <div id="main-left" class="">
+            <!-- <ul ng-if="pagination.totalItems > 0" uib-pagination boundary-links="true" total-items="pagination.totalItems" ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                last-text="&raquo;" ng-change="pageChanged()"></ul> -->
+
             <div class="row">
                 <div class=" col-md-12 ">
-                    <div class="product-item" ng-repeat="item in products">
+                    <div ng-if="!products || products.length == 0">
+                        <p ng-bind="loadingText"></p>
+                    </div>
+                    <div ng-if="products && products.length > 0" class="product-item" ng-repeat="item in products">
                         <div class="pi-img">
                             <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
                         </div>
@@ -39,7 +46,8 @@
 
 
             </div>
-
+            <ul ng-if="pagination.totalItems > 0" uib-pagination boundary-links="true" total-items="pagination.totalItems" ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                last-text="&raquo;" max-size="3" boundary-link-numbers="true" rotate="false" ng-change="pageChanged()"></ul>
         </div>
         <div id="main-right" class="">
             <div id="product_search">

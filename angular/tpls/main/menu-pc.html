@@ -21,27 +21,27 @@
 
     <li class="drop-down"><a href="/nha-dat-cho-thue">Nhà đất cho thuê</a>
         <ul>
-            <li class="drop-down"><a href="#">Cho thuê nhà mặt tiền</a>
+            <li class="drop-down"><a href="/cho-thue-nha-mat-tien">Cho thuê nhà mặt tiền</a>
                 <ul>
                     <li ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
-                        <a href="#">{{item.title}}</a>
+                        <a href="/cho-thue-nha-mat-tien-{{item.link}}">{{item.title}}</a>
                     </li>
                     <li>
                         <a href="#">Khu vực khác</a>
                     </li>
                 </ul>
             </li>
-            <li class="drop-down"><a href="#">Cho thuê căn hộ</a>
+            <li class="drop-down"><a href="/cho-thue-can-ho-chung-cu">Cho thuê căn hộ</a>
                 <ul>
                     <li ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
-                        <a href="#">{{item.title}}</a>
+                        <a href="/cho-thue-can-ho-chung-cu-{{item.link}}">{{item.title}}</a>
                     </li>
                     <li>
                         <a href="#">Khu vực khác</a>
                     </li>
                 </ul>
             </li>
-            <li class="drop-down"><a href="#">Bất động sản cho thuê khác</a>
+            <li class="drop-down"><a href="/bat-dong-san-cho-thue-khac">Bất động sản cho thuê khác</a>
                 <ul>
                     <li ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
                         <a href="#">{{item.title}}</a>

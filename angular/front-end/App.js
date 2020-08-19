@@ -8,11 +8,24 @@ if (curtoken) {
     });
 }
 
+angular.module("uib/template/pagination/pagination.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("uib/template/pagination/pagination.html",
+        "<li role=\"menuitem\" ng-if=\"::boundaryLinks\" ng-class=\"{disabled: noPrevious()||ngDisabled}\" class=\"page-item pagination-first\"><a href ng-click=\"selectPage(1, $event)\" ng-disabled=\"noPrevious()||ngDisabled\" class='page-link' uib-tabindex-toggle>{{::getText('first')}}</a></li>\n" +
+        "<li role=\"menuitem\" ng-if=\"::directionLinks\" ng-class=\"{disabled: noPrevious()||ngDisabled}\" class=\"page-item pagination-prev\"><a href ng-click=\"selectPage(page - 1, $event)\" ng-disabled=\"noPrevious()||ngDisabled\" class='page-link' uib-tabindex-toggle>{{::getText('previous')}}</a></li>\n" +
+        "<li role=\"menuitem\" ng-repeat=\"page in pages track by $index\" ng-class=\"{active: page.active,disabled: ngDisabled&&!page.active}\" class=\"page-item pagination-page\"><a href ng-click=\"selectPage(page.number, $event)\" class='page-link' ng-disabled=\"ngDisabled&&!page.active\" uib-tabindex-toggle>{{page.text}}</a></li>\n" +
+        "<li role=\"menuitem\" ng-if=\"::directionLinks\" ng-class=\"{disabled: noNext()||ngDisabled}\" class=\"page-item pagination-next\"><a href ng-click=\"selectPage(page + 1, $event)\" class='page-link' ng-disabled=\"noNext()||ngDisabled\" uib-tabindex-toggle>{{::getText('next')}}</a></li>\n" +
+        "<li role=\"menuitem\" ng-if=\"::boundaryLinks\" ng-class=\"{disabled: noNext()||ngDisabled}\" class=\"page-item pagination-last\"><a href ng-click=\"selectPage(totalPages, $event)\" class='page-link' ng-disabled=\"noNext()||ngDisabled\" uib-tabindex-toggle>{{::getText('last')}}</a></li>\n" +
+        "");
+}]);
+
 
 var app = angular.module('frontApp', [
     'ngRoute',
     // 'ngMaterial',
     'ui.router',
+    // 'ngAnimate',
+    // 'ngSanitize',
+    'ui.bootstrap',
     // 'datatables',
     // 'datatables.buttons',
     // 'datatables.light-columnfilter',
@@ -93,7 +106,7 @@ app.run(function($rootScope, $window, $http, $location) {
     });
 
     angular.element($window).on('load', function() {
-        console.log('angular window load, scroll to top');
+        // console.log('angular window load, scroll to top');
         angular.element('html, body').animate({
             scrollTop: 0
         }, 1500, 'easeInOutExpo');
@@ -131,7 +144,7 @@ var InitWebsite = function($rootScope, $http) {
     }
 
     submitFrontEnd(params, $http, function(res) {
-        console.log('init website', res);
+        // console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
 

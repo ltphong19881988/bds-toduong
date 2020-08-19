@@ -1708,6 +1708,15 @@ a.footer-logo img {
     /* width: 100%; */
 }
 
+#main-left {
+    min-height: 500px;
+    margin-bottom: 50px;
+}
+
+#main-left .pagination {
+    float: right;
+}
+
 .product-item {
     border: 1px solid #c3b7b7;
     position: relative;
@@ -1803,11 +1812,6 @@ a.footer-logo img {
 
 #product_detail .pr-content {
     font-size: 14px;
-}
-
-#product_detail img {
-    max-width: 80%;
-    margin: 0 auto;
 }
 
 .link-nha-dat a {
