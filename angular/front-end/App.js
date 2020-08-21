@@ -33,9 +33,16 @@ var app = angular.module('frontApp', [
 ]);
 app.factory("interceptors", [httpInterceptors]);
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
+    var listLink = ['gioi-thieu', 'chinh-sach-bao-mat', 'dieu-khoan-su-dung'];
     var $route = $routeProvider.$get[$routeProvider.$get.length - 1]({ $on: function() {} });
     // console.log('route', $route);
     $httpProvider.interceptors.push('interceptors');
+    listLink.forEach(element => {
+        $routeProvider.when("/" + element, {
+            templateUrl: "/tpls/main/one-content.html",
+            controller: "oneContentCtrl"
+        })
+    });
     $routeProvider
         .when("/", {
             templateUrl: "/tpls/main/index.html",
@@ -44,6 +51,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         .when("/news", {
             templateUrl: "/tpls/main/post/cate-page.html",
             controller: "postCategoryCtrl"
+        })
+        .when("/du-an", {
+            templateUrl: "/tpls/main/project/cate-page.html",
+            controller: "projectCtrl"
         })
         .when("/news/:page", {
             templateUrl: "/tpls/main/post/cate-page.html",
@@ -60,7 +71,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         .when("/:page[-pr]", {
             templateUrl: "/tpls/main/product/details.html",
             controller: "productDetailCtrl"
-        })
+        });
 
 
     // $route.routes['/news/:page'].regexp = /^\/(?:news\/(\d+))$/;
@@ -144,7 +155,7 @@ var InitWebsite = function($rootScope, $http) {
     }
 
     submitFrontEnd(params, $http, function(res) {
-        // console.log('init website', res);
+        console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
 

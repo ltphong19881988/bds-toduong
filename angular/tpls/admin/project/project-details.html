@@ -24,16 +24,16 @@
         margin-bottom: 10px;
     }
     
-    #formAddProduct div#listCategory {
+    #formAddProject div#listCategory {
         z-index: 9999;
         border: 1px solid #009188;
         height: 200px;
         overflow-y: scroll;
     }
     
-    #formAddProduct div.node {}
+    #formAddProject div.node {}
     
-    #formAddProduct .node>ul {
+    #formAddProject .node>ul {
         margin-left: 20px;
     }
     
@@ -41,23 +41,23 @@
         margin-left: 0px;
     }
     
-    #formAddProduct .node ul li>div>div {
+    #formAddProject .node ul li>div>div {
         margin: 5px 0px;
         display: inline-block;
     }
     
-    #formAddProduct .node ul li {
+    #formAddProject .node ul li {
         border-bottom: 1px solid #e1e1e1;
         position: relative;
         /* height: 35px; */
         line-height: 35px;
         padding-left: 10px;
     }
-    /* #formAddProduct .node ul li:last-child {
+    /* #formAddProject .node ul li:last-child {
         border-bottom: none;
     } */
     
-    #formAddProduct .node>div>div>ul {
+    #formAddProject .node>div>div>ul {
         margin-left: 0px;
     }
 </style>
@@ -67,66 +67,63 @@
         <aside class="profile-nav alt">
             <section class="card">
                 <div class="card-header bg-dark">
-                    <strong class="card-title text-light">Thêm sản phẩm</strong>
+                    <strong class="card-title text-light">Thêm mới dự án</strong>
                 </div>
-                <form id="formAddProduct" class="form-horizontal" ng-submit="submitProduct($event)">
+                <form id="formAddProject" class="form-horizontal" ng-submit="submitProject($event)">
                     <div class="card-body">
                         <div class="row form-group">
-                            <div class="col col-md-3"><label class=" form-control-label">Tên sản phẩm : </label></div>
+                            <div class="col col-md-3"><label class=" form-control-label">Tên dự án : </label></div>
                             <div class="col-12 col-md-9">
-                                <input type="text" name="title" placeholder="" class="form-control" ng-model="productItem.productContent.title">
+                                <input type="text" name="title" placeholder="" class="form-control" ng-model="projectItem.projectContent.title">
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3"><label class=" form-control-label">SEO Keywords : </label></div>
                             <div class="col-12 col-md-9">
-                                <input type="text" placeholder="SEO Keywords" class="form-control" ng-model="productItem.productContent.seoKeyWord">
+                                <input type="text" placeholder="SEO Keywords" class="form-control" ng-model="projectItem.projectContent.seoKeyWord">
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3"><label class=" form-control-label">SEO Descriptions : </label></div>
                             <div class="col-12 col-md-9">
-                                <input type="text" placeholder="SEO Descriptions" class="form-control" ng-model="productItem.productContent.seoDescriptions">
+                                <input type="text" placeholder="SEO Descriptions" class="form-control" ng-model="projectItem.projectContent.seoDescriptions">
                             </div>
                         </div>
-                        <div class="row form-group">
+                        <!-- <div class="row form-group">
                             <div class="col col-md-3"><label class=" form-control-label">Chọn danh mục : </label></div>
                             <div class="col-12 col-md-9">
                                 <input class="form-control" name="idCategory" ng-click='showHideCategory()' />
-                                <!-- <select type="text" id="productCategory" name="idCategory" class="form-control" ng-click='showHideCategory()'>
-                                        <option style="display:none;" value=""> </option>
-                                    </select> -->
                                 <div id='listCategory' status="0" style="display:none;">
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="row form-group">
+                        </div> -->
+                        <!-- <div class="row form-group">
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Giá thường : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="text" placeholder="123000000" class="form-control" ng-model="productItem.normalPrice" />
+                                    <input type="text" placeholder="123000000" class="form-control" ng-model="projectItem.normalPrice" />
                                 </div>
                             </div>
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Giá khuyến mãi : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="number" placeholder="100000000" class="form-control" ng-model="productItem.salePrice">
+                                    <input type="number" placeholder="100000000" class="form-control" ng-model="projectItem.salePrice">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row form-group">
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Diện tích  : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="number" placeholder="" class="form-control" ng-model="productItem.acreage">
+                                    <input type="number" placeholder="" class="form-control" ng-model="projectItem.acreage">
                                 </div>
                             </div>
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Hẻm rộng : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="number" placeholder="" class="form-control" ng-model="productItem.alleyWidth">
+                                    <input type="number" placeholder="" class="form-control" ng-model="projectItem.alleyWidth">
                                 </div>
                             </div>
                         </div>
@@ -182,7 +179,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="row col-md-6">
-                                <div class="col col-md-6"><label class=" form-control-label">Sản phầm hot : </label></div>
+                                <div class="col col-md-6"><label class=" form-control-label">Dự án hot : </label></div>
                                 <div class="col-12 col-md-6">
                                     <input type="checkbox" ng-model="checkHot" />
                                 </div>
@@ -201,8 +198,8 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#galleryModal">Chọn từ thư viện</button>
                                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#copyLinkModal" >Copy link</button> -->
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Tải ảnh lên</button>
-                                <div id="productImgs">
-                                    <div ng-if="productItem.pictures" ng-repeat="src in productItem.pictures" class="divImg">
+                                <div id="projectImgs">
+                                    <div ng-if="projectItem.pictures" ng-repeat="src in projectItem.pictures" class="divImg">
                                         <img src="{{src}}">
                                         <i class="fa fa-close"></i>
                                     </div>

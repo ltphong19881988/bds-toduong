@@ -34,35 +34,3 @@
     </div>
 
 </div>
-
-
-
-
-
-
-<script>
-    jQuery("#username").autocomplete({
-        source: function(request, response) {
-            jQuery.ajax({
-                type: "POST",
-                url: "/user/autocomplete",
-                data: {
-                    q: request.term
-                },
-                success: function(data) {
-                    response(jQuery.map(data, function(item) {
-                        return {
-                            label: item.username,
-                            value: item.username,
-                            id: item._id
-                        };
-                    }));
-                }
-            });
-        },
-        minLength: 2,
-        select: function(event, ui) {
-            //console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        }
-    });
-</script>

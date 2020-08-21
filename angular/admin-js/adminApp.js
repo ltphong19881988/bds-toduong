@@ -28,32 +28,9 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
             templateUrl: "/tpls/admin/slider.html",
             controller: "sliderCtrl"
         })
-        .when("/media", {
-            templateUrl: "/tpls/admin/media.html",
-            controller: "mediaCtrl"
-        })
-        .when("/media", {
-            templateUrl: "/tpls/admin/media.html",
-            controller: "mediaCtrl"
-        })
-        .when("/category", {
-            templateUrl: "/tpls/admin/category.html",
-            controller: "categoryCtrl"
-        })
-        .when("/post", {
-            templateUrl: "/tpls/admin/post/index.html",
-            controller: "postCtrl"
-        })
-        .when("/post/:posttId/:action", {
-            templateUrl: "/tpls/admin/post/post-details.html",
-            controller: "postCtrl",
-            params: {
-                posttId: { squash: true, value: null },
-            }
-        })
-        .when("/project", {
-            templateUrl: "/tpls/admin/project/index.html",
-            controller: "projectCtrl"
+        .when("/site-config", {
+            templateUrl: "/tpls/admin/site-config.html",
+            controller: "siteConfigCtrl"
         })
         .when("/sector", {
             templateUrl: "/tpls/admin/sector/index.html",
@@ -63,7 +40,42 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
             templateUrl: "/tpls/admin/product/product-type.html",
             controller: "productTypeCtrl"
         })
-        .when("/product", {
+        .when("/media", {
+            templateUrl: "/tpls/admin/media.html",
+            controller: "mediaCtrl"
+        })
+        .when("/url-one-level", {
+            templateUrl: "/tpls/admin/one-lvl-url.html",
+            controller: "urlOneLevelCtrl"
+        })
+        .when("/category", {
+            templateUrl: "/tpls/admin/category.html",
+            controller: "categoryCtrl"
+        })
+        .when("/post", {
+            templateUrl: "/tpls/admin/post/index.html",
+            controller: "postCtrl"
+        })
+        .when("/post/:postId/:action", {
+            templateUrl: "/tpls/admin/post/post-details.html",
+            controller: "postCtrl",
+            params: {
+                postId: { squash: true, value: null },
+            }
+        })
+        .when("/project", {
+            templateUrl: "/tpls/admin/project/index.html",
+            controller: "projectCtrl"
+        })
+        .when("/project/:projectId/:action", {
+            templateUrl: "/tpls/admin/project/project-details.html",
+            controller: "projectCtrl",
+            params: {
+                projectId: { squash: true, value: null },
+            }
+        })
+
+    .when("/product", {
             templateUrl: "/tpls/admin/product/product.html",
             controller: "productCtrl"
         })
@@ -75,18 +87,14 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
             }
         })
 
-    .when("/site-config", {
-            templateUrl: "/tpls/admin/site-config.html",
-            controller: "siteConfigCtrl"
-        })
-        // .when("/hair-sample/:hairId/:action", {
-        //     templateUrl: "/tpls/admin/hair-sample/hair-sample-detail.html",
-        //     controller: "hairSampleCtrl",
-        //     params: {
-        //         productId: { squash: true, value: null },
-        //     }
-        // })
-        .when("/promotion", {
+    // .when("/hair-sample/:hairId/:action", {
+    //     templateUrl: "/tpls/admin/hair-sample/hair-sample-detail.html",
+    //     controller: "hairSampleCtrl",
+    //     params: {
+    //         productId: { squash: true, value: null },
+    //     }
+    // })
+    .when("/promotion", {
             templateUrl: "/tpls/admin/promotion/index.html",
             controller: "promotionCtrl"
         })

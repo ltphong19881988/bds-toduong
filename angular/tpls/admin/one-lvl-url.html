@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header bg-dark">
+                    <strong class="card-title text-light">SEO một cấp</strong>
+                </div>
+                <div class="card-body ">
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Từ khóa (Không nên sửa): </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <input type="text " placeholder="key " ng-model='configKey' class="form-control autocomplete ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Giá trị : </label></div>
+                        <div class="col-12 col-md-9 ">
+                            <input type="text " placeholder="value " ng-model='configValue' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Loại dữ liệu (Không nên sửa) : </label></div>
+                        <div class="col-12 col-md-9 ">
+                            <input type="text " placeholder="type " ng-model='configType' class="form-control ">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit " class="btn btn-success " ng-click="submitAddSiteConfig($event) ">
+                                <i class="fa fa-dot-circle-o "></i> Thêm mới
+                            </button>
+                    <button type="reset " class="btn btn-danger pull-right" ng-click="cancelUpdateSiteConfig($event)" style="margin-right: 10px;"> 
+                                <i class=" fa fa-ban "></i> Hủy
+                        </button>
+                    <button type="reset " class="btn btn-info pull-right" ng-click="submitUpdateSiteConfig($event)" style="margin-right: 20px;"> 
+                                <i class=" fa fa-ban "></i> Thay đổi
+                        </button>
+
+                </div>
+            </section>
+
+        </aside>
+    </div>
+
+</div>
+
+<div class="row ">
+    <div class="col-sm-12 col-md-12 ">
+        <aside class="profile-nav alt ">
+            <section class="card ">
+                <div class="card-header bg-dark ">
+                    <strong class="card-title text-light ">Histories</strong>
+                </div>
+
+                <div class="card-body ">
+                    <div class="table-responsive ">
+                        <table datatable=" " dt-options="dtOptions " dt-columns="dtColumns " class="row-border hover ">
+
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+        </aside>
+    </div>
+
+</div>

@@ -73,7 +73,7 @@ router.use('/sector', require('./sector'));
 router.use('/product-type', require('./product-type'));
 router.use('/product', require('./product'));
 router.use('/post', require('./post'));
-// router.use('/member', require('./member'));
+router.use('/project', require('./project'));
 // router.use('/transactions', require('./transactions'));
 // router.use('/promotion', require('./promotion'));
 // router.use('/order', require('./order'));

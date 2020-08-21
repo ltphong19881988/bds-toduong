@@ -195,6 +195,13 @@ router.post('/get-slider', async(req, res, next) => {
     });
 })
 
+router.post('/one-content', async(req, res, next) => {
+    console.log(req.body);
+    var abc = await PostContent.findOne({ oneLvlUrl: req.body.url }).exec();
+    if (!abc) return res.json({ status: false, mes: "Không tìm thấy bài viết" });
+    res.json({ status: true, oneContent: abc });
+})
+
 router.get('/verify-email-link/:email', async(req, res, next) => {
     var abc = await User.findOne({ email: req.params.email }).exec();
 

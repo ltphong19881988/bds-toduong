@@ -134,7 +134,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         $rootScope.pageTitle = "Admin - Sửa bài viết";
         let params = {
             method: 'GET',
-            url: '/admin/post/item/' + $routeParams.posttId,
+            url: '/admin/post/item/' + $routeParams.postId,
         }
         submitBackend(params, $http, function(res) {
             console.log('get post item', res);
