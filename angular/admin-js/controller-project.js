@@ -104,7 +104,7 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
                 setTimeout(() => {
                     CKEDITOR.instances['editorDescription'].setData(res.projectContent.descriptions);
                     CKEDITOR.instances['editorContent'].setData(res.projectContent.content);
-                }, 500);
+                }, 1000);
 
             }
 

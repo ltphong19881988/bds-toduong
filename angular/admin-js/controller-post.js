@@ -144,7 +144,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                 setTimeout(() => {
                     CKEDITOR.instances['editorContent'].setData(res.postContent.content);
                     CKEDITOR.instances['editorDescription'].setData(res.postContent.descriptions);
-                }, 100);
+                }, 1000);
 
 
 
