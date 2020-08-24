@@ -1,4 +1,4 @@
-jQuery.fn.clickOff = function(callback, selfDestroy) {
+jQuery.fn.clickOffProject = function(callback, selfDestroy) {
     var clicked = false;
     var parent = this;
     var destroy = selfDestroy || true;
@@ -21,35 +21,6 @@ jQuery.fn.clickOff = function(callback, selfDestroy) {
     });
 };
 
-var setAutoComplete = function(key, $scope, $compile, $http) {
-    $scope['showlist' + key] = false;
-
-    jQuery('.showlist-' + key).clickOff(function() {
-        if ($scope['showlist' + key] == true) {
-            if ($scope[key])
-                $scope['selected' + key] = $scope[key].title;
-            else
-                $scope['selected' + key] = null;
-            $scope['showlist' + key] = false;
-            $scope.$apply();
-        }
-    });
-
-    // $scope.clearList = function() {
-    //     $scope['selected' + key] = null;
-    //     $scope['showlist' + key] = false;
-    // }
-
-    $scope.selectedItem = function($event, item) {
-        $scope['selected' + key] = item.title;
-        $scope['showlist' + key] = false;
-        $scope[key] = item;
-        // console.log(item);
-        if (key == 'province')
-            initDistrictProject($scope, $compile, $http);
-    }
-}
-
 var initProvinceProject = function($scope, $compile, $http) {
     let params = {
         method: 'POST',
@@ -60,7 +31,6 @@ var initProvinceProject = function($scope, $compile, $http) {
     }
     submitBackend(params, $http, function(provinces) {
         $scope.listProvinces = provinces;
-        // setAutoComplete('province', $scope, $compile, $http);
     });
 }
 
@@ -75,7 +45,6 @@ var initDistrictProject = function($scope, $compile, $http) {
         }
     }
     submitBackend(params, $http, function(districts) {
-        // setAutoComplete('district', $scope, $compile, $http);
         $scope.listDistricts = districts;
     });
 }
@@ -92,7 +61,6 @@ var initWardProject = function($scope, $compile, $http) {
         }
     }
     submitBackend(params, $http, function(wards) {
-        // setAutoComplete('district', $scope, $compile, $http);
         $scope.listWards = wards;
     });
 }
@@ -346,7 +314,6 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
                 window.location.reload();
             }
             console.log(res);
-            // setAutoComplete('province', $scope, $compile, $http);
         });
         e.preventDefault();
     }
@@ -361,7 +328,7 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
         var key = iAttrs.key;
         var $scope = scope;
 
-        jQuery('.showlist-' + key).clickOff(function() {
+        jQuery('.showlist-' + key).clickOffProject(function() {
             // console.log(document.activeElement, iElement);
             if ($scope['showlist' + key] == true && document.activeElement != iElement.context) {
                 // console.log('vo', $scope.listProvinces);

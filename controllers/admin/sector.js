@@ -95,9 +95,10 @@ router.post('/filter-all', function(req, res, next) {
                 districtID: { $ifNull: ["$districtID", -1] },
                 districtTitle: { $ifNull: ["$districtTitle", ""] },
                 districtTitleLink: { $ifNull: ["$districtTitleLink", ""] },
+                priority: 1,
             }
         },
-        { $sort: { type: 1, ID: 1 } }
+        { $sort: { type: 1, priority: 1, ID: 1 } }
     ]).exec(function(err, result) {
         // // console.log(err, result);
         // if (err) result = [];
