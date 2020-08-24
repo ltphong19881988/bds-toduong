@@ -57,8 +57,13 @@
     <!-- <li><a href="#portfolio">Hợp tác</a></li> -->
     <li class="drop-down"><a href="javascript:void(0)">Tin tức - Kinh nghiệm</a>
         <ul>
-            <li ng-repeat="item in menuNews" ng-if="item.priority == 2">
+            <li class="drop-down" ng-repeat="item in menuNews" ng-if="item.priority == 2 && item.idParent == '5f2e60e731fb1f20f8aa783d' ">
                 <a href="/news/{{item.catePostContent.oneLvlUrl}}">{{item.name}}</a>
+                <ul>
+                    <li ng-repeat="lvl_2 in menuNews" ng-if="lvl_2.priority == 3 && lvl_2.idParent == item._id ">
+                        <a href="/news/{{lvl_2.catePostContent.oneLvlUrl}}">{{lvl_2.name}}</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>

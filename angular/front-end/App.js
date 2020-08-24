@@ -97,7 +97,6 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 app.run(function($rootScope, $window, $http, $location) {
     console.log('app run');
     InitWebsite($rootScope, $http);
-    // InitMenuDistricts($rootScope, $http);
 
     $rootScope.$on('$viewContentLoaded', function() {
         //do your will
@@ -157,6 +156,7 @@ var InitWebsite = function($rootScope, $http) {
     submitFrontEnd(params, $http, function(res) {
         console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
+
         $rootScope.menuNews = res.listNews;
 
         $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-totnhat')[0].value;
@@ -167,7 +167,7 @@ var InitWebsite = function($rootScope, $http) {
     });
 }
 
-var InitMenuDistricts = function($rootScope, $http) {
+var InitMenuNews = function(arrKQ, listNews, pri) {
     let params = {
         method: 'POST',
         url: '/sector/filter-all',

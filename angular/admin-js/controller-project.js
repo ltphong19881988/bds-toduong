@@ -46,11 +46,11 @@ var setAutoComplete = function(key, $scope, $compile, $http) {
         $scope[key] = item;
         // console.log(item);
         if (key == 'province')
-            initDistrict($scope, $compile, $http);
+            initDistrictProject($scope, $compile, $http);
     }
 }
 
-var initProvince = function($scope, $compile, $http) {
+var initProvinceProject = function($scope, $compile, $http) {
     let params = {
         method: 'POST',
         url: '/admin/sector/filter-all',
@@ -64,7 +64,7 @@ var initProvince = function($scope, $compile, $http) {
     });
 }
 
-var initDistrict = function($scope, $compile, $http) {
+var initDistrictProject = function($scope, $compile, $http) {
     if (!$scope.projectItem.province) return;
     let params = {
         method: 'POST',
@@ -80,7 +80,7 @@ var initDistrict = function($scope, $compile, $http) {
     });
 }
 
-var initWard = function($scope, $compile, $http) {
+var initWardProject = function($scope, $compile, $http) {
     if (!$scope.projectItem.province || !$scope.projectItem.district) return;
     let params = {
         method: 'POST',
@@ -154,7 +154,7 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
 
     if ($routeParams.action != null) {
         $scope.projectItem = {};
-        initProvince($scope, $compile, $http);
+        initProvinceProject($scope, $compile, $http);
         initDirecton($scope, $compile, $http);
 
         uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
@@ -200,14 +200,14 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
             $scope['selectedprovince'] = item.title;
             $scope['showlistprovince'] = false;
             $scope.projectItem['province'] = item;
-            initDistrict($scope, $compile, $http);
+            initDistrictProject($scope, $compile, $http);
         }
 
         $scope.selectedDistrict = function($event, item) {
             $scope['selecteddistrict'] = item.title;
             $scope['showlistdistrict'] = false;
             $scope.projectItem['district'] = item;
-            initWard($scope, $compile, $http);
+            initWardProject($scope, $compile, $http);
         }
 
         $scope.selectedWard = function($event, item) {
