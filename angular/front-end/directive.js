@@ -342,12 +342,17 @@ app.directive('orientimgload', function() {
                 var parent = jQuery(this).parent();
                 var a = parent.height() / parent.width();
                 var b = jQuery(this).height() / jQuery(this).width();
+                var dolechX = jQuery(this).width() - parent.width();
+                var dolechY = jQuery(this).height() - parent.height();
                 if (a > b) {
                     jQuery(this).css("width", "auto");
                     jQuery(this).css("height", "100%");
                 } else {
                     jQuery(this).css("width", "100%");
                     jQuery(this).css("height", "auto");
+                    if (dolechY > 0) {
+                        jQuery(this).css('margin-top', "-" + dolechY / (jQuery(this).width() / parent.width()) / 2 + "px");
+                    }
                 }
             });
 

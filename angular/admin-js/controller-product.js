@@ -221,7 +221,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                 setTimeout(() => {
                     CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
                     CKEDITOR.instances['editorContent'].setData(res.productContent.content);
-                }, 100);
+                }, 500);
 
             }
             loopSelectedCategory(null, $scope.productItem.category);

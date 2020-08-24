@@ -89,6 +89,12 @@
                                 <input type="text" placeholder="SEO Descriptions" class="form-control" ng-model="projectItem.projectContent.seoDescriptions">
                             </div>
                         </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">Địa điểm : </label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" placeholder="Địa điểm" class="form-control" ng-model="projectItem.address">
+                            </div>
+                        </div>
                         <!-- <div class="row form-group">
                             <div class="col col-md-3"><label class=" form-control-label">Chọn danh mục : </label></div>
                             <div class="col-12 col-md-9">
@@ -115,15 +121,30 @@
 
                         <div class="row form-group">
                             <div class="row col-md-6">
-                                <div class="col col-md-4"><label class=" form-control-label">Diện tích  : </label></div>
+                                <div class="col col-md-4"><label class=" form-control-label">Tổng diện tích  : </label></div>
+                                <div class="col-12 col-md-8">
+                                    <input type="number" placeholder="" class="form-control" ng-model="projectItem.totalAcreage">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <div class="col col-md-4"><label class=" form-control-label">Diện tích xây dựng : </label></div>
                                 <div class="col-12 col-md-8">
                                     <input type="number" placeholder="" class="form-control" ng-model="projectItem.acreage">
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row form-group">
                             <div class="row col-md-6">
-                                <div class="col col-md-4"><label class=" form-control-label">Hẻm rộng : </label></div>
+                                <div class="col col-md-4"><label class=" form-control-label">Qui mô xây dựng  : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="number" placeholder="" class="form-control" ng-model="projectItem.alleyWidth">
+                                    <input type="text" placeholder="" class="form-control" ng-model="projectItem.projectScale">
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <div class="col col-md-4"><label class=" form-control-label">Giá thấp nhất từ : </label></div>
+                                <div class="col-12 col-md-8">
+                                    <input type="number" placeholder="" class="form-control" ng-model="projectItem.normalPrice">
                                 </div>
                             </div>
                         </div>

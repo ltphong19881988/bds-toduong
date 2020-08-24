@@ -17,12 +17,14 @@ var Project = new Schema({
     videoUrl: String,
     videoTitle: String,
     datecreate: { type: Date, default: Date.now },
-    normalPrice: Number,
-    salePrice: Number,
+    normalPrice: Number, // GIÁ THẤP NHẤT
+    address: String, // địa chỉ
     pictures: [],
     tags: [],
-    acreage: Number,
-    alleyWidth: Number,
+    acreage: Number, // diện tích xây dựng
+    totalAcreage: Number, // Tổng diện tích
+    projectScale: String, // Qui mô dự án
+    // alleyWidth: Number,
     direction: {},
     province: {},
     district: {},
