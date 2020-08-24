@@ -66,7 +66,7 @@ app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $ro
     $scope.loadingText = "Đang tải ...";
     $scope.pagination = {
         currentPage: 1,
-        itemsPerPage: 2,
+        itemsPerPage: 10,
         totalItems: 0
     };
     if ($routeParams.p) $scope.pagination.currentPage = parseInt($routeParams.p);

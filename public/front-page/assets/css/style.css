@@ -1815,6 +1815,10 @@ a.footer-logo img {
     font-size: 14px;
 }
 
+.post_detail img {
+    max-width: 80%;
+}
+
 .link-nha-dat a {
     color: #02518c;
 }
