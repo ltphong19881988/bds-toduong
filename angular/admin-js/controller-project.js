@@ -129,9 +129,9 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
         // remove pic from projects img
         selectedImgRemoveListener("#projectImgs .divImg .fa-close");
 
-        $scope.addImgsToPost = function() {
-            jQuery("#uploadModal button.close").click();
-            appendSelectedImg(jQuery("#projectImgs"), jQuery("#uploadProcess ul li img"), 'name');
+        $scope.addImgsToProject = function() {
+            jQuery("#galleryModal button.close").click();
+            appendSelectedImg(jQuery("#projectImgs"), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
         }
 
         // Click to Open modal get pics from gallery

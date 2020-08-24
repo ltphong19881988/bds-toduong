@@ -195,26 +195,30 @@ ul#listFiles li p {
 }
 
 #productImgs,
-#postImgs {
+#postImgs,
+#projectImgs {
     margin-top: 10px;
 }
 
 #productImgs .divImg,
-#postImgs .divImg {
+#postImgs .divImg,
+#projectImgs .divImg {
     display: inline;
     max-height: 80px;
     position: relative;
 }
 
 #productImgs img,
-#postImgs img {
+#postImgs img,
+#projectImgs img {
     max-height: 80px;
     margin-bottom: 15px;
     margin-right: 15px;
 }
 
 #productImgs .divImg .fa-close,
-#postImgs .divImg .fa-close {
+#postImgs .divImg .fa-close,
+#projectImgs .divImg .fa-close {
     position: absolute;
     right: 5px;
     top: -35px;

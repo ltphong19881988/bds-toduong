@@ -202,7 +202,7 @@
                                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#copyLinkModal" >Copy link</button> -->
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Tải ảnh lên</button>
                                 <div id="productImgs">
-                                    <div ng-if="productItem.pictures" ng-repeat="src in productItem.pictures" class="divImg">
+                                    <div ng-if="productItem.pictures" ng-repeat="src in productItem.pictures track by $index" class="divImg">
                                         <img src="{{src}}">
                                         <i class="fa fa-close"></i>
                                     </div>
