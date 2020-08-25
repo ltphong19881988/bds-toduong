@@ -10,6 +10,8 @@ const ListProvince = require('../../models/listprovince');
 const Category = require('../../models/category');
 const Post = require('../../models/post');
 const PostContent = require('../../models/post-content');
+const Project = require('../../models/project');
+const ProjectContent = require('../../models/project-content');
 const AppConfig = require('../../models/app-config');
 const mw = require('../../models/helpers/my-middleware');
 var MyFunction = require('../../models/helpers/my-function');
@@ -182,17 +184,46 @@ router.post('/site-config', async(req, res, next) => {
     });
 })
 
-router.post('/get-slider', async(req, res, next) => {
-    var options = { postType: 2 };
+router.post('/data-index', async(req, res, next) => {
+    var optionsSlider = { postType: 2 };
     if (req.body.webname) {
-        options['videoTitle'] = req.body.webname;
+        optionsSlider['videoTitle'] = req.body.webname;
     }
-    Post.aggregate([
-        { $match: options },
-        { $sort: { datecreate: -1 } }
-    ]).exec(function(err, result) {
-        res.json(result);
+    var listSliders = new Promise(resolve => {
+        Post.aggregate([
+            { $match: optionsSlider },
+            { $sort: { datecreate: -1 } }
+        ]).exec(function(err, result) {
+            resolve(result);
+        });
     });
+
+    var optionsProject = {};
+
+    var listHotProjects = new Promise(resolve => {
+        Project.aggregate([
+            { $match: optionsProject },
+            {
+                $lookup: {
+                    from: "projectcontents",
+                    localField: "_id",
+                    foreignField: "idProject",
+                    as: "projectContent"
+                }
+            },
+            { $unwind: "$projectContent" },
+            { $sort: { datecreate: -1 } },
+            { $skip: 0 },
+            { $limit: 3 },
+        ]).exec(function(err, result) {
+            resolve(result);
+        });
+    });
+
+    Promise.all([listSliders, listHotProjects]).then(values => {
+        res.json({ listSliders: values[0], listHotProjects: values[1] });
+    })
+
 })
 
 router.post('/one-content', async(req, res, next) => {

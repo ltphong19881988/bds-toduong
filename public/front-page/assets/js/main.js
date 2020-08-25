@@ -133,6 +133,13 @@
         $('.search_popup').removeClass('popup_active');
     })
 
+    $(document).on('click', '.search-overly', function(e) {
+        // console.log(e.currentTarget);
+        $('.popup-overlay-close').remove();
+        $('.search-overly').html('').remove();
+        $('.search_popup').removeClass('popup_active');
+    })
+
     // Navigation active state on scroll 
     var nav_sections = $('section');
     var main_nav = $('.nav-menu, .mobile-nav');

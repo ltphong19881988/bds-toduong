@@ -41,13 +41,15 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
     });
     let params = {
         method: 'POST',
-        url: '/get-slider',
+        // url: '/get-slider',
+        url: '/data-index',
         data: {
             webname: 'bds-totnhat'
         }
     }
     submitFrontEnd(params, $http, function(res) {
-        $scope.sliders = res;
+        $scope.sliders = res.listSliders;
+        $scope.listHotProjects = res.listHotProjects;
         setTimeout(() => {
             jQuery(".portfolio-details-carousel").owlCarousel({
                 autoplay: true,
@@ -55,7 +57,7 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
                 loop: true,
                 items: 1
             });
-        }, 100);
+        }, 200);
         // console.log('slider ', res);
     })
 
