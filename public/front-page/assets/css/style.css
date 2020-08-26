@@ -1273,6 +1273,10 @@ section {
     margin: 0 2px;
 }
 
+#hotProject .member .pic {
+    height: 300px;
+}
+
 
 /*--------------------------------------------------------------
 # Contact

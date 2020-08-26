@@ -23,7 +23,7 @@ var secretKey = config.secret;
 router.use('/product', require('./product'));
 router.use('/sector', require('./sector'));
 router.use('/post', require('./post'));
-// router.use('/investment', require('./investment'));
+router.use('/project', require('./project'));
 // router.use('/user', require('./user'));
 
 

@@ -50,6 +50,8 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
     submitFrontEnd(params, $http, function(res) {
         $scope.sliders = res.listSliders;
         $scope.listHotProjects = res.listHotProjects;
+        console.log(res);
+
         setTimeout(() => {
             jQuery(".portfolio-details-carousel").owlCarousel({
                 autoplay: true,

@@ -1,10 +1,10 @@
 <!-- ======= Breadcrumbs Section ======= -->
 <section class="breadcrumbs">
     <div class="container">
-        <h1> <span ng-bind="cateContent.title"></span> <span ng-if="local">tại <span ng-bind="local.title"></span> </span>
+        <h1> <span>Danh sách các dự án</span> <span ng-if="local">tại <span ng-bind="local.title"></span> </span>
         </h1>
         <div ng-if="pagination.totalItems > 0" class="datetime" style="font-size: 13px;">
-            Tìm thấy <span ng-bind="pagination.totalItems"></span> sản phẩm phù hợp
+            Tìm thấy <span ng-bind="pagination.totalItems"></span> dự án phù hợp
         </div>
     </div>
 </section>
@@ -20,23 +20,31 @@
 
             <div class="row">
                 <div class=" col-md-12 ">
-                    <div ng-if="!products || products.length == 0">
+                    <div ng-if="!listProject || listProject.length == 0">
                         <p ng-bind="loadingText"></p>
                     </div>
-                    <div ng-if="products && products.length > 0" class="product-item" ng-repeat="item in products">
+                    <div ng-if="listProject && listProject.length > 0" class="product-item" ng-repeat="item in listProject">
                         <div class="pi-img">
-                            <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                            <img ng-src="{{item.pictures[0]}}" alt="{{item.projectContent.title}}" orientimgload />
                         </div>
                         <div class="pi-content">
-                            <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
-                                {{item.productContent.title}}
+                            <a href="/du-an/{{item.projectContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.projectContent.title}}" style="text-rendering: optimizelegibility;">
+                                {{item.projectContent.title}}
                             </a>
                             <div class="wrap">
                                 <span class="wrap-price">
-                        <span class="price"> <i class="fa fa-tags" aria-hidden="true"></i>: <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong></span>
-                                <span class="area"> Diện tích: <strong class="product-area">{{item.acreage}} m²</strong></span></span>
-                                <span class="contact floatright"></span> <br/>
-                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i>: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
+                                    <span class="price"> 
+                                        <i class="fa fa-tags" aria-hidden="true"></i> Giá thấp nhất từ : 
+                                        <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong>
+                                    </span>
+                                </span>
+                                <br/>
+                                <span class="area">     
+                                    <i class="fa fa-square" aria-hidden="true"></i> Tổng diện tích: 
+                                    <strong class="product-area">{{item.acreage}} m²</strong>
+                                </span>
+                                <br/>
+                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i> : <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
                             </div>
                         </div>
                     </div>
