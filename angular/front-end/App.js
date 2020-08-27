@@ -58,7 +58,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         })
         .when("/du-an/:page", {
             templateUrl: "/tpls/main/project/details.html",
-            controller: "projectCtrl"
+            controller: "projectDetailCtrl"
         })
         .when("/news/:page", {
             templateUrl: "/tpls/main/post/cate-page.html",

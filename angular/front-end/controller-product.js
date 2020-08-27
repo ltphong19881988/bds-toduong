@@ -37,6 +37,14 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         $scope.nearestLocal = res.province;
         if (res.district && res.district.link) $scope.nearestLocal = res.district;
         if (res.ward && res.ward.link) $scope.nearestLocal = res.ward;
+        if ($scope.product.productContent.seoDescriptions)
+            MetadataService.setMetaTags('description', $scope.product.productContent.seoDescriptions);
+        else
+            MetadataService.setMetaTags('description', $scope.product.productContent.title);
+        if ($scope.product.productContent.seoKeyWord)
+            MetadataService.setMetaTags('keywords', $scope.product.productContent.seoKeyWord);
+        else
+            MetadataService.setMetaTags('keywords', $scope.product.productContent.title);
 
         setTimeout(function() {
             $(".gallery .owl-carousel").owlCarousel({

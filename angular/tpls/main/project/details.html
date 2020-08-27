@@ -32,7 +32,7 @@
 <!-- ======= Breadcrumbs Section ======= -->
 <section class="breadcrumbs">
     <div class="container">
-        <h1> <span ng-bind="product.productContent.title"></span>
+        <h1> <span ng-bind="project.projectContent.title"></span>
         </h1>
     </div>
 </section>
@@ -44,21 +44,39 @@
     <div class="row">
         <div id="main-left" class="" style="min-height: 500px;">
             <div id="product_detail">
-                <div class="gallery">
+                <div class="portfolio-details">
+                    <div class="portfolio-details-container">
+                        <div class="owl-carousel portfolio-details-carousel">
+                            <img ng-repeat="src in project.pictures" src="{{src}}" class="img-fluid" alt="">
+                        </div>
+
+                        <div class="portfolio-info">
+                            <h3>Thông tin dự án</h3>
+                            <ul>
+                                <li><strong>Category</strong>: Web design</li>
+                                <li><strong>Client</strong>: ASU Company</li>
+                                <li><strong>Project date</strong>: 01 March, 2020</li>
+                                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="gallery">
                     <div class="owl-carousel owl-theme">
                         <div ng-repeat="img in product.pictures">
                             <img ng-src="{{img}}" class="img-fluid" alt="{{product.productContent.title}}" ng-click="viewFullImg(img)" />
                         </div>
 
                     </div>
-                </div>
+                </div> -->
                 <span class="diadiem-title mar-right-15">
                         <b>Khu vực:</b> 
                         <a href="/{{nearestCate.oneLvlUrl}}-{{nearestLocal.link}}">{{nearestCate.title}} tại {{nearestLocal.title}}</a> - 
-                        <span ng-bind="product.district.title"></span> - <span ng-bind="product.province.title"></span>
+                        <span ng-bind="project.district.title"></span> - <span ng-bind="project.province.title"></span>
                 </span>
                 <br/>
-                <div style="display: inline-block;">
+                <!-- <div style="display: inline-block;">
                     <span class="gia-title mar-right-15">
                             <b>
                             Giá:</b>
@@ -73,131 +91,28 @@
                                 <span ng-bind="product.acreage"></span> m²
                     </strong>
                     </span>
-                </div>
+                </div> -->
 
                 </br/><br/>
                 <div class="pr-mota">
                     Thông tin chi tiết
                 </div>
-                <div class="pr-content" ng-bind-html="product.productContent.content | trust">
+                <div class="pr-content" ng-bind-html="project.projectContent.content | trust">
                 </div>
             </div>
 
         </div>
 
-        <div id="main-right" class="">
+        <!-- <div id="main-right" class="">
             <div id="product_search">
                 <div class="box-title">
                     Nhà đất bán
                 </div>
                 <div class="box-content">
-                    <ul class="count-product">
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-tp-hcm">
-                            Hồ Chí Minh</a> (85641) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-ha-noi">
-                            Hà Nội</a> (54863) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-binh-duong">
-                            Bình Dương</a> (9495) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-dong-nai">
-                            Đồng Nai</a> (7970) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-ba-ria-vung-tau">
-                            Bà Rịa Vũng Tàu</a> (4494) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-phu-yen">
-                            Phú Yên</a> (150) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-lao-cai">
-                            Lào Cai</a> (31) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-ca-mau">
-                            Cà Mau</a> (77) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-long-an">
-                            Long An</a> (4460) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-bac-lieu">
-                            Bạc Liêu</a> (34) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-ben-tre">
-                            Bến Tre</a> (156) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-dak-nong">
-                            Đắk Nông</a> (46) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-ha-tinh">
-                            Hà Tĩnh</a> (58) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-yen-bai">
-                            Yên Bái</a> (21) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-dien-bien">
-                            Điện Biên</a> (3) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-tuyen-quang">
-                            Tuyên Quang</a> (21) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-dong-thap">
-                            Đồng Tháp</a> (145) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-dak-lak">
-                            Đắk Lắk</a> (176) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-hau-giang">
-                            Hậu Giang</a> (123) </h4>
-                        </li>
-
-                        <li>
-                            <h4 class="normal"><a href="/nha-dat-ban-binh-phuoc">
-                            Bình Phước</a> (1235) </h4>
-                        </li>
-
-                    </ul>
 
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </div>
@@ -210,8 +125,8 @@
         jQuery('#main-left').attr("class", "col-md-12");
         jQuery('#main-right').css("display", "none");
     } else {
-        jQuery('#main-left').attr("class", "col-lg-9");
-        jQuery('#main-right').css("display", "block");
-        jQuery('#main-right').attr("class", "col-lg-3");
+        jQuery('#main-left').attr("class", "col-lg-12");
+        jQuery('#main-right').css("display", "none");
+        // jQuery('#main-right').attr("class", "col-lg-3");
     }
 </script>

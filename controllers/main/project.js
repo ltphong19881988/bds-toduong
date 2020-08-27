@@ -151,8 +151,8 @@ var GetNewProduct = async function(req, res, next) {
 router.post('/filter-url', async(req, res, next) => {
     console.log(req.body);
     var local = null;
-    if (req.body.url) {
-        local = await ListProvince.findOne({ link: req.body.url });
+    if (req.body.local) {
+        local = await ListProvince.findOne({ link: req.body.local });
         console.log('local', local);
     }
 
@@ -208,89 +208,20 @@ router.post('/filter-url', async(req, res, next) => {
 
 })
 
-router.post('/filter-product', async(req, res, next) => {
-    // console.log(req.body);
-    var options = {};
-    var skip = 0;
-    var limit = 10;
-    if (req.body.filter.idCategory) {
-        options['idCategory'] = { $elemMatch: { $eq: mongoose.Types.ObjectId(req.body.filter.idCategory) } }
-    }
-    if (req.body.filter.productType) {
-        var proType = await ProductType.findOne({ groupType: "productType", value: req.body.filter.productType });
-        options['productType'] = { $elemMatch: { _id: proType._id.toString() } };
-    }
-    if (req.body.filter.skip && typeof req.body.filter.skip === 'number' && (req.body.filter.skip % 1) === 0) {
-        skip = parseInt(req.body.filter.skip);
-    }
-    if (req.body.filter.limit && typeof req.body.filter.limit === 'number' && (req.body.filter.limit % 1) === 0) {
-        limit = parseInt(req.body.filter.limit);
-    }
-    Product.aggregate([{
-            $match: options,
-        },
-        {
-            $sort: { datecreate: -1 }
-        },
-        // {
-        //     $lookup: {
-        //         from: "categories",
-        //         localField: "idCategory",
-        //         foreignField: "_id",
-        //         as: "category"
-        //     },
-        // },
-        {
-            $lookup: {
-                from: "productcontents",
-                localField: "_id",
-                foreignField: "idProduct",
-                as: "productContent"
-            },
-        },
-        { $unwind: "$productContent" },
-        // {
-        //     $project: {
-        //         // "categoryName": '$category.name',
-        //         "nameKey": 1,
-        //         "normalPrice": 1,
-        //         "pictures": 1,
-        //         "salePrice": 1,
-        //         "datecreate": 1,
-        //         "title": '$postContent.title',
-        //     }
-        // },
-        { "$skip": skip },
-        { "$limit": skip + limit },
-
-    ], function(err, result) {
-        res.json(result);
-    });
-
-})
-
 router.get('/name-key/:key', async(req, res, next) => {
-    // console.log(req.params);
-    Product.aggregate([{
+    console.log(req.params);
+    Project.aggregate([{
             $match: { nameKey: req.params.key },
         },
         {
             $lookup: {
-                from: "categories",
-                localField: "idCategory",
-                foreignField: "_id",
-                as: "category"
-            },
-        },
-        {
-            $lookup: {
-                from: "productcontents",
+                from: "projectcontents",
                 localField: "_id",
-                foreignField: "idProduct",
-                as: "productContent"
+                foreignField: "idProject",
+                as: "projectContent"
             },
         },
-        { $unwind: "$productContent" },
+        { $unwind: "$projectContent" },
         // {
         //     $project: {
         //         // "categoryName": '$category.name',
