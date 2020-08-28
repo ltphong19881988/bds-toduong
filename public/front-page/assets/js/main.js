@@ -131,6 +131,7 @@
         $(this).remove();
         $('.search-overly').html('').remove();
         $('.search_popup').removeClass('popup_active');
+        $('#copyOwl').remove();
     })
 
     $(document).on('click', '.search-overly', function(e) {
@@ -138,6 +139,7 @@
         $('.popup-overlay-close').remove();
         $('.search-overly').html('').remove();
         $('.search_popup').removeClass('popup_active');
+        $('#copyOwl').remove();
     })
 
     // Navigation active state on scroll 

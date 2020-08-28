@@ -89,19 +89,24 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
         if (res.ward && res.ward.link) $scope.nearestLocal = res.ward;
 
         setTimeout(function() {
-            $(".portfolio-details-carousel").owlCarousel({
+            $scope.copyOwl = $('.portfolio-details-carousel').clone().prop({
+                id: 'copyOwl'
+            });
+        }, 800);
+        setTimeout(function() {
+            $scope.owl = $(".portfolio-details-carousel").owlCarousel({
                 autoplay: true,
                 dots: true,
                 loop: true,
                 items: 1,
                 onInitialized: function(e) {
-                    console.log('o a dep trai', $('.owl-loaded .owl-item').width());
+                    // console.log('o a dep trai', $('.owl-loaded .owl-item').width());
                     var parentWidth = $('.owl-loaded .owl-item').width();
                     var parentHeight = parentWidth / 2 + 50;
                     $('.owl-loaded .owl-item').css('height', parentHeight + 'px');
                     $('.owl-loaded .owl-item').css('text-align', 'center');
                     $('.owl-loaded .owl-item img').each(function(e) {
-                        console.log($(this).width(), $(this).height());
+                        // console.log($(this).width(), $(this).height());
                         if ($(this).width() > parentWidth)
                             $(this).css('width', '100%');
                         // if (parentWidth / parentHeight >= $(this).width() / $(this).height()) {
@@ -109,16 +114,43 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
                         // } else {
 
                         // }
-                    })
+                    });
                 },
             });
-        }, 500);
+        }, 1000);
     })
 
     $scope.viewFullImg = function(src) {
-        // console.log(src);
-        $('body').append(`<div class="search-overly"><img src="` + src + `" style="width:98%; margin-left: 1%; margin-top: 60px;" /></div>`);
-        $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
+        console.log(src);
+        $('body').append(`<div class="search-overly"></div>`);
+
+        $('body').prepend($scope.copyOwl);
+        $scope.copyOwl.owlCarousel({
+            autoplay: true,
+            dots: true,
+            loop: true,
+            items: 1,
+            autoHeight: true,
+            onInitialized: function(e) {
+                console.log('o a dep trai', $('.owl-loaded .owl-item').width(), $('.owl-loaded .owl-item').height());
+                $('.owl-loaded .owl-item img').each(function(e) {
+                    console.log($(this).width(), $(this).height());
+                    // if ($(this).height() > $('.owl-loaded .owl-item').height()) {
+                    //     $(this).css('height', $('.owl-loaded .owl-item').height() + 'px');
+                    //     $(this).css('width', 'auto');
+                    //     $(this).css('margin-left', 'auto');
+                    //     $(this).css('margin-right', 'auto');
+                    // }
+
+                    // if (parentWidth / parentHeight >= $(this).width() / $(this).height()) {
+
+                    // } else {
+
+                    // }
+                });
+            },
+        });
+        // $('.owl-nav').css('z-index', '9999989');
     }
 
 });

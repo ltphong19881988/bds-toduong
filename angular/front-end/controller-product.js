@@ -66,6 +66,8 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         // console.log(src);
         $('body').append(`<div class="search-overly"><img src="` + src + `" style="width:98%; margin-left: 1%; margin-top: 60px;" /></div>`);
         $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
+        $('.owl-nav').css('positon', 'fixed');
+        $('.owl-nav').css('z-index', '9999989');
     }
 
 });
