@@ -10,6 +10,11 @@
 # General
 --------------------------------------------------------------*/
 
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
 body {
     font-family: "Open Sans", sans-serif;
     color: #444444;
