@@ -47,6 +47,11 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
             MetadataService.setMetaTags('keywords', $scope.product.productContent.title);
 
         setTimeout(function() {
+            $scope.copyOwl = $('.owl-carousel').clone().prop({
+                id: 'copyOwl'
+            });
+        }, 400);
+        setTimeout(function() {
             $(".gallery .owl-carousel").owlCarousel({
                 autoPlay: false,
                 nav: true,
@@ -59,15 +64,30 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
                     // jQuery('.owl-nav.disabled').removeClass('disabled');
                 },
             });
-        }, 300);
+        }, 500);
     })
 
     $scope.viewFullImg = function(src) {
-        // console.log(src);
-        $('body').append(`<div class="search-overly"><img src="` + src + `" style="width:98%; margin-left: 1%; margin-top: 60px;" /></div>`);
-        $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
-        $('.owl-nav').css('positon', 'fixed');
-        $('.owl-nav').css('z-index', '9999989');
+        // $('body').append(`<div class="search-overly"><img src="` + src + `" style="width:98%; margin-left: 1%; margin-top: 60px;" /></div>`);
+        // $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
+        // $('.owl-nav').css('positon', 'fixed');
+        // $('.owl-nav').css('z-index', '9999989');
+
+        $('body').append(`<div class="search-overly"></div>`);
+        $('body').prepend($scope.copyOwl);
+        $scope.copyOwl.owlCarousel({
+            autoplay: true,
+            dots: true,
+            loop: true,
+            items: 1,
+            autoHeight: true,
+            onInitialized: function(e) {
+                console.log('o a dep trai', $('.owl-loaded .owl-item').width(), $('.owl-loaded .owl-item').height());
+                $('.owl-loaded .owl-item img').each(function(e) {
+                    console.log($(this).width(), $(this).height());
+                });
+            },
+        });
     }
 
 });

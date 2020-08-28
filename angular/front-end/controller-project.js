@@ -92,7 +92,7 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
             $scope.copyOwl = $('.portfolio-details-carousel').clone().prop({
                 id: 'copyOwl'
             });
-        }, 800);
+        }, 400);
         setTimeout(function() {
             $scope.owl = $(".portfolio-details-carousel").owlCarousel({
                 autoplay: true,
@@ -117,7 +117,7 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
                     });
                 },
             });
-        }, 1000);
+        }, 500);
     })
 
     $scope.viewFullImg = function(src) {
