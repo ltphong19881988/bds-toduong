@@ -1024,7 +1024,7 @@ section {
 }
 
 .portfolio-details .portfolio-info {
-    padding: 30px;
+    padding: 25px;
     position: absolute;
     right: 0;
     bottom: -70px;
@@ -1934,7 +1934,8 @@ a.footer-logo img {
     }
     .portfolio-details .portfolio-info {
         position: static;
-        margin-top: 30px;
+        margin: 15px 0px;
+        padding: 15px;
     }
     #hero h1 {
         font-size: 28px;

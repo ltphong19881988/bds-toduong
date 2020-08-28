@@ -47,29 +47,21 @@
                 <div class="portfolio-details">
                     <div class="portfolio-details-container">
                         <div class="owl-carousel portfolio-details-carousel">
-                            <img ng-repeat="src in project.pictures" src="{{src}}" class="img-fluid" alt="">
+                            <img ng-repeat="src in project.pictures" src="{{src}}" class="img-fluid" ng-click="viewFullImg(src)" alt="">
                         </div>
 
                         <div class="portfolio-info">
                             <h3>Thông tin dự án</h3>
                             <ul>
-                                <li><strong>Category</strong>: Web design</li>
-                                <li><strong>Client</strong>: ASU Company</li>
-                                <li><strong>Project date</strong>: 01 March, 2020</li>
-                                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+                                <li ng-if="project.totalAcreage"><strong>Tổng diện tích</strong>: <span ng-bind="project.totalAcreage"></span> m2</li>
+                                <li ng-if="project.normalPrice"><strong>Giá từ</strong>: <span ng-bind="project.normalPrice | productPrice"></span></li>
+                                <!-- <li><strong>Project date</strong>: 01 March, 2020</li>
+                                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li> -->
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- <div class="gallery">
-                    <div class="owl-carousel owl-theme">
-                        <div ng-repeat="img in product.pictures">
-                            <img ng-src="{{img}}" class="img-fluid" alt="{{product.productContent.title}}" ng-click="viewFullImg(img)" />
-                        </div>
-
-                    </div>
-                </div> -->
                 <span class="diadiem-title mar-right-15">
                         <b>Khu vực:</b> 
                         <a href="/{{nearestCate.oneLvlUrl}}-{{nearestLocal.link}}">{{nearestCate.title}} tại {{nearestLocal.title}}</a> - 

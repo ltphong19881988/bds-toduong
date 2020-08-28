@@ -96,8 +96,20 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
                 items: 1,
                 onInitialized: function(e) {
                     console.log('o a dep trai', $('.owl-loaded .owl-item').width());
-                    $('.owl-loaded .owl-item').css('height', ($('.owl-loaded .owl-item').width() / 2 + 50) + 'px');
-                    $('.owl-loaded .owl-item img')
+                    var parentWidth = $('.owl-loaded .owl-item').width();
+                    var parentHeight = parentWidth / 2 + 50;
+                    $('.owl-loaded .owl-item').css('height', parentHeight + 'px');
+                    $('.owl-loaded .owl-item').css('text-align', 'center');
+                    $('.owl-loaded .owl-item img').each(function(e) {
+                        console.log($(this).width(), $(this).height());
+                        if ($(this).width() > parentWidth)
+                            $(this).css('width', '100%');
+                        // if (parentWidth / parentHeight >= $(this).width() / $(this).height()) {
+
+                        // } else {
+
+                        // }
+                    })
                 },
             });
         }, 500);

@@ -12,7 +12,7 @@ var GetHotProduct = function(filter, $http, callback) {
 }
 
 
-app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile, $routeParams) {
+app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile, $routeParams, MetadataService) {
     $rootScope.pageTitle = "Bất động sản Tô Dương - ";
     // console.log('category', $routeParams);
     // console.log('location', location.pathname);
