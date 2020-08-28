@@ -2,7 +2,7 @@ const ip = require("ip").address();
 
 var publicPath = '';
 var databaseCF = {
-    connectStr: 'mongodb://139.180.185.249:27017/bds-toduong',
+    connectStr: 'mongodb://149.28.152.179:27118/bds-toduong',
     options: {
         // keepAlive: true,
         // reconnectTries: Number.MAX_VALUE,
@@ -17,10 +17,10 @@ var databaseCF = {
     }
 
 }
-if (ip == '139.180.185.249') {
+if (ip == '149.28.152.179') {
     console.log(' o server');
     databaseCF = {
-        connectStr: 'mongodb://139.180.185.249:27017/bds-toduong',
+        connectStr: 'mongodb://149.28.152.179:27118/bds-toduong',
         options: {
             keepAlive: true,
             reconnectTries: Number.MAX_VALUE,
