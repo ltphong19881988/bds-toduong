@@ -100,7 +100,7 @@
                             <div class="col-12 col-md-9">
                                 <md-content layout-padding="" layout-margin="" class="datepickerdemoMoment">
                                     <md-datepicker ng-model="postItem.datePost" ng-change="onDatePostChanged()" md-placeholder="Enter date"></md-datepicker>
-                                    Date: {{postItem.datePost | date:shortDate}}
+                                    Date: {{postItem.datePost | date: 'dd/MM/yyyy'}}
                                 </md-content>
                             </div>
                         </div>

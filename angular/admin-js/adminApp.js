@@ -19,7 +19,7 @@ var adminApp = angular.module('adminApp', [
     // 'ui.bootstrap.datetimepicker',
 ]);
 
-adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
+adminApp.config(function($routeProvider, $locationProvider, $stateProvider, $mdDateLocaleProvider) {
 
     $routeProvider
         .when("/index", {
@@ -131,6 +131,15 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {
         requireBase: false
     }).hashPrefix('*');
 
+    $mdDateLocaleProvider.formatDate = function(date) {
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return day + '/' + (monthIndex + 1) + '/' + year;
+
+    };
 
 });
 
