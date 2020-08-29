@@ -1745,7 +1745,7 @@ a.footer-logo img {
 
 .product-item .pi-img {
     width: 40%;
-    height: 159px;
+    height: 135px;
     overflow: hidden;
     position: relative;
     float: left;
@@ -1968,7 +1968,9 @@ a.footer-logo img {
     }
     .product-item .pi-img {
         width: 35%;
-        height: 158px;
+        height: 110px;
+        position: absolute;
+        bottom: 5px;
     }
     .product-item .pi-content {
         width: 65%;
@@ -2020,11 +2022,13 @@ a.footer-logo img {
         height: 156px;
     }
     .product-item .pi-img {
-        width: 40%;
-        height: 145px;
+        width: 35%;
+        height: 95px;
+        position: absolute;
+        bottom: 5px;
     }
     .product-item .pi-content {
-        width: 60%;
+        width: 64%;
         font-size: 12px;
     }
     .container {

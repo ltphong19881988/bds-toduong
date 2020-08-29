@@ -17,21 +17,23 @@
             <div class="row">
                 <div class=" col-md-12 ">
                     <div class="product-item" ng-repeat="item in listPosts">
+                        <div class="pi-title">
+                            <a href="/news/{{item.postContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.postContent.title}}" style="text-rendering: optimizelegibility;">
+                                {{item.postContent.title}}
+                            </a>
+                        </div>
                         <div class="pi-img">
                             <img ng-if="item.pictures.length > 0" ng-src="{{item.pictures[0]}}" alt="{{item.postContent.title}}" orientimgload />
                             <img ng-if="item.pictures.length == 0" ng-src="/front-page/assets/img/logo_fb.png" alt="{{item.postContent.title}}" orientimgload />
                         </div>
                         <div class="pi-content">
-                            <a href="/news/{{item.postContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.postContent.title}}" style="text-rendering: optimizelegibility;">
-                                {{item.postContent.title}}
-                            </a>
+
                             <div class="datetime" style="font-size: 13px;">
                                 Ngày đăng : {{item.datePost | date:'dd/MM/yyyy'}}
                             </div>
-                            <br/>
                             <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3 && item.postContent.descriptions != '' " ng-bind-html="item.postContent.descriptions | trust">
                             </div>
-                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') == 3 || item.postContent.descriptions == '' " ng-bind-html="item.postContent.content | removeHTMLTags | subString:200 | trust ">
+                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') == 3 || item.postContent.descriptions == '' " ng-bind-html="item.postContent.content | removeHTMLTags | subString: postCateContentNumer | trust ">
                             </div>
                         </div>
                     </div>

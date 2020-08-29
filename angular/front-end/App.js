@@ -101,21 +101,36 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 app.run(function($rootScope, $window, $http, $location) {
     console.log('app run');
     InitWebsite($rootScope, $http);
+    if ($window.innerWidth >= 992)
+        $rootScope.postCateContentNumer = 300;
+    if ($window.innerWidth < 992)
+        $rootScope.postCateContentNumer = 150;
+    if ($window.innerWidth <= 992)
+        $rootScope.postCateContentNumer = 200;
+    if ($window.innerWidth <= 420)
+        $rootScope.postCateContentNumer = 130;
+
 
     $rootScope.$on('$viewContentLoaded', function() {
         //do your will
         // console.log('viewContentLoaded');
     });
     angular.element($window).bind('resize', function() {
-        if ($window.innerWidth < 992) {
-            jQuery('#main-left').attr("class", "col-md-12");
-            jQuery('#main-right').css("display", "none");
-        }
         if ($window.innerWidth >= 992) {
+            $rootScope.postCateContentNumer = 250;
             jQuery('#main-left').attr("class", "col-lg-9");
             jQuery('#main-right').css("display", "block");
             jQuery('#main-right').attr("class", "col-lg-3");
         }
+
+        if ($window.innerWidth < 992) {
+            $rootScope.postCateContentNumer = 200;
+            jQuery('#main-left').attr("class", "col-md-12");
+            jQuery('#main-right').css("display", "none");
+        }
+        if ($window.innerWidth <= 420)
+            $rootScope.postCateContentNumer = 130;
+
         // console.log($window.innerWidth);
     });
 
