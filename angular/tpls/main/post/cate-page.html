@@ -28,7 +28,10 @@
                             <div class="datetime" style="font-size: 13px;">
                                 Ngày đăng : {{item.datePost | date:'dd/MM/yyyy'}}
                             </div>
-                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3" ng-bind-html="item.postContent.descriptions | trust">
+                            <br/>
+                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3 && item.postContent.descriptions != '' " ng-bind-html="item.postContent.descriptions | trust">
+                            </div>
+                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') == 3 || item.postContent.descriptions == '' " ng-bind-html="item.postContent.content | removeHTMLTags | subString:200 | trust ">
                             </div>
                         </div>
                     </div>

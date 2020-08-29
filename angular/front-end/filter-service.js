@@ -63,3 +63,16 @@ app.filter("titleFilter", ['$sce', function($sce) {
         return htmlCode;
     }
 }]);
+
+app.filter('removeHTMLTags', function() {
+    return function(text) {
+        return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+    };
+});
+
+app.filter('subString', function() {
+    return function(htmlCode, number) {
+        if (htmlCode.length > number) htmlCode = htmlCode.substr(0, number) + ' ...';
+        return htmlCode;
+    }
+});
