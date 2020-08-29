@@ -298,3 +298,8 @@ table.dataTable tbody td,
 table.dataTable tbody th {
     padding: 7px 10px !important;
 }
+
+.datepickerdemoMoment {
+    margin: 0px;
+    padding: 0px;
+}

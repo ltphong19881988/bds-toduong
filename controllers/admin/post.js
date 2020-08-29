@@ -68,7 +68,8 @@ router.post("/item", async(req, res, next) => {
         idCategoryType: req.body.post.idCategoryType,
         pictures: req.body.post.pictures,
         tags: req.body.post.tags,
-        postType: 1
+        postType: 1,
+        datePost: req.body.post.datePost
     };
     var post_content = {
         title: req.body.post.postContent.title,

@@ -272,8 +272,8 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                 if (full.visible == 1) return '<div style="text-align:center;"><i class="fa fa-check-circle green" aria-hidden="true"></i></div>';
                 if (full.visible == 0) return '<div style="text-align:center;"><i class="fa fa-minus-circle red" aria-hidden="true"></i></div>';
             }),
-            DTColumnBuilder.newColumn('datecreate').withTitle('Ngày đăng').renderWith(function(data, type, full) {
-                return moment(new Date(full.datecreate)).format('DD-MM-YYYY');
+            DTColumnBuilder.newColumn('datePost').withTitle('Ngày đăng').renderWith(function(data, type, full) {
+                return moment(new Date(full.datePost)).format('DD-MM-YYYY');
             }),
             DTColumnDefBuilder.newColumnDef(0).withTitle('Xử lý').renderWith(render),
         ];

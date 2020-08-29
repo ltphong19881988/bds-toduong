@@ -13,8 +13,10 @@ var adminApp = angular.module('adminApp', [
     'datatables',
     'datatables.buttons',
     'datatables.light-columnfilter',
-    'ui.bootstrap',
-    'ui.bootstrap.datetimepicker',
+    'ngMaterial',
+    'material.svgAssetsCache'
+    // 'ui.bootstrap',
+    // 'ui.bootstrap.datetimepicker',
 ]);
 
 adminApp.config(function($routeProvider, $locationProvider, $stateProvider) {

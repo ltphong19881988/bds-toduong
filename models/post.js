@@ -15,6 +15,7 @@ var Post = new Schema({
     videoUrl: String,
     videoTitle: String,
     datecreate: { type: Date, default: Date.now },
+    datePost: { type: Date, default: Date.now },
     normalPrice: Number,
     salePrice: Number,
     pictures: [],
@@ -99,7 +100,7 @@ module.exports.UpdatePost = async function(post, post_content) {
 }
 
 module.exports.FilterDataTablePost = async function(data) {
-    console.log(data);
+    // console.log(data);
     let options = { postType: 1 };
     // if (req.body.idCategoryType) {
     //     options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);
@@ -147,13 +148,13 @@ module.exports.FilterDataTablePost = async function(data) {
                 "productType": 1,
                 "nameKey": 1,
                 "pictures": 1,
-                "datecreate": 1,
+                "datePost": 1,
                 visible: 1,
                 "title": '$postContent.title',
             }
         },
     ], function(err, result) {
-        console.log('post', err, result);
+        // console.log('post', err, result);
 
         if (err) result = [];
         return (result);

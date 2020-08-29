@@ -26,9 +26,9 @@
                                 {{item.postContent.title}}
                             </a>
                             <div class="datetime" style="font-size: 13px;">
-                                Ngày đăng : {{item.datecreate | date:'HH:mm dd/MM/yyyy'}}
+                                Ngày đăng : {{item.datePost | date:'dd/MM/yyyy'}}
                             </div>
-                            <div class="des" ng-bind-html="item.postContent.descriptions | trust">
+                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3" ng-bind-html="item.postContent.descriptions | trust">
                             </div>
                         </div>
                     </div>
