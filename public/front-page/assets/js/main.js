@@ -100,7 +100,8 @@
             $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
             $('.mobile-nav-overly').toggle();
         });
-        $(document).on('click', '.mobile-nav .drop-down > a', function(e) {
+        // $(document).on('click', '.mobile-nav .drop-down > a', function(e) {
+        $(document).on('click', '.mobile-nav .drop-down  a', function(e) {
             e.preventDefault();
             $('.mobile-nav-toggle').click();
             $('.mobile-nav .drop-down.active').toggleClass('active');
