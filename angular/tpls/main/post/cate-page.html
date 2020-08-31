@@ -16,7 +16,7 @@
         <div id="main-left" class="" style="min-height: 500px; margin-bottom: 50px;">
             <div class="row">
                 <div class=" col-md-12 ">
-                    <div class="product-item" ng-repeat="item in listPosts">
+                    <div class="post-item" ng-repeat="item in listPosts">
                         <div class="pi-title">
                             <a href="/news/{{item.postContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.postContent.title}}" style="text-rendering: optimizelegibility;">
                                 {{item.postContent.title}}
@@ -31,7 +31,7 @@
                             <div class="datetime" style="font-size: 13px;">
                                 Ngày đăng : {{item.datePost | date:'dd/MM/yyyy'}}
                             </div>
-                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3 && item.postContent.descriptions != '' " ng-bind-html="item.postContent.descriptions | trust">
+                            <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3 && item.postContent.descriptions != '' " ng-bind-html="item.postContent.descriptions | removeHTMLTags | subString: postCateContentNumer | trust">
                             </div>
                             <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') == 3 || item.postContent.descriptions == '' " ng-bind-html="item.postContent.content | removeHTMLTags | subString: postCateContentNumer | trust ">
                             </div>
