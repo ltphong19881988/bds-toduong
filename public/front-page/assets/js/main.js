@@ -101,7 +101,7 @@
             $('.mobile-nav-overly').toggle();
         });
         // $(document).on('click', '.mobile-nav .drop-down > a', function(e) {
-        $(document).on('click', '.mobile-nav .drop-down  a', function(e) {
+        $(document).on('click', '.mobile-nav li  a', function(e) {
             e.preventDefault();
             $('.mobile-nav-toggle').click();
             $('.mobile-nav .drop-down.active').toggleClass('active');
