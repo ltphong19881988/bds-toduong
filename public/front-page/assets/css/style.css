@@ -249,6 +249,43 @@ h6 {
     background: rgba(255, 255, 255, 0.2);
 }
 
+.drop-down {
+    position: relative;
+}
+
+.nav-menu .drop-down {
+    padding-right: 10px;
+}
+
+.nav-menu .drop-down .btn-dropdown::after,
+.mobile-nav .drop-down .btn-dropdown::after {
+    content: "\ea99";
+    font-family: IcoFont;
+}
+
+.mobile-nav .drop-down .btn-dropdown {
+    position: absolute;
+    top: 3px;
+    right: 12px;
+    padding: 5px 12px;
+}
+
+.nav-menu .drop-down .btn-dropdown {
+    position: absolute;
+    top: 17px;
+    right: 2px;
+}
+
+.nav-menu .drop-down ul .btn-dropdown {
+    top: 7px;
+    right: 7px;
+}
+
+.nav-menu .drop-down ul .btn-dropdown::after {
+    content: "\eaa0";
+    font-family: IcoFont;
+}
+
 .nav-menu .drop-down ul {
     display: block;
     position: absolute;
@@ -289,7 +326,7 @@ h6 {
 }
 
 .nav-menu .drop-down>a:after {
-    content: "\ea99";
+    /* content: "\ea99"; */
     font-family: IcoFont;
     padding-left: 5px;
 }
@@ -310,7 +347,7 @@ h6 {
 }
 
 .nav-menu .drop-down .drop-down>a:after {
-    content: "\eaa0";
+    /* content: "\eaa0"; */
     font-family: IcoFont;
     position: absolute;
     right: 15px;
@@ -389,7 +426,7 @@ h6 {
 }
 
 .mobile-nav .drop-down>a:after {
-    content: "\ea99";
+    /* content: "\ea99"; */
     font-family: IcoFont;
     padding-left: 10px;
     position: absolute;
@@ -397,7 +434,7 @@ h6 {
 }
 
 .mobile-nav .active.drop-down>a:after {
-    content: "\eaa1";
+    /* content: "\eaa1"; */
 }
 
 .mobile-nav .drop-down>a {
@@ -2008,6 +2045,9 @@ a.footer-logo img {
     }
     .breadcrumbs h1 {
         font-size: 17px;
+    }
+    .post_detail img {
+        max-width: 100%;
     }
 }
 
