@@ -11,6 +11,7 @@ const Category = require('../../models/category');
 const Post = require('../../models/post');
 const PostContent = require('../../models/post-content');
 const Project = require('../../models/project');
+const Product = require('../../models/product');
 const ProjectContent = require('../../models/project-content');
 const AppConfig = require('../../models/app-config');
 const mw = require('../../models/helpers/my-middleware');
@@ -220,8 +221,33 @@ router.post('/data-index', async(req, res, next) => {
         });
     });
 
-    Promise.all([listSliders, listHotProjects]).then(values => {
-        res.json({ listSliders: values[0], listHotProjects: values[1] });
+    var optionsProduct = { visible: 1 };
+    var newProducts = new Promise(resolve => {
+        Product.aggregate([{
+                $match: optionsProduct,
+            },
+            {
+                $sort: { datecreate: -1 }
+            },
+            {
+                $lookup: {
+                    from: "productcontents",
+                    localField: "_id",
+                    foreignField: "idProduct",
+                    as: "productContent"
+                },
+            },
+            { $unwind: "$productContent" },
+            { "$skip": 0 },
+            { "$limit": 6 },
+
+        ], function(err, result) {
+            resolve(result);
+        });
+    });
+
+    Promise.all([listSliders, listHotProjects, newProducts]).then(values => {
+        res.json({ listSliders: values[0], listHotProjects: values[1], newProducts: values[2] });
     })
 
 })

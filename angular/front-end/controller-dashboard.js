@@ -44,12 +44,13 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
         // url: '/get-slider',
         url: '/data-index',
         data: {
-            webname: 'bds-totnhat'
+            webname: 'bds-totnhat',
         }
     }
     submitFrontEnd(params, $http, function(res) {
         $scope.sliders = res.listSliders;
         $scope.listHotProjects = res.listHotProjects;
+        $rootScope.newProducts = res.newProducts;
         console.log(res);
 
         setTimeout(() => {
@@ -120,34 +121,22 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
         restrict: 'E',
         scope: {
             title: '@',
-            key: "@"
+            key: "@",
         },
         templateUrl: '/tpls/main/product/directive-new-product.html',
-        controller: function($scope, $compile, $http) {
+        controller: function($scope, $compile, $http, $rootScope) {
             $scope.linkViewmore = '/san-pham-moi';
-            let filter_ban = {
-                idCategoryType: "5f166a011ab04a0e50f990b3",
-                skip: 0,
-                limit: 6
-            };
-            GetHotProduct(filter_ban, $http, function(res) {
-                $scope.newProducts = res;
-                // console.log($scope.newProducts);
-                // setTimeout(function() {
-                //     jQuery("#" + $scope.key + ' .pi-img').each(function() {
-                //         var a = jQuery(this).height() / jQuery(this).width();
-                //         var b = jQuery(this).find('img').eq(0).height() / jQuery(this).find('img').eq(0).width();
-                //         if (a > b) {
-                //             jQuery(this).find('img').eq(0).css("width", "auto");
-                //             jQuery(this).find('img').eq(0).css("height", "100%");
-                //         } else {
-                //             jQuery(this).find('img').eq(0).css("width", "100%");
-                //             jQuery(this).find('img').eq(0).css("height", "auto");
-                //         }
-                //     })
-                // }, 100);
-
-            })
+            $rootScope.$watch('newProducts', function() {
+                $scope.newProducts = $rootScope.newProducts;
+            }, true);
+            // let filter_ban = {
+            //     idCategoryType: "5f166a011ab04a0e50f990b3",
+            //     skip: 0,
+            //     limit: 6
+            // };
+            // GetHotProduct(filter_ban, $http, function(res) {
+            //     $scope.newProducts = res;
+            // })
         },
 
     }

@@ -1854,6 +1854,7 @@ a.footer-logo img {
 
 #product_detail {
     font-size: 15px;
+    margin-bottom: 20px;
 }
 
 #product_detail .gallery {
@@ -1953,6 +1954,25 @@ a.footer-logo img {
 
 .box-content .count-product .normal {
     font-size: 14px;
+}
+
+.othernews h2 {
+    float: left;
+    font-size: 1.1em;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.normalblue {
+    color: #055699;
+}
+
+.othernews .otherline {
+    border-bottom: 1px dashed #ccc;
+    float: right;
+    line-height: 14px;
+    width: 80%;
+    margin-top: 0;
 }
 
 @media (max-width: 1199px) {

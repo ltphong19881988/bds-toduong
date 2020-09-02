@@ -61,7 +61,7 @@
     </li>
     <li><a href="/du-an">Dự án</a></li>
     <!-- <li><a href="#portfolio">Hợp tác</a></li> -->
-    <li class="drop-down"><a href="javascript:void(0)">Tin tức - Kinh nghiệm</a>
+    <li class="drop-down"><a href="#">Tin tức - Kinh nghiệm</a>
         <ul>
             <li class="drop-down" ng-repeat="item in menuNews" ng-if="item.priority == 2 && item.idParent == '5f2e60e731fb1f20f8aa783d' ">
                 <a href="/news/{{item.catePostContent.oneLvlUrl}}">{{item.name}}</a>
@@ -76,6 +76,16 @@
         <button class="btn btn-dropdown"></button>
     </li>
     <li><a href="/news/phong-thuy">Phong thủy</a></li>
-
+    <li class="drop-down"><a href="#">Tỉnh khác</a>
+        <ul>
+            <li class="drop-down">
+                <a href="/nha-dat-ban-long-an">Nhà đất Long An</a>
+            </li>
+            <li class="drop-down">
+                <a href="/nha-dat-ban-binh-duong">Nhà đất Bình Dương</a>
+            </li>
+        </ul>
+        <button class="btn btn-dropdown"></button>
+    </li>
 </ul>
 <!-- .nav-menu -->

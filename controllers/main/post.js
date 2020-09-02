@@ -1,11 +1,9 @@
 const router = require('express').Router();
 const Category = require('../../models/category');
 const ListProvince = require("../../models/listprovince");
-const Product = require("../../models/product");
-const ProductType = require("../../models/product-type");
-const ProductContent = require("../../models/product-content");
 const Post = require("../../models/post");
 const PostContent = require("../../models/post-content");
+const Tool = require("../../models/helpers/tool");
 const mongoose = require('mongoose');
 
 var strIndexOf = function(url, str) {
@@ -151,7 +149,7 @@ router.post('/filter-url', async(req, res, next) => {
 })
 
 router.get('/name-key/:key', async(req, res, next) => {
-    // console.log(req.params);
+
     Post.aggregate([{
             $match: { nameKey: req.params.key },
         },
@@ -172,20 +170,11 @@ router.get('/name-key/:key', async(req, res, next) => {
             },
         },
         { $unwind: "$postContent" },
-        // {
-        //     $project: {
-        //         // "categoryName": '$category.name',
-        //         "nameKey": 1,
-        //         "normalPrice": 1,
-        //         "pictures": 1,
-        //         "salePrice": 1,
-        //         "datecreate": 1,
-        //         "title": '$postContent.title',
-        //     }
-        // },
-    ], function(err, result) {
+    ], async function(err, result) {
         console.log('result', result);
         res.json(result[0]);
+        // var count = await Post.countDocuments({ postType: 1, visible: 1 }).exec();
+        // var skipRecords = Tool.getRandomArbitrary(1, count - limitrecords);
     });
 })
 

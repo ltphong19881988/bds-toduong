@@ -1,6 +1,10 @@
 var Tool = {};
 module.exports = Tool;
 
+module.exports.getRandomArbitrary = function(min, max) {
+    return Math.ceil(Math.random() * (max - min) + min);
+}
+
 module.exports.RegularUsername = function(str) {
     // $pattern = "/^[a-z0-9_\.]{6,32}$/";
     if (!str)
