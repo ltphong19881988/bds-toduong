@@ -48,12 +48,12 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
             MetadataService.setMetaTags('keywords', $scope.product.productContent.title);
 
         setTimeout(function() {
-            $scope.copyOwl = $('.owl-carousel').clone().prop({
+            $scope.copyOwl = $('.gallery > .owl-carousel').clone().prop({
                 id: 'copyOwl'
             });
         }, 400);
         setTimeout(function() {
-            $(".gallery .owl-carousel").owlCarousel({
+            $(".gallery > .owl-carousel").owlCarousel({
                 autoPlay: false,
                 nav: true,
                 navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
@@ -102,6 +102,7 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         // $('.owl-nav').css('z-index', '9999989');
 
         $('body').append(`<div class="search-overly"></div>`);
+        $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
         $('body').prepend($scope.copyOwl);
         $scope.copyOwl.owlCarousel({
             autoplay: true,

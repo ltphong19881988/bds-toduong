@@ -123,6 +123,7 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
     $scope.viewFullImg = function(src) {
         console.log(src);
         $('body').append(`<div class="search-overly"></div>`);
+        $('body').prepend('<button type="button" class="popup-overlay-close"><i class="icofont-close"></i></button>');
 
         $('body').prepend($scope.copyOwl);
         $scope.copyOwl.owlCarousel({
