@@ -24,19 +24,9 @@ app.controller("postDetailCtrl", function($rootScope, $scope, $http, $compile, $
     };
     submitFrontEnd(params, $http, function(res) {
         console.log('details', res);
-        $rootScope.pageTitle += ' - ' + res.postContent.title;
-        $scope.post = res;
-        $scope.nearestCate = JSON.parse(localStorage.getItem('nearestCate'));
-        // $scope.nearestCate = res.category.reduce(function(prev, current) {
-        //     if (+current.priority > +prev.priority) {
-        //         return current;
-        //     } else {
-        //         return prev;
-        //     }
-        // });
-        $scope.nearestLocal = res.province;
-        if (res.district && res.district.link) $scope.nearestLocal = res.district;
-        if (res.ward && res.ward.link) $scope.nearestLocal = res.ward;
+        $rootScope.pageTitle += ' - ' + res.post.postContent.title;
+        $scope.post = res.post;
+        $scope.relatedPosts = res.relatedPosts;
 
     })
 

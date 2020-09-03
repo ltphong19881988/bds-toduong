@@ -1971,8 +1971,36 @@ a.footer-logo img {
     border-bottom: 1px dashed #ccc;
     float: right;
     line-height: 14px;
-    width: 80%;
+    width: 75%;
     margin-top: 0;
+}
+
+.font-link-box-item {
+    color: #000;
+    text-decoration: none !important;
+    text-rendering: geometricPrecision;
+}
+
+.iconlist {
+    padding-left: 15px;
+    background-image: url(../img/bullet-xanh.jpg);
+    background-position: left center;
+    background-repeat: no-repeat;
+    line-height: 26px;
+    margin-left: 15px;
+    clear: both;
+    display: block;
+    font-size: 14px;
+}
+
+.related_product .title-list {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 16px;
+    color: #03528c;
+    text-transform: uppercase;
 }
 
 @media (max-width: 1199px) {

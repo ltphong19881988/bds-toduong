@@ -54,11 +54,20 @@
                 <div class="pr-content" ng-bind-html="post.postContent.content | trust">
                 </div>
             </div>
-            <div class="row othernews">
-                <h2 class="normalblue" style="white-space: nowrap;">Tin mới nhất</h2>
+            <div class="othernews">
+                <h2 class="normalblue" style="white-space: nowrap;">Xem thêm tin khác</h2>
                 <div class="otherline">
                     &nbsp;
                 </div>
+                <a ng-repeat="item in relatedPosts" class="font-link-box-item iconlist" href="/news/{{item.postContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.postContent.title}}">
+                    {{item.postContent.title}}
+                    <i>
+                        ( 
+                        <span ng-if="item.datePost" ng-bind="item.datePost | date:'dd/MM/yyyy' "></span> 
+                        <span ng-if="!item.datePost" ng-bind="item.datecreate | date:'dd/MM/yyyy' "></span>
+                        )
+                    </i>
+                </a>
             </div>
         </div>
 

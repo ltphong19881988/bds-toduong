@@ -12,7 +12,8 @@ var GetHotProduct = function(filter, $http, callback) {
 }
 
 var fixImgSlider = function($scope) {
-    jQuery("#" + $scope.key + ' .testimonial-img').each(function() {
+    // jQuery("#" + $scope.key + ' .testimonial-img').each(function() {
+    jQuery('.testimonial-img').each(function() {
         var width = jQuery(this).width();
         if (width <= 250) {
             jQuery(this).height(width);

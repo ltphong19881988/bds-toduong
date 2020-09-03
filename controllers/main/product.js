@@ -6,6 +6,7 @@ const ProductType = require("../../models/product-type");
 const ProductContent = require("../../models/product-content");
 const Post = require("../../models/post");
 const PostContent = require("../../models/post-content");
+const Tool = require("../../models/helpers/tool");
 const mongoose = require('mongoose');
 
 var strIndexOf = function(url, str) {
@@ -326,9 +327,51 @@ router.get('/name-key/:key', async(req, res, next) => {
         //         "title": '$postContent.title',
         //     }
         // },
-    ], function(err, result) {
-        console.log('result', result);
-        res.json(result[0]);
+    ], async function(err, products) {
+        console.log('result', products);
+
+        var limitrecords = 5;
+        var relateOpts = {
+            nameKey: { $ne: req.params.key },
+            visible: 1,
+            idCategory: { $elemMatch: { $eq: products[0].category[0]._id } },
+            $or: [
+                { 'province.link': products[0].province['link'] },
+                { 'district.link': products[0].district['link'] },
+            ]
+        };
+        var count = await Product.countDocuments(relateOpts).exec();
+        var checklimit = count - limitrecords;
+        if (checklimit < 0) checklimit = 0;
+        var skipRecords = Tool.getRandomArbitrary(0, checklimit);
+        Product.aggregate([{
+                $match: relateOpts,
+            },
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "idCategory",
+                    foreignField: "_id",
+                    as: "category"
+                },
+            },
+            {
+                $lookup: {
+                    from: "productcontents",
+                    localField: "_id",
+                    foreignField: "idProduct",
+                    as: "productContent"
+                },
+            },
+            { $unwind: "$productContent" },
+            { $skip: skipRecords },
+            { $limit: 5 }
+        ], function(err, relatedProducts) {
+            console.log('relatedProducts', relatedProducts);
+            res.json({ product: products[0], relatedProducts: relatedProducts });
+
+
+        });
     });
 })
 

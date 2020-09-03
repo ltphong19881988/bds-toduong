@@ -24,8 +24,9 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
     };
     submitFrontEnd(params, $http, function(res) {
         console.log('details', res);
-        $rootScope.pageTitle += res.productContent.title;
-        $scope.product = res;
+        $rootScope.pageTitle += res.product.productContent.title;
+        $scope.product = res.product;
+        $scope.relatedProducts = res.relatedProducts;
         $scope.nearestCate = JSON.parse(localStorage.getItem('nearestCate'));
         // $scope.nearestCate = res.category.reduce(function(prev, current) {
         //     if (+current.priority > +prev.priority) {
@@ -35,8 +36,8 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         //     }
         // });
         $scope.nearestLocal = res.province;
-        if (res.district && res.district.link) $scope.nearestLocal = res.district;
-        if (res.ward && res.ward.link) $scope.nearestLocal = res.ward;
+        if (res.product.district && res.product.district.link) $scope.nearestLocal = res.product.district;
+        if (res.product.ward && res.product.ward.link) $scope.nearestLocal = res.product.ward;
         if ($scope.product.productContent.seoDescriptions)
             MetadataService.setMetaTags('description', $scope.product.productContent.seoDescriptions);
         else
@@ -65,6 +66,33 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
                 },
             });
         }, 500);
+
+        setTimeout(function() {
+            // console.log(jQuery('.testimonial-img').eq(0).width());
+            jQuery('.related_product-carousel').owlCarousel({
+                autoplay: true,
+                dots: false,
+                loop: true,
+                onInitialized: function(e) {
+                    fixImgSlider($scope);
+                },
+                onRefreshed: function(e) {
+                    fixImgSlider($scope);
+                },
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 2
+                    },
+                    992: {
+                        items: 3
+                    },
+                }
+            });
+
+        }, 300);
     })
 
     $scope.viewFullImg = function(src) {

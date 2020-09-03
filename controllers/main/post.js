@@ -170,11 +170,39 @@ router.get('/name-key/:key', async(req, res, next) => {
             },
         },
         { $unwind: "$postContent" },
-    ], async function(err, result) {
-        console.log('result', result);
-        res.json(result[0]);
-        // var count = await Post.countDocuments({ postType: 1, visible: 1 }).exec();
-        // var skipRecords = Tool.getRandomArbitrary(1, count - limitrecords);
+    ], async function(err, post) {
+        console.log('result', post);
+        // res.json(post[0]);
+        var limitrecords = 5;
+        var count = await Post.countDocuments({ postType: 1, visible: 1 }).exec();
+        var checklimit = count - limitrecords;
+        if (checklimit < 0) checklimit = 0;
+        var skipRecords = Tool.getRandomArbitrary(0, checklimit);
+        Post.aggregate([{
+                $match: { nameKey: { $ne: req.params.key }, postType: 1, visible: 1 },
+            },
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "idCategory",
+                    foreignField: "_id",
+                    as: "category"
+                },
+            },
+            {
+                $lookup: {
+                    from: "postcontents",
+                    localField: "_id",
+                    foreignField: "idPost",
+                    as: "postContent"
+                },
+            },
+            { $unwind: "$postContent" },
+            { $skip: skipRecords },
+            { $limit: 5 }
+        ], async function(err, lienquans) {
+            res.json({ post: post[0], relatedPosts: lienquans });
+        });
     });
 })
 
