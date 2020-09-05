@@ -42,8 +42,8 @@ var initCategory = function($scope, $compile, $http) {
         url: '/admin/category/all-category?idCategoryType=5f166a011ab04a0e50f990b3',
     }
     submitBackend(params, $http, function(res) {
-        // console.log('all category', res);
         $scope.arrCategory = res;
+        console.log('all category', $scope.arrCategory);
         var html = `
             <div class="node" parent="null" >
                 <ul style="list-style: none;">
@@ -56,8 +56,8 @@ var initCategory = function($scope, $compile, $http) {
 }
 
 var tonggleCategory = function() {
-    if (!isVisible(jQuery("#formAddProduct div#listCategory")[0])) jQuery("#formAddProduct div#listCategory").show();
-    else jQuery("#formAddProduct div#listCategory").hide();
+    if (!isVisible(jQuery("div#listCategory")[0])) jQuery("div#listCategory").show();
+    else jQuery("div#listCategory").hide();
 }
 
 var loopSelectedCategory = function(idParent, arrCate) {
@@ -137,7 +137,8 @@ var initProvince = function($scope, $compile, $http) {
 }
 
 var initDistrict = function($scope, $compile, $http) {
-    if (!$scope.productItem.province) return;
+    // if (!$scope.productItem.province) return;
+    if (!$scope.selectedprovince) return;
     let params = {
         method: 'POST',
         url: '/admin/sector/filter-all',

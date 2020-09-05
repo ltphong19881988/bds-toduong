@@ -150,7 +150,7 @@
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Tỉnh thành  : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="text" placeholder="Tỉnh thành" auto-complete class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                                    <input type="text" placeholder="Tỉnh thành" auto-complete-project class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
                                     <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
                                         <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
                                             {{item.title}}
@@ -161,7 +161,7 @@
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Quận huyện : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="text" placeholder="Quận huyện" class="form-control" auto-complete ui-items="listDistricts" ng-model="selecteddistrict" key='district' ng-click='showHideList($event)' />
+                                    <input type="text" placeholder="Quận huyện" class="form-control" auto-complete-project ui-items="listDistricts" ng-model="selecteddistrict" key='district' ng-click='showHideList($event)' />
                                     <ul class="showlist showlist-district ui-autocomplete" ng-show="showlistdistrict">
                                         <li ng-repeat="item in listDistricts  | filter: selecteddistrict track by $index" ng-click="selectedDistrict($event, item)">
                                             {{item.title}}
@@ -175,7 +175,7 @@
                             <div class="row col-md-6">
                                 <div class="col col-md-4"><label class=" form-control-label">Phường xã  : </label></div>
                                 <div class="col-12 col-md-8">
-                                    <input type="text" placeholder="Phường xã" class="form-control" auto-complete ui-items="listWards" ng-model="selectedward" key='ward' ng-click='showHideList($event)' />
+                                    <input type="text" placeholder="Phường xã" class="form-control" auto-complete-project ui-items="listWards" ng-model="selectedward" key='ward' ng-click='showHideList($event)' />
                                     <ul class="showlist showlist-ward ui-autocomplete" ng-show="showlistward">
                                         <li ng-repeat="item in listWards  | filter: selectedward track by $index" ng-click="selectedWard($event, item)">
                                             {{item.title}}

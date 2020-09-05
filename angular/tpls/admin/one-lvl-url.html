@@ -1,3 +1,45 @@
+<style>
+    div#listCategory {
+        z-index: 9999;
+        border: 1px solid #009188;
+        height: 300px;
+        overflow-y: scroll;
+        position: absolute;
+        background: #fff;
+        width: 100%;
+    }
+    
+    div.node {}
+    
+    .node>ul {
+        margin-left: 20px;
+    }
+    
+    #listCategory>.node>ul {
+        margin-left: 0px;
+    }
+    
+    .node ul li>div>div {
+        margin: 5px 0px;
+        display: inline-block;
+    }
+    
+    .node ul li {
+        border-bottom: 1px solid #e1e1e1;
+        position: relative;
+        /* height: 35px; */
+        line-height: 35px;
+        padding-left: 10px;
+    }
+    /* #formAddProduct .node ul li:last-child {
+        border-bottom: none;
+    } */
+    
+    .node>div>div>ul {
+        margin-left: 0px;
+    }
+</style>
+
 <div class="row">
     <div class="col-sm-12 col-md-12">
         <aside class="profile-nav alt">
@@ -6,34 +48,122 @@
                     <strong class="card-title text-light">SEO một cấp</strong>
                 </div>
                 <div class="card-body ">
+
+                    <div class="row form-group">
+                        <div class="row col-md-6">
+                            <div class="col col-md-3"><label class=" form-control-label">Danh mục : </label></div>
+                            <div class="col-12 col-md-9">
+                                <input class="form-control" name="idCategory" ng-click='showHideCategory()' />
+                                <div id='listCategory' status="0" style="display:none;">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row col-md-6">
+                            <div class="col col-md-4"><label class=" form-control-label">Tỉnh thành  : </label></div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" placeholder="Tỉnh thành" auto-complete-url class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                                <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                                    <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                        {{item.title}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+
+                        <div class="row col-md-6">
+                            <div class="col col-md-4"><label class=" form-control-label">Quận huyện : </label></div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" placeholder="Quận huyện" class="form-control" auto-complete-url ui-items="listDistricts" ng-model="selecteddistrict" key='district' ng-click='showHideList($event)' />
+                                <ul class="showlist showlist-district ui-autocomplete" ng-show="showlistdistrict">
+                                    <li ng-repeat="item in listDistricts  | filter: selecteddistrict track by $index" ng-click="selectedDistrict($event, item)">
+                                        {{item.title}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row col-md-6">
+                            <div class="col col-md-4"><label class=" form-control-label">Phường xã  : </label></div>
+                            <div class="col-12 col-md-8">
+                                <input type="text" placeholder="Phường xã" class="form-control" auto-complete-url ui-items="listWards" ng-model="selectedward" key='ward' ng-click='showHideList($event)' />
+                                <ul class="showlist showlist-ward ui-autocomplete" ng-show="showlistward">
+                                    <li ng-repeat="item in listWards  | filter: selectedward track by $index" ng-click="selectedWard($event, item)">
+                                        {{item.title}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">Từ khóa (Không nên sửa): </label></div>
+                        <div class="col col-md-3 "><label class=" form-control-label ">Url (Không nên sửa): </label></div>
                         <div class="col-12 col-md-9 ui-widget ">
-                            <input type="text " placeholder="key " ng-model='configKey' class="form-control autocomplete ">
+                            <input type="text " placeholder="key " ng-model='urlItem.oneLvlUrl' class="form-control  ">
                         </div>
                     </div>
                     <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">Giá trị : </label></div>
-                        <div class="col-12 col-md-9 ">
-                            <input type="text " placeholder="value " ng-model='configValue' class="form-control ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Tiêu đề: </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <input type="text " placeholder="key " ng-model='urlItem.title' class="form-control  ">
                         </div>
                     </div>
                     <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">Loại dữ liệu (Không nên sửa) : </label></div>
+                        <div class="col col-md-3 "><label class=" form-control-label ">SEO keywords : </label></div>
                         <div class="col-12 col-md-9 ">
-                            <input type="text " placeholder="type " ng-model='configType' class="form-control ">
+                            <input type="text " placeholder="value " ng-model='urlItem.seoKeyWord' class="form-control ">
                         </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">SEO descriptions : </label></div>
+                        <div class="col-12 col-md-9 ">
+                            <input type="text " placeholder="type " ng-model='urlItem.seoDescriptions' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-12"><label class=" form-control-label">Mô tả ngắn : </label></div>
+                        <textarea name="" id="editorDescriptionUrl" rows="4" cols="80">
+                                    
+                                </textarea>
+                        <script>
+                            CKEDITOR.replace('editorDescriptionUrl', {
+                                language: 'vi',
+                                width: '90%',
+                                title: 'Mô tả ngắn',
+                                entities_latin: false,
+                                height: '5em',
+                                // uiColor: '#9AB8F3'
+                            });
+                        </script>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-12"><label class=" form-control-label">Nội dung chi tiết : </label></div>
+                        <textarea name="" id="editorContentUrl" rows="10" cols="80">
+                                Nội dung chi tiết
+                            </textarea>
+                        <script>
+                            CKEDITOR.replace('editorContentUrl', {
+                                language: 'vi',
+                                width: '100%',
+                                title: 'Nội dung chi tiết',
+                                entities_latin: false,
+                                height: '20em',
+                                toolbarCanCollapse: true,
+                                // uiColor: '#9AB8F3'
+                            });
+                        </script>
                     </div>
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit " class="btn btn-success " ng-click="submitAddSiteConfig($event) ">
+                    <button type="submit " class="btn btn-success " ng-click='submitOneLvlUrl($event, "add")'>
                                 <i class="fa fa-dot-circle-o "></i> Thêm mới
                             </button>
-                    <button type="reset " class="btn btn-danger pull-right" ng-click="cancelUpdateSiteConfig($event)" style="margin-right: 10px;"> 
+                    <button type="reset " class="btn btn-danger pull-right" ng-click="cancelUpdateOneLvlUrl($event)" style="margin-right: 10px;"> 
                                 <i class=" fa fa-ban "></i> Hủy
                         </button>
-                    <button type="reset " class="btn btn-info pull-right" ng-click="submitUpdateSiteConfig($event)" style="margin-right: 20px;"> 
+                    <button type="reset " class="btn btn-info pull-right" ng-click='submitOneLvlUrl($event, "edit")' style="margin-right: 20px;"> 
                                 <i class=" fa fa-ban "></i> Thay đổi
                         </button>
 

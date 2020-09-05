@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
-const Transaction = require('../transaction');
 const User = require('../user');
 const UserInvest = require('../userinvest');
 const InvestmentTree = require('../investmenttree');

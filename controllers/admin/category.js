@@ -42,19 +42,7 @@ var getCookies = function(cookie, cname) {
     return "";
 }
 
-// router.get('/abc', function(req, res, next) {
-//     Post.aggregate([{
-//             $match: { postType: 0 },
-//         }
 
-//     ], function(err, result) {
-//         result.forEach(element => {
-//             Post.findOneAndUpdate({ _id: element._id }, { visible: 1, idCategory: [element.idCategory] }, function(err, doc) {
-//                 console.log('update', err, doc);
-//             })
-//         });
-//     })
-// })
 
 router.get("/all-category", function(req, res, next) {
     var options = {};
@@ -258,6 +246,16 @@ router.post("/uploadfile", function(req, res, next) {
         });
     });
     res.json('fewầ')
+})
+
+router.get('/get-post-content/:id', async(req, res, next) => {
+    var id = mongoose.Types.ObjectId(req.params.id);
+    var post = await Post.findOne({ postType: 0, idCategory: id });
+    // console.log('post', post);
+    var postContent = await PostContent.findOne({ idPost: post._id });
+    // console.log('postContent', postContent);
+    post._doc['postContent'] = postContent;
+    res.json(post);
 })
 
 

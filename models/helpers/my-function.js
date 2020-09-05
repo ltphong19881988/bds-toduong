@@ -3,9 +3,7 @@ const moment = require('moment');
 const fs = require('fs');
 const nodemailer = require("nodemailer");
 const AppConfig = require('../app-config');
-const Transaction = require('../transaction');
-const UserInvest = require('../userinvest');
-const InvestmentTree = require('../investmenttree');
+
 
 var MyFunction = {};
 module.exports = MyFunction;

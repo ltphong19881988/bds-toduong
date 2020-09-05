@@ -322,7 +322,7 @@ adminApp.controller("projectCtrl", function($rootScope, $scope, $http, $compile,
 
 
 
-}).directive('autoComplete', function($timeout) {
+}).directive('autoCompleteProject', function($timeout) {
     return function(scope, iElement, iAttrs) {
         // console.log(iElement, iAttrs);
         var key = iAttrs.key;

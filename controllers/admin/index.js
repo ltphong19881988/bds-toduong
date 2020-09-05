@@ -10,7 +10,7 @@ const User = require('../../models/user');
 const Group = require('../../models/group');
 const AppConfig = require('../../models/app-config');
 const Post = require('../../models/post');
-// var UserRole   = require('../models/userrole');
+const OneLvlUrl = require('../../models/onelvlurl');
 // var UserAuth   = require('../models/userauth');
 
 var config = require('../../config'); // get our config file
@@ -74,10 +74,7 @@ router.use('/product-type', require('./product-type'));
 router.use('/product', require('./product'));
 router.use('/post', require('./post'));
 router.use('/project', require('./project'));
-// router.use('/transactions', require('./transactions'));
-// router.use('/promotion', require('./promotion'));
-// router.use('/order', require('./order'));
-// router.use('/video', require('./video'));
+
 // router.use('/notification', require('./notification'));
 
 
@@ -194,7 +191,7 @@ router.get('/add-phuong', function(req, res, next) {
 
 })
 
-
+// ======= all site config request 
 router.post('/site-config', async(req, res, next) => {
     if (!req.body.key || !req.body.value) return res.json({ status: false, mes: 'Vui lòng nhập đầy đủ' });
     var item = new AppConfig({
@@ -255,6 +252,7 @@ router.post('/all-site-config', async(req, res, next) => {
 
 })
 
+// ======= all siler request 
 router.post('/slider', async(req, res, next) => {
     if (!req.body.videoUrl) return res.json({ status: false, mes: 'Bạn chưa chọn hình ảnh' });
     var item = new Post(req.body);
@@ -288,7 +286,47 @@ router.post('/slider/all', async(req, res, next) => {
 
 })
 
+// ======= all one level url request 
+router.post('/one-lvl-url', async(req, res, next) => {
+    // console.log(req.body);
+    // if (!req.body.key || !req.body.value) return res.json({ status: false, mes: 'Vui lòng nhập đầy đủ' });
+    var item = new OneLvlUrl({
+        idCategory: mongoose.Types.ObjectId(req.body.idCategory),
+        local: req.body.local,
+        title: req.body.title,
+        oneLvlUrl: req.body.oneLvlUrl,
+        descriptions: req.body.descriptions,
+        content: req.body.content,
+        seoKeyWord: req.body.seoKeyWord,
+        seoDescriptions: req.body.seoDescriptions,
+    })
 
+    item.save(function(err, doc) {
+        if (err) return res.json({ status: false, mes: 'Lỗi không lưu được, vui lòng thử lại sau', err: err });
+        return res.json({ status: true, mes: 'Thành công', doc })
+    });
+
+})
+
+router.put('/one-lvl-url', async(req, res, next) => {
+    console.log(req.body);
+    var doc = await OneLvlUrl.findOneAndUpdate({ _id: mongoose.Types.ObjectId(req.body._id) }, req.body);
+    res.json({ status: true, mes: 'Thành công', doc });
+})
+
+router.post('/all-one-lvl-url', async(req, res, next) => {
+    console.log(req.body);
+    var result = await OneLvlUrl.FilterAllDataTable({});
+    console.log('result', result);
+    var records = {
+        'draw': req.body.aoData[0].value,
+        'recordsTotal': 2,
+        'recordsFiltered': 0,
+        'data': result
+    };
+
+    res.json(records);
+})
 
 
 
