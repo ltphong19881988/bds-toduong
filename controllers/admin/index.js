@@ -315,8 +315,8 @@ router.put('/one-lvl-url', async(req, res, next) => {
 })
 
 router.post('/all-one-lvl-url', async(req, res, next) => {
-    console.log(req.body);
-    var result = await OneLvlUrl.FilterAllDataTable({});
+    // console.log(req.body);
+    var result = await OneLvlUrl.FilterAllDataTable(req.body.aoData);
     console.log('result', result);
     var records = {
         'draw': req.body.aoData[0].value,

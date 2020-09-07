@@ -72,7 +72,6 @@ app.filter('removeHTMLTags', function() {
 
 app.filter('subString', function() {
     return function(htmlCode, number) {
-        console.log('number', number);
         if (htmlCode.length > number) htmlCode = htmlCode.substr(0, number) + ' ...';
         return htmlCode;
     }

@@ -20,7 +20,7 @@ var submitFrontEnd = function(params, $http, callback) {
     });
 };
 
-var filterUrlCategory = function(params, $scope, $http, MetadataService) {
+var filterUrlCategory = function(params, $rootScope, $scope, $http, MetadataService) {
     submitFrontEnd(params, $http, function(res) {
         console.log('result', res);
         if (params.data.url.indexOf('san-pham-moi') == 0) {
@@ -31,10 +31,14 @@ var filterUrlCategory = function(params, $scope, $http, MetadataService) {
         } else {
             $scope.cate = res.cate;
             $scope.cateContent = res.cateContent;
-            MetadataService.setMetaTags('description', $scope.cateContent.title);
-            MetadataService.setMetaTags('keywords', $scope.cateContent.title);
-            localStorage.setItem('nearestCate', JSON.stringify(res.cateContent));
+            console.log('description', $rootScope['flagSeoInfo']);
+            if ($rootScope['flagSeoInfo'] == false) {
+                MetadataService.setMetaTags('description', $scope.cateContent.seoDescriptions);
+                MetadataService.setMetaTags('keywords', $scope.cateContent.seoKeyWord);
+                $rootScope.pageTitle = $rootScope['webName'] + ' - ' + $scope.cateContent.title;
+            }
 
+            localStorage.setItem('nearestCate', JSON.stringify(res.cateContent));
             $scope.searchForm["idCategory"] = $scope.cate._id;
             jQuery('input[name="idCategory"]').val($scope.cateContent.title);
 
@@ -62,7 +66,7 @@ var filterUrlCategory = function(params, $scope, $http, MetadataService) {
 
 
 app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $routeParams, $location, MetadataService) {
-    $rootScope.pageTitle = "Bất động sản Tô Dương - Category";
+
     $scope.loadingText = "Đang tải ...";
     $scope.pagination = {
         currentPage: 1,
@@ -95,7 +99,7 @@ app.controller("categoryCtrl", function($rootScope, $scope, $http, $compile, $ro
         if (path.length > 1) location.href = "/" + url;
     }
 
-    filterUrlCategory(params, $scope, $http, MetadataService);
+    filterUrlCategory(params, $rootScope, $scope, $http, MetadataService);
 
     $scope.pageChanged = function() {
         console.log('Page changed to: ' + $scope.pagination.currentPage, location.pathname);

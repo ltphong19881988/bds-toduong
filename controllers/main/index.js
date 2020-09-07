@@ -12,7 +12,7 @@ const Post = require('../../models/post');
 const PostContent = require('../../models/post-content');
 const Project = require('../../models/project');
 const Product = require('../../models/product');
-const ProjectContent = require('../../models/project-content');
+const OneLvlUrl = require('../../models/onelvlurl');
 const AppConfig = require('../../models/app-config');
 const mw = require('../../models/helpers/my-middleware');
 var MyFunction = require('../../models/helpers/my-function');
@@ -259,6 +259,24 @@ router.post('/one-content', async(req, res, next) => {
     res.json({ status: true, oneContent: abc });
 })
 
+router.post('/seo-info', async(req, res, next) => {
+    if (req.body.url == '/') {
+        console.log('home');
+    } else {
+        if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) return res.json({ status: false });
+        var url = req.body.url.replace('/', '');
+        if (url.indexOf('news') != -1)
+            url = url.replace('news/', '');
+        var abc = url.split('/');
+        console.log(abc[0]);
+        var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
+        if (!onelvlData) return res.json({ status: false });
+        return res.json({ status: true, seoInfo: onelvlData });
+        // console.log(url, typeof(url));
+    }
+})
+
+
 router.get('/verify-email-link/:email', async(req, res, next) => {
     var abc = await User.findOne({ email: req.params.email }).exec();
 
@@ -393,7 +411,7 @@ router.post('/login', loginMW, async(req, res, next) => {
 })
 
 router.get('/*', function(req, res, next) {
-    // console.log(req.decoded);
+    // console.log('originurl', req.originalUrl);
     // res.redirect('/lending');
     res.render('layout/frontPage', {});
 })

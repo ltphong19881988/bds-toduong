@@ -239,7 +239,7 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
             '0': { html: 'input', type: 'datetime' },
             '1': { html: 'input', regexp: true, type: 'text', time: 500 },
             '2': { html: 'input', regexp: true, type: 'text', time: 500 },
-            '3': { html: 'input', regexp: true, type: 'text' },
+            '3': { html: 'input', regexp: true, type: 'text', time: 500 },
         });
     // .withOption('order', [
     //     [1, 'asc'],
@@ -250,15 +250,18 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
         DTColumnBuilder.newColumn('oneLvlUrl').withTitle('Đường link một cấp'),
         // DTColumnBuilder.newColumn('languageCode').withTitle('Ngôn ngữ'),
         DTColumnBuilder.newColumn('category.name').withTitle('Danh mục'),
-        DTColumnBuilder.newColumn('local.title').withTitle('Khu vực'),
-        DTColumnDefBuilder.newColumnDef(0).withTitle('Xử lý').withOption('width', '200px').renderWith(renderAction),
+        DTColumnBuilder.newColumn('local.title').withTitle('Khu vực').renderWith(function(data, type, full) {
+            if (full.local && full.local.title) return full.local.title;
+            else return '';
+        }),
+        DTColumnDefBuilder.newColumnDef(0).withTitle('Xử lý').withOption('width', '200px').renderWith(function(data, type, full) {
+            $scope.allUrlItem[full._id] = full;
+            var html = "<button class='btn btn-info' ng-click=\"preUpdate(allUrlItem['" + full._id + "'])\"> " + "Sửa" + "</button>";
+            return html;
+        }),
     ];
 
-    function renderAction(data, type, full) {
-        $scope.allUrlItem[full._id] = full;
-        var html = "<button class='btn btn-info' ng-click=\"preUpdate(allUrlItem['" + full._id + "'])\"> " + "Sửa" + "</button>";
-        return html;
-    }
+
 
 }).directive('autoCompleteUrl', function($timeout) {
     return function(scope, iElement, iAttrs) {

@@ -162,7 +162,7 @@ var GetNewProduct = async function(req, res, next) {
 }
 
 router.post('/filter-url', async(req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     if (req.body.url.indexOf('san-pham-moi') == 0) {
         return GetNewProduct(req, res, next);
     }
@@ -178,7 +178,7 @@ router.post('/filter-url', async(req, res, next) => {
     var post = await Post.findOne({ _id: cateContent.idPost });
     var cate = await Category.findOne({ _id: post.idCategory });
     var local = await ListProvince.findOne({ link: exUrl });
-    console.log('local', local);
+    // console.log('local', local);
     if (exUrl.length > 2 && local == null) return res.json({ cateContent, cate, redirect: true });
 
     var options = {

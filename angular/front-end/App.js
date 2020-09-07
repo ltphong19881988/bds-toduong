@@ -98,8 +98,9 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 });
 
 // Run a function for init the app ( before content loaded )
-app.run(function($rootScope, $window, $http, $location) {
+app.run(function($rootScope, $window, $http, $location, MetadataService) {
     console.log('app run');
+    $rootScope['web_key'] = 'totnhat';
     InitWebsite($rootScope, $http);
     if ($window.innerWidth >= 992)
         $rootScope.postCateContentNumer = 340;
@@ -108,11 +109,31 @@ app.run(function($rootScope, $window, $http, $location) {
     if ($window.innerWidth <= 450)
         $rootScope.postCateContentNumer = 120;
 
+    // $rootScope.$on('$viewContentLoaded', function() {
+    //     //do your will
+    //     // console.log('viewContentLoaded');
+    // });
 
-    $rootScope.$on('$viewContentLoaded', function() {
-        //do your will
-        // console.log('viewContentLoaded');
+    // $rootScope.$on('$locationChangeStart', function() {
+    //     console.log('locationChangeStart', location);
+    // });
+
+    $rootScope.$on('$locationChangeSuccess', function() {
+        // console.log('locationChangeSuccess', location);
+        // get SEO infomation by ajax
+        $rootScope['flagSeoInfo'] = false;
+        getSeoInfo(location.pathname, $http, function(res) {
+            console.log('getSeoInfo', res);
+            if (res.status) {
+                $rootScope['flagSeoInfo'] = true;
+                MetadataService.setMetaTags('description', res.seoInfo.seoDescriptions);
+                MetadataService.setMetaTags('keywords', res.seoInfo.seoKeyWord);
+                $rootScope.pageTitle = res.seoInfo.title;
+            }
+        })
+
     });
+
     angular.element($window).bind('resize', function() {
         if ($window.innerWidth >= 992) {
             $rootScope.postCateContentNumer = 340;
@@ -138,6 +159,7 @@ app.run(function($rootScope, $window, $http, $location) {
             scrollTop: 0
         }, 1500, 'easeInOutExpo');
     })
+
 });
 
 
@@ -173,14 +195,14 @@ var InitWebsite = function($rootScope, $http) {
     submitFrontEnd(params, $http, function(res) {
         console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
-
         $rootScope.menuNews = res.listNews;
 
-        $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-totnhat')[0].value;
-        $rootScope['webPhone'] = res.siteConfig.filter(x => x.key == 'phone-number-totnhat')[0];
-        $rootScope['webEmail'] = res.siteConfig.filter(x => x.key == 'email-totnhat')[0];
-        $rootScope['webAddress'] = res.siteConfig.filter(x => x.key == 'web-address-totnhat')[0];
-        $rootScope['logoInfo'] = res.siteConfig.filter(x => x.key == 'logo-info-totnhat')[0];
+        $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
+        $rootScope['webName'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
+        $rootScope['webPhone'] = res.siteConfig.filter(x => x.key == 'phone-number-' + $rootScope['web_key'])[0];
+        $rootScope['webEmail'] = res.siteConfig.filter(x => x.key == 'email-' + $rootScope['web_key'])[0];
+        $rootScope['webAddress'] = res.siteConfig.filter(x => x.key == 'web-address-' + $rootScope['web_key'])[0];
+        $rootScope['logoInfo'] = res.siteConfig.filter(x => x.key == 'logo-info-' + $rootScope['web_key'])[0];
     });
 }
 
@@ -197,5 +219,18 @@ var InitMenuNews = function(arrKQ, listNews, pri) {
     }
     submitFrontEnd(params, $http, function(districts) {
         $rootScope.menuDistrict = districts;
+    });
+}
+
+var getSeoInfo = function(url, $http, callback) {
+    let params = {
+        method: 'POST',
+        url: '/seo-info',
+        data: {
+            url: url
+        }
+    }
+    submitFrontEnd(params, $http, function(res) {
+        callback(res);
     });
 }

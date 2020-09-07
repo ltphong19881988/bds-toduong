@@ -148,10 +148,10 @@ module.exports.UpdateProduct = async function(product, product_content) {
 
 module.exports.FilterDataTableProduct = async function(data) {
     console.log(data);
-    let options = {}
-        // if (req.body.idCategoryType) {
-        //     options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);
-        // }
+    let options = {};
+    // if (req.body.idCategoryType) {
+    //     options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);
+    // }
     var hot = data[1].value.filter(item => item.data == 'productType')[0];
     if (hot && hot.search.value) {
         options['productType'] = { $elemMatch: { value: hot.search.value } };
