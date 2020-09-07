@@ -260,11 +260,12 @@ router.post('/one-content', async(req, res, next) => {
 })
 
 router.post('/seo-info', async(req, res, next) => {
+    console.log(req.body);
     if (req.body.url == '/') {
         console.log('home');
     } else {
-        if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) return res.json({ status: false });
         var url = req.body.url.replace('/', '');
+        if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) return res.json({ status: false });
         if (url.indexOf('news') != -1)
             url = url.replace('news/', '');
         var abc = url.split('/');

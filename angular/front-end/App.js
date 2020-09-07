@@ -91,7 +91,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
-    }).hashPrefix('*');
+    }).hashPrefix('!'); // Ban đầu là hashPrefix('*');        
 
 
 
