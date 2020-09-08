@@ -21,6 +21,29 @@ var config = require('../../config'); // get our config file
 const { resolve } = require('path');
 var secretKey = config.secret;
 
+router.use(function(req, res, next) {
+    var fragment = req.query._escaped_fragment_;
+    console.log('fragment', fragment);
+    if (!fragment) return next();
+    // If the fragment is empty, serve the
+    // index page
+    if (fragment === "" || fragment === "/")
+        fragment = "/index.html";
+    // If fragment does not start with '/'
+    // prepend it to our fragment
+    if (fragment.charAt(0) !== "/")
+        fragment = '/' + fragment;
+    // If fragment does not end with '.html'
+    // append it to the fragment
+    if (fragment.indexOf('.html') == -1) fragment += ".html";
+    // Serve the static html snapshot
+    try {
+        // console.log(global.__basedir);
+        var file = global.__basedir + "/snapshots" + fragment;
+        res.sendfile(file);
+    } catch (err) { res.send(404); }
+})
+
 router.use('/product', require('./product'));
 router.use('/sector', require('./sector'));
 router.use('/post', require('./post'));
@@ -260,7 +283,8 @@ router.post('/one-content', async(req, res, next) => {
 })
 
 router.post('/seo-info', async(req, res, next) => {
-    console.log(req.body);
+
+    // console.log(req.body);
     if (req.body.url == '/') {
         console.log('home');
     } else {

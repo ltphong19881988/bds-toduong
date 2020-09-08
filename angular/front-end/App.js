@@ -87,7 +87,6 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
     $route.routes['/:page[-pr]'].regexp = /([a-z0-9-]{1,999})-pr[0-9]/;
 
 
-
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
@@ -101,7 +100,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 app.run(function($rootScope, $window, $http, $location, MetadataService) {
     console.log('app run');
     $rootScope['web_key'] = 'totnhat';
-    InitWebsite($rootScope, $http);
+    InitWebsite($rootScope, $http, MetadataService);
     if ($window.innerWidth >= 992)
         $rootScope.postCateContentNumer = 340;
     if ($window.innerWidth < 992)
@@ -119,7 +118,7 @@ app.run(function($rootScope, $window, $http, $location, MetadataService) {
     // });
 
     $rootScope.$on('$locationChangeSuccess', function() {
-        // console.log('locationChangeSuccess', location);
+        console.log('locationChangeSuccess', $location);
         // get SEO infomation by ajax
         $rootScope['flagSeoInfo'] = false;
         getSeoInfo(location.pathname, $http, function(res) {
@@ -180,7 +179,7 @@ function httpInterceptors() {
     };
 }
 
-var InitWebsite = function($rootScope, $http) {
+var InitWebsite = function($rootScope, $http, MetadataService) {
     let params = {
         method: 'POST',
         url: '/init-web',
@@ -197,6 +196,8 @@ var InitWebsite = function($rootScope, $http) {
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
 
+        MetadataService.setMetaTags('description', res.siteConfig.filter(x => x.key == 'seo-descriptions-' + $rootScope['web_key'])[0].value);
+        MetadataService.setMetaTags('keywords', res.siteConfig.filter(x => x.key == 'seo-keywords-' + $rootScope['web_key'])[0].value);
         $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
         $rootScope['webName'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
         $rootScope['webPhone'] = res.siteConfig.filter(x => x.key == 'phone-number-' + $rootScope['web_key'])[0];
