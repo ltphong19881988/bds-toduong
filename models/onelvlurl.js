@@ -83,7 +83,12 @@ module.exports.FilterAllDataTable = async function(data) {
                 as: "category"
             },
         },
-        { $unwind: "$category" },
+        {
+            $unwind: {
+                path: "$category",
+                "preserveNullAndEmptyArrays": true
+            }
+        },
         { $sort: { oneLvlUrl: 1 } }
     ], function(err, result) {
         console.log(err, result);
