@@ -330,10 +330,10 @@ router.post('/all-one-lvl-url', async(req, res, next) => {
 })
 
 router.post('/create-snapshot', async(req, res, next) => {
-    console.log(req.body, global.__basedir);
+    // console.log(req.body, global.__basedir);
     var abc = path.join(global.__basedir, '../');
-    console.log(abc);
-    exec('node ' + abc + 'snapshot-html\\index.js ' + req.body.url + ' product-item ' + global.__basedir + '\\snapshots' + '"', (error, stdout, stderr) => {
+    // console.log(abc);
+    exec('node ' + abc + 'snapshot-html/index.js ' + req.body.url + ' product-item ' + global.__basedir + '/snapshots' + '"', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return res.json({ status: false, mes: 'thất bại' });
