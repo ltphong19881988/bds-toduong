@@ -58,9 +58,15 @@ router.use('/uploads/*', function(req, res, next) {
     next();
 });
 
-// router.get('/', function(req, res) {
-//     res.redirect('/dashboard');
-// })
+router.get('/robot.txt', function(req, res) {
+    var file = global.__basedir + '/robot.txt';
+    res.sendfile(file);
+})
+
+router.get('/sitemap.xml', function(req, res) {
+    var file = global.__basedir + '/sitemap.xml';
+    res.sendfile(file);
+})
 
 
 function abc() {
