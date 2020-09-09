@@ -334,8 +334,9 @@ router.post('/create-snapshot', async(req, res, next) => {
     var abc = path.join(global.__basedir, '../');
     // console.log(abc);
     exec('node ' + abc + 'snapshot-html/index.js ' + req.body.url + ' product-item ' + global.__basedir + '/snapshots', (error, stdout, stderr) => {
+        console.log(error, stdout, stderr);
         if (error) {
-            console.log(`error: ${error.message}`);
+            // console.log(`error: ${error.message}`);
             return res.json({ status: false, mes: 'thất bại' });
         }
         if (stderr) {
