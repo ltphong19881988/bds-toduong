@@ -2,7 +2,7 @@
 
 <ul>
     <!-- <li class="active"><a href="index.html">Home</a></li> -->
-    <li class="drop-down"><a href="/nha-dat-ban">Nhà đất bán</a>
+    <li class="drop-down"><a ng-href="/nha-dat-ban">Nhà đất bán</a>
         <ul>
             <li class="drop-down" ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
                 <a href="/nha-dat-ban-{{item.link}}">{{item.title}}</a>
@@ -21,7 +21,7 @@
         <button class="btn btn-dropdown">        </button>
     </li>
 
-    <li class="drop-down"><a href="/nha-dat-cho-thue">Nhà đất cho thuê</a>
+    <li class="drop-down"><a ng-href="/nha-dat-cho-thue">Nhà đất cho thuê</a>
         <ul>
             <li class="drop-down"><a href="/cho-thue-nha-mat-tien">Cho thuê nhà mặt tiền</a>
                 <ul>
@@ -59,7 +59,7 @@
         </ul>
         <button class="btn btn-dropdown">    </button>
     </li>
-    <li><a href="/du-an">Dự án</a></li>
+    <li><a ng-href="/du-an">Dự án</a></li>
     <!-- <li><a href="#portfolio">Hợp tác</a></li> -->
     <li class="drop-down"><a href="#">Tin tức - Kinh nghiệm</a>
         <ul>
@@ -75,7 +75,7 @@
         </ul>
         <button class="btn btn-dropdown"></button>
     </li>
-    <li><a href="/news/phong-thuy">Phong thủy</a></li>
+    <li><a ng-href="/news/phong-thuy">Phong thủy</a></li>
     <li class="drop-down"><a href="#">Tỉnh khác</a>
         <ul>
             <li class="drop-down">
