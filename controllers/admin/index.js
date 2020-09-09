@@ -1,5 +1,6 @@
 var express = require('express');
-var async = require('async');
+const { exec } = require("child_process");
+const path = require('path');
 var request = require('request');
 var moment = require('moment');
 const mongoose = require('mongoose');
@@ -326,6 +327,22 @@ router.post('/all-one-lvl-url', async(req, res, next) => {
     };
 
     res.json(records);
+})
+
+router.post('/create-snapshot', async(req, res, next) => {
+    console.log(req.body, global.__basedir);
+    var abc = path.join(global.__basedir, '../');
+    console.log(abc);
+    exec('node ' + abc + 'snapshot-html\\index.js ' + req.body.url + ' product-item ' + global.__basedir + '\\snapshots' + '"', (error, stdout, stderr) => {
+        if (error) {
+            // console.log(`error: ${error.message}`);
+            return res.json({ status: false, mes: 'thất bại' });
+        }
+        if (stderr) {
+            // console.log(`stderr: ${stderr}`);
+            return res.json({ status: true, mes: 'thành công' });
+        }
+    });
 })
 
 

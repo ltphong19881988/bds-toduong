@@ -99,7 +99,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 // Run a function for init the app ( before content loaded )
 app.run(function($rootScope, $window, $http, $location, MetadataService) {
     console.log('app run');
-    $rootScope['web_key'] = 'totnhat';
+    $rootScope['web_key'] = 'toduong';
     InitWebsite($rootScope, $http, MetadataService);
     if ($window.innerWidth >= 992)
         $rootScope.postCateContentNumer = 340;

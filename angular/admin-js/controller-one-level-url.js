@@ -212,6 +212,22 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
         jQuery('.card-footer .btn-success').show();
     }
 
+    $scope.createSnapShot = function(item) {
+        console.log(item.oneLvlUrl);
+        var abc = location.origin + "/" + item.oneLvlUrl;
+        let params = {
+            method: 'POST',
+            url: '/admin/create-snapshot',
+            data: {
+                url: abc
+            }
+        }
+        submitBackend(params, $http, function(res) {
+            console.log('create-snapshot', res);
+            alert(res.mes);
+        });
+    }
+
     // Data table angularjs
     $scope.dtOptions = DTOptionsBuilder
         .newOptions()
@@ -256,7 +272,8 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
         }),
         DTColumnDefBuilder.newColumnDef(0).withTitle('Xử lý').withOption('width', '200px').renderWith(function(data, type, full) {
             $scope.allUrlItem[full._id] = full;
-            var html = "<button class='btn btn-info' ng-click=\"preUpdate(allUrlItem['" + full._id + "'])\"> " + "Sửa" + "</button>";
+            var html = "<button class='btn btn-info' ng-click=\"preUpdate(allUrlItem['" + full._id + "'])\"> " + "Sửa" + "</button> &nbsp;";
+            html += "<button class='btn btn-primary' ng-click=\"createSnapShot(allUrlItem['" + full._id + "'])\"> " + "Tạo snapshot" + "</button> &nbsp;";
             return html;
         }),
     ];
