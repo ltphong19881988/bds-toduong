@@ -33,9 +33,19 @@
     <!-- Template Main CSS File -->
     <link href="/front-page/assets/css/style.css" rel="stylesheet">
 
-    <style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146789895-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-    </style>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-146789895-2');
+    </script>
+
 </head>
 
 <body data-auto-scroll>
@@ -208,9 +218,9 @@
     
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-animate.min.js"></script> -->
     <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-sanitize.js"></script> -->
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="/ui-bootstrap-tpls-2.5.0.js"></script>
     <script src="/angular-route.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.js"></script>
+    <script src="/angular-ui-router.js"></script>
     
 
     <script src="/front-end/App.js"></script>
