@@ -334,14 +334,23 @@ router.post('/create-snapshot', async(req, res, next) => {
     var abc = path.join(global.__basedir, '../');
     // console.log(abc);
     exec('node ' + abc + 'snapshot-html/index.js ' + req.body.url + ' product-item ' + global.__basedir + '/snapshots', (error, stdout, stderr) => {
-        console.log(error, stdout, stderr);
+        // console.log('error', error);
+        // console.log('stdout', stdout);
+        // console.log('stderr', stderr);
         if (error) {
-            // console.log(`error: ${error.message}`);
+            console.log(`error: ${error.message}`);
             return res.json({ status: false, mes: 'thất bại' });
         }
-        if (stderr) {
-            // console.log(`stderr: ${stderr}`);
-            return res.json({ status: true, mes: 'thành công' });
+        // if (stderr) {
+        //     console.log(`stderr: ${stderr}`);
+        //     return res.json({ status: true, mes: 'thành công' });
+        // }
+        if (stdout) {
+            console.log(`stdout: ${stdout}`);
+            if (stdout.indexOf('thanh cong') != -1)
+                return res.json({ status: true, mes: 'thành công' });
+            else
+                return res.json({ status: false, mes: 'thất bại' });
         }
     });
 })

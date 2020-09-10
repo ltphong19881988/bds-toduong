@@ -288,14 +288,14 @@ router.post('/seo-info', async(req, res, next) => {
 
     // console.log(req.body);
     if (req.body.url == '/') {
-        console.log('home');
+        // console.log('home');
     } else {
         var url = req.body.url.replace('/', '');
         if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) return res.json({ status: false });
         if (url.indexOf('news') != -1)
             url = url.replace('news/', '');
         var abc = url.split('/');
-        console.log(abc[0]);
+        // console.log(abc[0]);
         var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
         if (!onelvlData) return res.json({ status: false });
         return res.json({ status: true, seoInfo: onelvlData });
