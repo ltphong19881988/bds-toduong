@@ -22,9 +22,9 @@ const { resolve } = require('path');
 var secretKey = config.secret;
 
 router.use(function(req, res, next) {
+    if (req.originalUrl.indexOf('_escaped_fragment_') == -1) return next();
     var fragment = req.query._escaped_fragment_;
-    console.log('fragment', fragment);
-    if (!fragment) return next();
+    // console.log('bat dau kiem tra');
     // If the fragment is empty, serve the
     // index page
     if (fragment === "" || fragment === "/")
@@ -33,13 +33,9 @@ router.use(function(req, res, next) {
     // prepend it to our fragment
     if (fragment.charAt(0) !== "/")
         fragment = '/' + fragment;
-    // If fragment does not end with '.html'
-    // append it to the fragment
-    // if (fragment.indexOf('.html') == -1) fragment += ".html";
-    // Serve the static html snapshot
     try {
-        // console.log(global.__basedir);
-        var file = global.__basedir + "/snapshots" + fragment + '/index.html';
+        // console.log(global.__basedir, 'di vo day roi');
+        var file = global.__basedir + "/snapshots" + req.originalUrl.split('?_escaped_fragment')[0] + fragment + '/index.html';
         res.sendfile(file);
     } catch (err) { res.send(404); }
 })
