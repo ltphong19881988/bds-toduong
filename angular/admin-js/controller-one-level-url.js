@@ -265,7 +265,10 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
         DTColumnBuilder.newColumn('_id').withTitle('ID').notVisible(),
         DTColumnBuilder.newColumn('oneLvlUrl').withTitle('Đường link một cấp'),
         // DTColumnBuilder.newColumn('languageCode').withTitle('Ngôn ngữ'),
-        DTColumnBuilder.newColumn('category.name').withTitle('Danh mục'),
+        DTColumnBuilder.newColumn('category.name').withTitle('Danh mục').renderWith(function(data, type, full) {
+            if (full.category && full.category.name) return full.category.name;
+            else return '';
+        }),
         DTColumnBuilder.newColumn('local.title').withTitle('Khu vực').renderWith(function(data, type, full) {
             if (full.local && full.local.title) return full.local.title;
             else return '';

@@ -11,6 +11,22 @@ app.service('MetadataService', function($rootScope, $window) {
 
 });
 
+app.service('SEOService', function($rootScope, $window) {
+    return {
+        setMetaTags: function(seoInfo) {
+            // console.log($window.document.getElementsByTagName('title'));
+            $window.document.getElementsByTagName('title')[0].innerText = seoInfo.title;
+            $window.document.getElementsByName('keywords')[0].content = seoInfo.seoKeyWord;
+            $window.document.getElementsByName('description')[0].content = seoInfo.seoDescriptions;
+            // $window.document.getElementsByName(key)[0].content = value;
+        },
+        getMetaTags: function(key) {
+            // return $window.document.getElementsByName(key)[0].content;
+        }
+    }
+
+});
+
 app.service('browser', ['$window', function($window) {
 
     return function() {

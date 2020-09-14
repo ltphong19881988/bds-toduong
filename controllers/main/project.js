@@ -149,7 +149,7 @@ var GetNewProduct = async function(req, res, next) {
 }
 
 router.post('/filter-url', async(req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     var local = null;
     if (req.body.local) {
         local = await ListProvince.findOne({ link: req.body.local });
@@ -166,7 +166,7 @@ router.post('/filter-url', async(req, res, next) => {
             { 'ward.link': local['link'] },
         ]
     }
-    console.log(options);
+    // console.log(options);
 
     var skip = 0;
     var limit = 10;

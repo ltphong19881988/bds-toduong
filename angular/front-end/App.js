@@ -98,10 +98,12 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 });
 
 // Run a function for init the app ( before content loaded )
-app.run(function($rootScope, $window, $http, $location, MetadataService) {
+app.run(function($rootScope, $window, $http, $location, MetadataService, SEOService) {
     console.log('app run');
     $rootScope['web_key'] = 'toduong';
-    InitWebsite($rootScope, $http, MetadataService);
+    if (location.hostname.indexOf('totnhat.vn') != -1)
+        $rootScope['web_key'] = 'totnhat';
+    InitWebsite($rootScope, $http);
     if ($window.innerWidth >= 992)
         $rootScope.postCateContentNumer = 340;
     if ($window.innerWidth < 992)
@@ -114,23 +116,26 @@ app.run(function($rootScope, $window, $http, $location, MetadataService) {
     //     // console.log('viewContentLoaded');
     // });
 
-    // $rootScope.$on('$locationChangeStart', function() {
-    //     console.log('locationChangeStart', location);
-    // });
+    $rootScope.$on('$locationChangeStart', function() {
+        // console.log('locationChangeStart', location);
+        $rootScope['locationChangeStart'] = location.href;
+    });
 
     $rootScope.$on('$locationChangeSuccess', function() {
-        console.log('locationChangeSuccess', $location);
         // get SEO infomation by ajax
-        $rootScope['flagSeoInfo'] = false;
-        getSeoInfo(location.pathname, $http, function(res) {
-            console.log('getSeoInfo', res);
-            if (res.status) {
-                $rootScope['flagSeoInfo'] = true;
-                MetadataService.setMetaTags('description', res.seoInfo.seoDescriptions);
-                MetadataService.setMetaTags('keywords', res.seoInfo.seoKeyWord);
-                $rootScope.pageTitle = res.seoInfo.title;
-            }
-        })
+        // console.log('locationChangeSuccess', location);
+        $rootScope['locationChangeSuccess'] = location.href;
+        if ($rootScope['locationChangeSuccess'] != $rootScope['locationChangeStart']) {
+            console.log('angularjs router change href', location.pathname);
+            getSeoInfo(location.pathname, $http, function(res) {
+                console.log('getSeoInfo', res);
+                if (res.status) {
+                    SEOService.setMetaTags(res.seoInfo);
+                }
+            })
+        } else {
+            console.log('web được tải lại');
+        }
 
     });
 
@@ -180,7 +185,7 @@ function httpInterceptors() {
     };
 }
 
-var InitWebsite = function($rootScope, $http, MetadataService) {
+var InitWebsite = function($rootScope, $http) {
     let params = {
         method: 'POST',
         url: '/init-web',
@@ -197,9 +202,7 @@ var InitWebsite = function($rootScope, $http, MetadataService) {
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
 
-        MetadataService.setMetaTags('description', res.siteConfig.filter(x => x.key == 'seo-descriptions-' + $rootScope['web_key'])[0].value);
-        MetadataService.setMetaTags('keywords', res.siteConfig.filter(x => x.key == 'seo-keywords-' + $rootScope['web_key'])[0].value);
-        $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
+        // $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
         $rootScope['webName'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
         $rootScope['webPhone'] = res.siteConfig.filter(x => x.key == 'phone-number-' + $rootScope['web_key'])[0];
         $rootScope['webEmail'] = res.siteConfig.filter(x => x.key == 'email-' + $rootScope['web_key'])[0];

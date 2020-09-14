@@ -34,12 +34,12 @@ var fixImgSlider = function($scope) {
 }
 
 app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
-    var listener = $rootScope.$watch('pageTitle', function() {
-        if ($rootScope.pageTitle != undefined) {
-            $rootScope.pageTitle += " - Trang chủ";
-            listener();
-        }
-    });
+    // var listener = $rootScope.$watch('pageTitle', function() {
+    //     if ($rootScope.pageTitle != undefined) {
+    //         $rootScope.pageTitle += " - Trang chủ";
+    //         listener();
+    //     }
+    // });
     let params = {
         method: 'POST',
         // url: '/get-slider',

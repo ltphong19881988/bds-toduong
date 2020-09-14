@@ -54,7 +54,7 @@ var filterCategoryFromName = async function(name) {
 }
 
 module.exports.FilterAllDataTable = async function(data) {
-    console.log('aoData', data);
+    // console.log('aoData', data);
     var options = {};
     var oneLvlUrl = data[1].value.filter(item => item.data == 'oneLvlUrl')[0];
     if (oneLvlUrl && oneLvlUrl.search.value) {

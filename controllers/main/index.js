@@ -19,25 +19,57 @@ var MyFunction = require('../../models/helpers/my-function');
 
 var config = require('../../config'); // get our config file
 const { resolve } = require('path');
+const ProductContent = require('../../models/product-content');
 var secretKey = config.secret;
 
-router.use(function(req, res, next) {
-    if (req.originalUrl.indexOf('_escaped_fragment_') == -1) return next();
-    var fragment = req.query._escaped_fragment_;
-    // console.log('bat dau kiem tra');
-    // If the fragment is empty, serve the
-    // index page
-    if (fragment === "" || fragment === "/")
-        fragment = "/";
-    // If fragment does not start with '/'
-    // prepend it to our fragment
-    if (fragment.charAt(0) !== "/")
-        fragment = '/' + fragment;
-    try {
-        // console.log(global.__basedir, 'di vo day roi');
-        var file = global.__basedir + "/snapshots" + req.originalUrl.split('?_escaped_fragment')[0] + fragment + '/index.html';
-        res.sendfile(file);
-    } catch (err) { res.send(404); }
+var getSEO_Info = async function(url, req, res, next) {
+    if (req.originalUrl.startsWith('/admin') == true) {
+        return next();
+    }
+    // console.log('start url', url);
+    if (url == null) url = req.originalUrl.replace('/', '');
+    else url = url.replace('/', '');
+    if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) {
+        if (req.originalUrl.indexOf('-pr') != -1) {
+            var abc = req.originalUrl.split('-pr');
+            var product = await Product.findOne({ nameKey: 'pr' + abc[abc.length - 1] });
+            var productContent = await ProductContent.findOne({ idProduct: product._id });
+            return productContent;
+        }
+        return null;
+    }
+    if (url.indexOf('news') != -1)
+        url = url.replace('news/', '');
+    var abc = url.split('/');
+    if (abc[0] == '') abc[0] = '/';
+    // console.log('find url', abc);
+    var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
+    if (!onelvlData) return null;
+    return onelvlData;
+}
+
+router.use(async function(req, res, next) {
+    if (req.originalUrl.indexOf('_escaped_fragment_') == -1) {
+
+        return next();
+    } else {
+        var fragment = req.query._escaped_fragment_;
+        // console.log('bat dau kiem tra');
+        // If the fragment is empty, serve the
+        // index page
+        if (fragment === "" || fragment === "/")
+            fragment = "/";
+        // If fragment does not start with '/'
+        // prepend it to our fragment
+        if (fragment.charAt(0) !== "/")
+            fragment = '/' + fragment;
+        try {
+            // console.log(global.__basedir, 'di vo day roi');
+            var file = global.__basedir + "/snapshots" + req.originalUrl.split('?_escaped_fragment')[0] + fragment + '/index.html';
+            res.sendfile(file);
+        } catch (err) { res.send(404); }
+    }
+
 })
 
 router.use('/product', require('./product'));
@@ -285,22 +317,13 @@ router.post('/one-content', async(req, res, next) => {
 })
 
 router.post('/seo-info', async(req, res, next) => {
-
-    // console.log(req.body);
-    if (req.body.url == '/') {
-        // console.log('home');
-    } else {
-        var url = req.body.url.replace('/', '');
-        if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) return res.json({ status: false });
-        if (url.indexOf('news') != -1)
-            url = url.replace('news/', '');
-        var abc = url.split('/');
-        // console.log(abc[0]);
-        var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
-        if (!onelvlData) return res.json({ status: false });
+    // console.log('post url', req.body.url);
+    var onelvlData = await getSEO_Info(req.body.url, req, res, next);
+    // console.log('getSEO_Info', onelvlData);
+    if (!onelvlData)
+        return res.json({ status: false, seoInfo: {} });
+    else
         return res.json({ status: true, seoInfo: onelvlData });
-        // console.log(url, typeof(url));
-    }
 })
 
 
@@ -437,12 +460,18 @@ router.post('/login', loginMW, async(req, res, next) => {
 
 })
 
-router.get('/*', function(req, res, next) {
-    // console.log('originurl', req.originalUrl);
-    // res.redirect('/lending');
-    res.render('layout/frontPage', {});
-})
+router.get('/*', async function(req, res, next) {
+    if (req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.map') == -1) {
+        req.seoInfo = await getSEO_Info(null, req, res, next);
+    }
 
+    if (!req['seoInfo']) req['seoInfo'] = {};
+    if (!req.seoInfo['title']) req.seoInfo['title'] = '';
+    if (!req.seoInfo['seoKeyWord']) req.seoInfo['seoKeyWord'] = '';
+    if (!req.seoInfo['seoDescriptions']) req.seoInfo['seoDescriptions'] = '';
+    // res.redirect('/lending');
+    res.render('layout/frontPage', { seoInfo: req.seoInfo });
+})
 
 
 

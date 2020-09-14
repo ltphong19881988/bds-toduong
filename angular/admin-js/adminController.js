@@ -194,7 +194,6 @@ var abcXYZ = function(response, parentElement, type, $scope, $compile) {
 }
 
 adminApp.controller("categoryCtrl", function($rootScope, $scope, $compile, $http) {
-    $rootScope.pageTitle = "Admin - Category";
     $scope.rootFolderPath = 'public/uploads/media/';
     $scope.acviteFolderPath = 'public/uploads/media/';
     $scope.checkSelect = 0;
@@ -410,7 +409,6 @@ var formDatatoObj = function(data, formEle) {
 
 
 adminApp.controller("transferCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Admin - Transfer";
     $scope.submitTransfer = function(e) {
         var formData = (jQuery("#formTransfer").serialize());
         submitTransfer(formData, $http, function(result) {
@@ -421,7 +419,6 @@ adminApp.controller("transferCtrl", function($rootScope, $scope, $http) {
 });
 
 adminApp.controller("profilesCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bazanland - User Profiles";
     jQuery("#avatarBase64").change(function() {
         readFileToBase64(jQuery(this)[0], function(result) {
             jQuery("#changeAvatar img").attr("src", result);
@@ -468,7 +465,6 @@ adminApp.controller("profilesCtrl", function($rootScope, $scope, $http) {
 });
 
 adminApp.controller("members3333Ctrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bazanland - Members";
     // getUserInfo($http, function(result){
     //     // console.log(result);
     //     if(!result.fullname) result.fullname = "() Add here";
@@ -500,7 +496,6 @@ adminApp.controller("members3333Ctrl", function($rootScope, $scope, $http) {
 });
 
 adminApp.controller("authenticationCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bazanland - Two-Factor Authentication";
     get2FAInfo($http, function(result) {
         $scope.authInfo = result;
     });
@@ -519,7 +514,6 @@ adminApp.controller("authenticationCtrl", function($rootScope, $scope, $http) {
 });
 
 adminApp.controller("walletCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bazanland - Wallet";
     getWallet($http, function(result) {
         $scope.listCurrencies = result;
         console.log(result);
@@ -574,7 +568,6 @@ adminApp.controller("walletCtrl", function($rootScope, $scope, $http) {
 });
 
 adminApp.controller("investmentCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bazanland - Investment";
     getInvestmentPackages($http, function(result) {
         $scope.packages = result;
     });
@@ -591,7 +584,6 @@ adminApp.controller("investmentCtrl", function($rootScope, $scope, $http) {
 });
 
 adminApp.controller("createPackageCtrl", function($rootScope, $scope, $http) {
-    $rootScope.pageTitle = "Bazanland - Create Package";
     $scope.amount = parseInt(getUrlParameter("amount"));
     $scope.id = getUrlParameter("id");
     getPackage($scope.id, $http, function(result) {

@@ -213,7 +213,7 @@ var InitModsTable = function($scope, $compile, $http, DTOptionsBuilder, DTColumn
 }
 
 adminApp.controller("memberCtrl", function($rootScope, $scope, $http, $compile, $location, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
-        $rootScope.pageTitle = "Admin - Members";
+        $rootScope. = "Admin - Members";
 
         if ($location.$$path.indexOf('/member') != -1) {
             InitMembersTable($scope, $compile, $http, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder);
