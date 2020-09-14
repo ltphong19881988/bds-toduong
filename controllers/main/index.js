@@ -66,7 +66,7 @@ router.use(async function(req, res, next) {
         try {
             // console.log(global.__basedir, 'di vo day roi');
             var file = global.__basedir + "/snapshots" + req.originalUrl.split('?_escaped_fragment')[0] + fragment + '/index.html';
-            res.sendfile(file);
+            res.sendFile(file);
         } catch (err) { res.send(404); }
     }
 
@@ -87,13 +87,17 @@ router.use('/uploads/*', function(req, res, next) {
 });
 
 router.get('/robot.txt', function(req, res) {
-    var file = global.__basedir + '/robot.txt';
-    res.sendfile(file);
+    var file = global.__basedir + '/robot-toduong.txt';
+    if (req.headers.host.indexOf('batdongsantotnhat.vn') != -1)
+        file = global.__basedir + '/robot-totnhat.txt';
+    res.sendFile(file);
 })
 
 router.get('/sitemap.xml', function(req, res) {
-    var file = global.__basedir + '/sitemap.xml';
-    res.sendfile(file);
+    var file = global.__basedir + '/sitemap-toduong.xml';
+    if (req.headers.host.indexOf('batdongsantotnhat.vn') != -1)
+        file = global.__basedir + '/sitemap-totnhat.xml';
+    res.sendFile(file);
 })
 
 
@@ -461,7 +465,8 @@ router.post('/login', loginMW, async(req, res, next) => {
 })
 
 router.get('/*', async function(req, res, next) {
-    if (req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.map') == -1) {
+    if (req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.map') && req.originalUrl.indexOf('.ico') == -1) {
+        console.log('vao lay SEOINFO', req.originalUrl);
         req.seoInfo = await getSEO_Info(null, req, res, next);
     }
 
