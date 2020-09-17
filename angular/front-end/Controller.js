@@ -267,15 +267,6 @@ authPage.controller("verify2faCtrl", function($scope, $rootScope, $http) {
 
 
 
-app.controller("headerCtrl", function($rootScope, $scope, $http) {
-    $rootScope.$watch('logedUser', function(value) {
-        if (value) {
-            // console.log(value);
-            if (!value.sponsor) value.sponsor = 'Không có';
-        }
-    })
-});
-
 app.controller("authenticationCtrl", function($rootScope, $scope, $http) {
     $rootScope.pageTitle = "Bazanland - Two-Factor Authentication";
     get2FAInfo($http, function(result) {

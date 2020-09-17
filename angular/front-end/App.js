@@ -8,6 +8,16 @@ if (curtoken) {
     });
 }
 
+var getUrlParameter = function(name) {
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 angular.module("uib/template/pagination/pagination.html", []).run(["$templateCache", function($templateCache) {
     $templateCache.put("uib/template/pagination/pagination.html",
         "<li role=\"menuitem\" ng-if=\"::boundaryLinks\" ng-class=\"{disabled: noPrevious()||ngDisabled}\" class=\"page-item pagination-first\"><a href ng-click=\"selectPage(1, $event)\" ng-disabled=\"noPrevious()||ngDisabled\" class='page-link' uib-tabindex-toggle>{{::getText('first')}}</a></li>\n" +
@@ -47,6 +57,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         .when("/", {
             templateUrl: "/tpls/main/index.html",
             controller: "dashboardCtrl"
+        })
+        .when("/login", {
+            templateUrl: "/tpls/main/login.html",
+            controller: "loginCtrl"
         })
         .when("/news", {
             templateUrl: "/tpls/main/post/cate-page.html",

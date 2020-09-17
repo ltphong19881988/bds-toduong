@@ -5,7 +5,7 @@ const passwordHasher = require('aspnet-identity-pw');
 // const fileManager = require('file-manager-js');
 const User = require('../../models/user');
 const mongoose = require('mongoose');
-const MyWallet = require('../../models/helpers/my-wallet');
+// const MyWallet = require('../../models/helpers/my-wallet');
 const Middleware = require('../../models/helpers/my-middleware');
 var secretKey = require('../../config').secret;
 

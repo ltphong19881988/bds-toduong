@@ -41,31 +41,30 @@ var getCookies = function(cookie, cname) {
 router.use(function(req, res, next) {
     // console.log(req);
     var token = req.body.token || req.query.token || getCookies(req.headers.cookie, "x-access-token");
-    next();
     // decode token
-    // if (token) {
-    //     // verifies secret and checks exp
-    //     jwt.verify(token, secretKey, async function(err, decoded) {
-    //         if (err) {
-    //             return res.json({ success: false, message: 'Failed to authenticate token.' });
-    //         } else {
-    //             // if everything is good, save to request for use in other routes
-    //             var user = await User.findOne({ _id: mongoose.Types.ObjectId(decoded._id) });
-    //             var admin = await Group.findOne({ name: 'admin' });
-    //             if (user.groups.indexOf(admin._id) == -1) {
-    //                 return res.json({ success: false, message: 'Failed to authenticate your account permission.' });
-    //             } else {
-    //                 // console.log(user);
-    //                 req.decoded = decoded;
-    //                 next();
-    //             }
+    if (token) {
+        // verifies secret and checks exp
+        jwt.verify(token, secretKey, async function(err, decoded) {
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+                // if everything is good, save to request for use in other routes
+                var user = await User.findOne({ _id: mongoose.Types.ObjectId(decoded._id) });
+                var admin = await Group.findOne({ name: 'admin' });
+                if (user.groups.indexOf(admin._id) == -1) {
+                    return res.json({ success: false, message: 'Failed to authenticate your account permission.' });
+                } else {
+                    // console.log(user);
+                    req.decoded = decoded;
+                    next();
+                }
 
-    //         }
-    //     });
+            }
+        });
 
-    // } else {
-    //     res.redirect("/login?redirect=" + req.originalUrl);
-    // }
+    } else {
+        res.redirect("/login?redirect=" + req.originalUrl);
+    }
 })
 
 router.use('/media', require('./media'));

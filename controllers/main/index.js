@@ -76,7 +76,7 @@ router.use('/product', require('./product'));
 router.use('/sector', require('./sector'));
 router.use('/post', require('./post'));
 router.use('/project', require('./project'));
-// router.use('/user', require('./user'));
+router.use('/user', require('./user'));
 
 
 
@@ -461,6 +461,7 @@ router.post('/register', registerMW, async(req, res, next) => {
 
 var loginMW = [mw.ValidateLogin]
 router.post('/login', loginMW, async(req, res, next) => {
+    console.log(passwordHasher.hashPassword('admintoduong@!@#'));
     var e = await User.findOne({ email: req.body.login.toLowerCase() }).exec();
     var u = await User.findOne({ username: req.body.login.toLowerCase() }).exec();
     if (!e && !u) {

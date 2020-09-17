@@ -1,0 +1,21 @@
+<section id="contact" class="contact">
+    <div class="col-sm-12 col-md-6 offset-md-3">
+        <form id="formLogin" action="" method="post" role="form" class="php-email-form" ng-submit="submitLogin($event)">
+            <div class="text-center"><h1 style="font-size: 22px; margin-bottom: 30px;">Đăng nhập quản lý</h1></div>
+            <div class="form-group">
+                <label>Tên đăng nhập : </label>
+                <input type="text" class="form-control" ng-model="login.username" placeholder="username" data-msg="Please enter at least 8 chars of subject">
+                <div class="validate"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Mật khẩu : </label>
+                <input type="password" class="form-control" ng-model="login.password" placeholder="password" data-msg="Please enter at least 8 chars of subject">
+                <div class="validate"></div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-info" type="submit">Đăng nhập</button>
+            </div>
+        </form>
+    </div>
+</section>
