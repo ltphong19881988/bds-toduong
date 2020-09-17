@@ -14,7 +14,7 @@ var ProjectContent = new Schema({
     content: String,
     seoKeyWord: String,
     seoDescriptions: String,
-
+    seoSocial : {}
 });
 var ProjectContent = mongoose.model('ProjectContent', ProjectContent);
 module.exports = ProjectContent;

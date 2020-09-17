@@ -17,6 +17,7 @@ var OneLvlUrlSchema = new Schema({
     content: String,
     seoKeyWord: String,
     seoDescriptions: String,
+    seoSocial : {}
 });
 var OneLvlUrl = mongoose.model('OneLvlUrl', OneLvlUrlSchema);
 module.exports = OneLvlUrl;

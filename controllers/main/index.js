@@ -229,8 +229,43 @@ router.post('/init-web', async(req, res, next) => {
         })
     })
 
+    // var listPhongThuy = new Promise(resolve => {
+    //     Category.aggregate([{
+    //             $match: { idCategoryType: mongoose.Types.ObjectId('5f3f4c1183c2f72c8c4e600e') },
+    //         },
+    //         {
+    //             $sort: { idParent: 1, priority: 1 }
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: "posts",
+    //                 localField: "_id",
+    //                 foreignField: "idCategory",
+    //                 as: "catePost"
+    //             },
+    //         },
+    //         { $unwind: "$catePost" },
+    //         {
+    //             $match: { 'catePost.postType': 0 },
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: "postcontents",
+    //                 localField: "catePost._id",
+    //                 foreignField: "idPost",
+    //                 as: "catePostContent"
+    //             },
+    //         },
+    //         { $unwind: "$catePostContent" },
+
+    //     ], function(err, result) {
+    //         // console.log('cate', result);
+    //         resolve(result);
+    //     })
+    // })
+
     Promise.all([siteConfig, listDistrict, listNews]).then(values => {
-        res.json({ siteConfig: values[0], menuDistrict: values[1], listNews: values[2] });
+        res.json({ siteConfig: values[0], menuDistrict: values[1], listNews: values[2]});
     })
 
 })

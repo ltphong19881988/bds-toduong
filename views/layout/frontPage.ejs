@@ -1,56 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="frontApp">
 
-<head>
-    <meta charset="utf-8">
-    <base href="/">
-    <meta name="viewport" content="width=device-width">
-    <meta name="fragment" content="!">
+    <head>
+        <meta charset="utf-8">
+        <base href="/">
+        <meta name="viewport" content="width=device-width">
+        <meta name="fragment" content="!">
 
-    <title aa-bind="pageTitle">
-        <%- seoInfo.title %>
-    </title>
+        <meta name="google-site-verification" content="h51rQzhopu0OE-Qmdg-ZixawsBE-cvBeiXCk5Z0JD8I" />
+        <meta name="robots" content="index, follow">
 
-    <meta content="<%- seoInfo.seoKeyWord %>" name="keywords">
-    <meta content="<%- seoInfo.seoDescriptions %>" name="description">
+        <title aa-bind="pageTitle">
+            <%- seoInfo.title %>
+        </title>
 
-    <meta name="google-site-verification" content="h51rQzhopu0OE-Qmdg-ZixawsBE-cvBeiXCk5Z0JD8I" />
-    <meta name="robots" content="index, follow">
+        <meta content="<%- seoInfo.seoKeyWord %>" name="keywords">
+        <meta content="<%- seoInfo.seoDescriptions %>" name="description">
+        <% if (seoInfo.social) { %>
+        <meta property="og:url" content="" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="" />
+        <meta property="og:description" content="" />
+        <meta property="og:image" content="" />
+        <% } %>
 
-    <!-- Favicons -->
-    <link href="/front-page/assets/img/favicon.png" rel="icon">
-    <link href="/front-page/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        <!-- Favicons -->
+        <link href="/front-page/assets/img/favicon.png" rel="icon">
+        <link href="/front-page/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
-    <link href="/front-page/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link href="/front-page/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/front-page/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-    <link href="/front-page/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="/front-page/assets/vendor/venobox/venobox.css" rel="stylesheet">
-    <link href="/front-page/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/front-page/assets/vendor/aos/aos.css" rel="stylesheet">
+        <!-- Vendor CSS Files -->
+        <link href="/front-page/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+        <link href="/front-page/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/front-page/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+        <link href="/front-page/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="/front-page/assets/vendor/venobox/venobox.css" rel="stylesheet">
+        <link href="/front-page/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="/front-page/assets/vendor/aos/aos.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
-    <link href="/front-page/assets/css/style.css" rel="stylesheet">
+        <!-- Template Main CSS File -->
+        <link href="/front-page/assets/css/style.css" rel="stylesheet">
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146789895-2"></script>
-    <script>
-        console.log('location', location);
-        window.dataLayer = window.dataLayer || [];
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146789895-2"></script>
+        <script>
+            console.log('location', location);
+            window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-146789895-2');
-    </script>
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'UA-146789895-2');
+        </script>
 
-</head>
+    </head>
 
 <body data-auto-scroll>
     <button type="button" class="mobile-nav-toggle d-md-none"><i class="icofont-navigation-menu"></i></button>

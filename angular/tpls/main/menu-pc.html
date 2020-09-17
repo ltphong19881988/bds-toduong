@@ -75,7 +75,14 @@
         </ul>
         <button class="btn btn-dropdown"></button>
     </li>
-    <li><a ng-href="/news/phong-thuy">Phong thủy</a></li>
+    <li class="drop-down" ><a ng-href="/news/phong-thuy">Phong thủy</a>
+        <ul>
+            <li class="" ng-repeat="item in menuNews" ng-if="item.priority == 2 && item.idParent == '5f3f4c1183c2f72c8c4e600e' ">
+                <a href="/news/{{item.catePostContent.oneLvlUrl}}">{{item.name}}</a>
+            </li>
+        </ul>
+        <button class="btn btn-dropdown"></button>
+    </li>
     <li class="drop-down"><a href="#">Tỉnh khác</a>
         <ul>
             <li class="drop-down">

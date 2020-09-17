@@ -14,7 +14,7 @@ var ProductContent = new Schema({
     content: String,
     seoKeyWord: String,
     seoDescriptions: String,
-
+    seoSocial : {}
 });
 var ProductContent = mongoose.model('ProductContent', ProductContent);
 module.exports = ProductContent;

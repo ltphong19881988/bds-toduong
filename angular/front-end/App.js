@@ -201,6 +201,7 @@ var InitWebsite = function($rootScope, $http) {
         console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
+        // $rootScope.menuPhongThuy = res.listPhongThuy;
 
         // $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
         $rootScope['webName'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
