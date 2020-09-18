@@ -102,8 +102,10 @@ h6 {
 }
 
 #header.header-scrolled {
-    background: rgba(103, 176, 209, 0.8);
-    padding: 0 30px;
+    /* background: #fff;
+    position: fixed;
+    width: 100%; */
+    /* padding: 0 30px; */
 }
 
 #header .first-menu {
@@ -240,7 +242,7 @@ h6 {
 }
 
 .header-scrolled .nav-menu a {
-    color: #fff;
+    color: #2f4d5a;
 }
 
 .header-scrolled .nav-menu a:hover,
@@ -369,7 +371,7 @@ h6 {
 /* Mobile Navigation */
 
 .mobile-nav-toggle {
-    position: absolute;
+    position: fixed;
     right: 15px;
     top: 15px;
     z-index: 9998;
@@ -2035,13 +2037,13 @@ a.footer-logo img {
 
 @media (max-width: 768px) {
     #header.header-scrolled {
-        padding: 10px 0;
+        /* padding: 10px 0; */
     }
     #header .logo {
         /* float: left; */
     }
     #header .logo img {
-        max-height: 40px;
+        max-height: 38px;
     }
     .nav-menu a {
         font-size: 12px;
@@ -2124,8 +2126,21 @@ a.footer-logo img {
     #header {
         padding: 10px 15px;
     }
+    #header.header-scrolled {
+        background: #fff;
+        position: fixed;
+        width: 100%;
+    }
+    #header .first-menu {
+        text-align: center;
+    }
     #header .search_btn {
         top: 6px;
+        left:0px;
+        right : auto;
+    }
+    #header .search_btn span{
+        font-size: 14px;
     }
     .mobile-nav-toggle {
         right: 5px;
