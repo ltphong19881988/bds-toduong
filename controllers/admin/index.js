@@ -13,6 +13,9 @@ const AppConfig = require('../../models/app-config');
 const Post = require('../../models/post');
 const OneLvlUrl = require('../../models/onelvlurl');
 // var UserAuth   = require('../models/userauth');
+const fs = require('fs');
+const Tool = require('../../models/helpers/tool');
+
 
 var config = require('../../config'); // get our config file
 // var Helpers = require('../helpers');
@@ -354,6 +357,27 @@ router.post('/create-snapshot', async(req, res, next) => {
     });
 })
 
+// ======= download image auto and save
+
+
+var download_Image = function(uri, filename, callback){
+  request.head(uri, function(err, res, body){
+    // console.log('content-type:', res.headers['content-type']);
+    // console.log('content-length:', res.headers['content-length']);
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  });
+};
+
+router.post('/download-img', async(req, res, next) => {
+    var dauxanh = config.publicPath + req.body.path;
+    var filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png' ;
+    while (fs.existsSync(dauxanh + '/' + filename)) {
+        filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png' ;
+    }
+    download_Image(req.body.link, dauxanh + '/' + filename, function(){
+        res.json(req.body.path + '/' + filename);
+    });
+})
 
 
 router.get('/*', function(req, res, next) {

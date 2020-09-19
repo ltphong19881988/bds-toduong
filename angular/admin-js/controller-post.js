@@ -217,6 +217,52 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             console.log($scope.postItem);
         }
 
+        $scope.CheckLinkImages = function(e) {
+            angular.element("#rewriteLinkImg .modal-body").html('');
+            var content = CKEDITOR.instances['editorContent'].getData();
+            // console.log(content);
+            var listStr = content.match(/src\=([^\s]*)\s/g);
+            // console.log('list img', listStr);
+            listStr = jQuery.map( listStr, function( x ) {
+                return (x.substr(5,x.length - 7));
+            });
+            var listProcess = [];
+            listStr.forEach(element => {
+                var html = `<div class="form-group"> 
+                                <span> ` + element + ` </span> <br/>
+                                <span> Đang xử lý ... </span>
+                            </div>`;
+                angular.element("#rewriteLinkImg .modal-body").append($compile(html)($scope));
+                var p = new Promise(resolve => {
+                    let params = {
+                        method: 'POST',
+                        url: '/admin/download-img',
+                        data: {
+                            link: element,
+                            path : 'public/uploads/media/autodownload'
+                        }
+                    }
+                    submitBackend(params, $http, function(res) {
+                        // console.log('auto download', element, res);
+                        resolve({old : element, new : res.replace('public', '')});
+                    });
+                })
+                listProcess.push(p);
+            });
+            alert('đang xử lý');
+            Promise.all(listProcess).then(results => {
+                results.forEach(item => {
+                    content = content.replace(item.old, item.new);
+                });
+                CKEDITOR.instances['editorContent'].setData(content);
+                alert("Đã xong");
+            }).catch(err => {
+                console.log('promise all error', err);
+            })
+            
+
+        }
+
 
     } else {
         $scope.dtOptions = DTOptionsBuilder.newOptions()
