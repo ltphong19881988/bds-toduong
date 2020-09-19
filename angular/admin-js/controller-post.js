@@ -228,26 +228,29 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             });
             var listProcess = [];
             listStr.forEach(element => {
-                var html = `<div class="form-group"> 
+                if(element.indexOf('http') != -1 && element.indexOf('toduongbatdongsan') == -1 && element.indexOf('batdongsantotnhat') == -1) {
+                    var html = `<div class="form-group"> 
                                 <span> ` + element + ` </span> <br/>
                                 <span> Đang xử lý ... </span>
                             </div>`;
-                angular.element("#rewriteLinkImg .modal-body").append($compile(html)($scope));
-                var p = new Promise(resolve => {
-                    let params = {
-                        method: 'POST',
-                        url: '/admin/download-img',
-                        data: {
-                            link: element,
-                            path : 'public/uploads/media/autodownload'
+                    angular.element("#rewriteLinkImg .modal-body").append($compile(html)($scope));
+                    var p = new Promise(resolve => {
+                        let params = {
+                            method: 'POST',
+                            url: '/admin/download-img',
+                            data: {
+                                link: element,
+                                path : 'public/uploads/media/autodownload'
+                            }
                         }
-                    }
-                    submitBackend(params, $http, function(res) {
-                        // console.log('auto download', element, res);
-                        resolve({old : element, new : res.replace('public', '')});
-                    });
-                })
-                listProcess.push(p);
+                        submitBackend(params, $http, function(res) {
+                            // console.log('auto download', element, res);
+                            resolve({old : element, new : res.replace('public', '')});
+                        });
+                    })
+                    listProcess.push(p);
+                }
+                
             });
             alert('đang xử lý');
             Promise.all(listProcess).then(results => {
