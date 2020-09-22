@@ -106,7 +106,18 @@
     </div>
   </section> -->
     <!-- End Hero -->
-
+    <div class="container" style="position: relative;">
+        <div class="ads-left ads">
+            <a ng-if="adsLeft" href="{{adsLeft.nameKey}}" >
+                <img ng-src="{{adsLeft.videoUrl}}" alt="" />
+            </a>
+        </div>
+        <div class="ads-right ads">
+            <a ng-if="adsRight" href="{{adsRight.nameKey}}" >
+                <img ng-src="{{adsRight.videoUrl}}" alt="" />
+            </a>
+        </div>
+    </div>
     <main id="main">
 
         <ng-view></ng-view>

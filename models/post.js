@@ -11,7 +11,7 @@ var Post = new Schema({
     nameKey: { type: String },
     idCategory: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
     idCategoryType: { type: Schema.Types.ObjectId, ref: 'CategoryType' },
-    postType: Number, // 1 : rieng-biet, 0 : dinh kem theo category , 2 : banner ;
+    postType: Number, // 1 : rieng-biet, 0 : dinh kem theo category , 2 : banner ; 3 : Quảng cáo
     videoUrl: String,
     videoTitle: String,
     datecreate: { type: Date, default: Date.now },
@@ -21,6 +21,7 @@ var Post = new Schema({
     pictures: [],
     tags: [],
     visible: { type: Number, default: 1 }, // 1 is visible
+    position : String,
 });
 var Post = mongoose.model('Post', Post);
 module.exports = Post;

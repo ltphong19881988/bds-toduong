@@ -77,7 +77,7 @@ router.post('/filter-all', function(req, res, next) {
     if (req.body.districtID) {
         options['districtID'] = parseInt(req.body.districtID);
     }
-    console.log(options);
+    // console.log(options);
     ListProvince.aggregate([
         { $match: options },
         {

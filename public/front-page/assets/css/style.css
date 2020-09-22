@@ -47,6 +47,17 @@ h6 {
     float: right;
 }
 
+.ads {
+    position: fixed;
+    top: 160px;
+    width: 160px;
+    height: 600px;
+    z-index: 99;
+}
+
+/* .ads-left {
+    left: 100px;
+} */
 
 /*--------------------------------------------------------------
 # Back to top button

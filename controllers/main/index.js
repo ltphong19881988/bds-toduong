@@ -132,7 +132,7 @@ function abc() {
 // })
 
 router.post('/init-web', async(req, res, next) => {
-    // console.log(req.body);
+    // console.log(req);
     var menuDistrict = req.body.menuDistrict;
     var options = {};
     var siteConfig = new Promise(resolve => {
@@ -229,43 +229,21 @@ router.post('/init-web', async(req, res, next) => {
         })
     })
 
-    // var listPhongThuy = new Promise(resolve => {
-    //     Category.aggregate([{
-    //             $match: { idCategoryType: mongoose.Types.ObjectId('5f3f4c1183c2f72c8c4e600e') },
-    //         },
-    //         {
-    //             $sort: { idParent: 1, priority: 1 }
-    //         },
-    //         {
-    //             $lookup: {
-    //                 from: "posts",
-    //                 localField: "_id",
-    //                 foreignField: "idCategory",
-    //                 as: "catePost"
-    //             },
-    //         },
-    //         { $unwind: "$catePost" },
-    //         {
-    //             $match: { 'catePost.postType': 0 },
-    //         },
-    //         {
-    //             $lookup: {
-    //                 from: "postcontents",
-    //                 localField: "catePost._id",
-    //                 foreignField: "idPost",
-    //                 as: "catePostContent"
-    //             },
-    //         },
-    //         { $unwind: "$catePostContent" },
+    var optionsAds = { postType: 3, normalPrice : 1, videoTitle : "bds-toduong" };
+    if (req.headers.host.indexOf('batdongsantotnhat') != -1) {
+        optionsSlider.videoTitle = "bds-totnhat";
+    }
+    var listAds = new Promise(resolve => {
+        Post.aggregate([
+            { $match: optionsAds },
+            { $sort: { datecreate: -1 } }
+        ]).exec(function(err, result) {
+            resolve(result);
+        });
+    });
 
-    //     ], function(err, result) {
-    //         // console.log('cate', result);
-    //         resolve(result);
-    //     })
-    // })
-
-    Promise.all([siteConfig, listDistrict, listNews]).then(values => {
-        res.json({ siteConfig: values[0], menuDistrict: values[1], listNews: values[2]});
+    Promise.all([siteConfig, listDistrict, listNews, listAds]).then(values => {
+        res.json({ siteConfig: values[0], menuDistrict: values[1], listNews: values[2], listAds : values[3]});
     })
 
 })
@@ -282,7 +260,7 @@ router.post('/site-config', async(req, res, next) => {
 })
 
 router.post('/data-index', async(req, res, next) => {
-    var optionsSlider = { postType: 2 };
+    var optionsSlider = { postType: 2, normalPrice : 1 };
     if (req.body.webname) {
         optionsSlider['videoTitle'] = req.body.webname;
     }

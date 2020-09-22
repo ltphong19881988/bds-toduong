@@ -1,28 +1,28 @@
 <style>
-    .slider-item {
+    .ads-item {
         border: 1px solid #dedede;
         margin-bottom: 10px;
         border-radius: 5px;
         padding: 0px;
     }
     
-    .slider-item .col {
+    .ads-item .col {
         padding: 0px;
     }
     
-    .slider-item .col .btn {
+    .ads-item .col .btn {
         position: absolute;
     }
     
-    .slider-item .col .btn.edit {
+    .ads-item .col .btn.edit {
         left: 0px;
     }
     
-    .slider-item .col .btn.delete {
+    .ads-item .col .btn.delete {
         right: 0px;
     }
     
-    .slider-item .col .btn.visible {
+    .ads-item .col .btn.visible {
         left: 0px;
         bottom: 0px;
     }
@@ -33,7 +33,7 @@
         <aside class="profile-nav alt">
             <section class="card">
                 <div class="card-header bg-dark">
-                    <strong class="card-title text-light">Cấu hình website</strong>
+                    <strong class="card-title text-light">Thêm - Chỉnh sửa quảng cáo</strong>
                 </div>
                 <div class="card-body ">
                     <div class="row form-group ">
@@ -45,9 +45,26 @@
                         </div>
                     </div>
                     <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">website :  </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <input type="text " placeholder="ví dụ : bds-totnhat hay bds-toduong " ng-model='item.videoTitle' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
                         <div class="col col-md-3 "><label class=" form-control-label ">Link đích :  </label></div>
                         <div class="col-12 col-md-9 ui-widget ">
                             <input type="text " placeholder="ví dụ : gooogle.com " ng-model='item.nameKey' class="form-control ">
+                        </div>
+                    </div>
+                    <div class="row form-group ">
+                        <div class="col col-md-3 "><label class=" form-control-label ">Vị trí :  </label></div>
+                        <div class="col-12 col-md-9 ui-widget ">
+                            <select id="position" class="form-control" ng-change="unitChanged()" ng-model="item.position" >
+                                <option value="">Choose..</option>
+                                <option ng-selected='item.position == "left"'  value="left">Bên trái</option>
+                                <option ng-selected='item.position == "right"' value="right">Bên phải</option>
+                                <option ng-selected='item.position == "center"' value="center">Ở giữa</option>
+                              </select>
                         </div>
                     </div>
                     <div class="row form-group ">
@@ -56,22 +73,17 @@
                             <input type="checkbox" name="checkVisible" checked ng-click="checkVisibleTonggle($event)">
                         </div>
                     </div>
-                    <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">website :  </label></div>
-                        <div class="col-12 col-md-9 ui-widget ">
-                            <input type="text " placeholder="ví dụ : bds-totnhat hay bds-toduong " ng-model='item.videoTitle' class="form-control ">
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit " class="btn btn-success " ng-click="submitAddSlider($event) ">
+                    <button type="submit " class="btn btn-success " ng-click="submitAddAds($event) ">
                                 <i class="fa fa-dot-circle-o "></i> Thêm mới
                             </button>
                     <button type="reset " class="btn btn-danger pull-right" ng-click="cancelUpdateSiteConfig($event)" style="margin-right: 10px;"> 
                                 <i class=" fa fa-ban "></i> Hủy
                         </button>
-                    <button type="reset " class="btn btn-info pull-right" ng-click="submitUpdateSlider($event)" style="margin-right: 20px;"> 
+                    <button type="reset " class="btn btn-info pull-right" ng-click="submitUpdateAds($event)" style="margin-right: 20px;"> 
                                 <i class=" fa fa-ban "></i> Thay đổi
                         </button>
 
@@ -88,18 +100,18 @@
         <aside class="profile-nav alt ">
             <section class="card ">
                 <div class="card-header bg-dark ">
-                    <strong class="card-title text-light ">Danh sách slider</strong>
+                    <strong class="card-title text-light ">Danh sách Ads</strong>
                 </div>
 
                 <div class="card-body">
-                    <div class="col-md-12 slider-item" ng-repeat="item in listSliders">
+                    <div class="col-md-12 ads-item" ng-repeat="item in listAds">
                         <div class="col col-md-4 col-lg-3 ">
                             <img ng-src="{{item.videoUrl}}" />
                             <button class="btn edit btn-primary btn-sm" ng-click="prepareEdit($event, item)">
-                                <i title="Sửa slider" class="fa fa-edit"></i>
+                                <i title="Sửa ads" class="fa fa-edit"></i>
                             </button>
                             <button class="btn delete btn-danger btn-sm" ng-click="prepareDelete($event, item)">
-                                <i title="Xóa slider" class="fa fa-close"></i>
+                                <i title="Xóa ads" class="fa fa-close"></i>
                             </button>
                             <button ng-if="item.normalPrice == 1" class="btn visible btn-success btn-sm" ng-click="tonggleVisible($event, item)">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
@@ -111,6 +123,7 @@
                         </div>
                         <div class="col col-md-8 col-lg-9">
                             <p style="padding: 5px 10px;">Link : <a href="{{item.nameKey}}" target="_blank"> {{item.nameKey}}</a></p>
+                            <p style="padding: 5px 10px;">Vị trí : {{item.position}}</p>
                             <p style="padding: 5px 10px;">website : {{item.videoTitle}}</p>
                         </div>
                     </div>

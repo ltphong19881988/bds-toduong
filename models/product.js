@@ -147,7 +147,7 @@ module.exports.UpdateProduct = async function(product, product_content) {
 }
 
 module.exports.FilterDataTableProduct = async function(data) {
-    console.log(data);
+    // console.log(data);
     let options = {};
     // if (req.body.idCategoryType) {
     //     options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);

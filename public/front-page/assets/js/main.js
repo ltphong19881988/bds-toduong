@@ -225,7 +225,22 @@
 
     // Initiate venobox (lightbox feature used in portofilo)
     $(document).ready(function() {
+        // console.log('innerWidth', window.innerWidth);
+        // console.log('.container', $('.container').width());
         $('.venobox').venobox();
+        var window_Width = window.innerWidth;
+        var container_Width = $('.container').width();
+        var abc = (window_Width - container_Width) / 2;
+        if(window_Width > (container_Width + 180*2) ){
+            var ads_left = $('.ads-left').eq(0);
+            var ads_right = $('.ads-right').eq(0);
+            ads_left.css('left', abc - 170);
+            ads_right.css('right', abc - 170);
+        }else{
+            $('.ads').hide();
+            console.log('khong du cho');
+        }
+        
     });
 
     // Testimonials carousel (uses the Owl Carousel library)

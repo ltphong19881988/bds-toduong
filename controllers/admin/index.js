@@ -358,8 +358,6 @@ router.post('/create-snapshot', async(req, res, next) => {
 })
 
 // ======= download image auto and save
-
-
 var download_Image = function(uri, filename, callback){
   request.head(uri, function(err, res, body){
     // console.log('content-type:', res.headers['content-type']);
@@ -381,6 +379,43 @@ router.post('/download-img', async(req, res, next) => {
         res.json(req.body.path + '/' + filename);
     });
 })
+
+
+// ======= all ads request 
+router.post('/ads', async(req, res, next) => {
+    if (!req.body.videoUrl) return res.json({ status: false, mes: 'Bạn chưa chọn hình ảnh' });
+    var item = new Post(req.body);
+    item.save(function(err, doc) {
+        if (err) return res.json({ status: false, mes: 'Lỗi không lưu được, vui lòng thử lại sau', err: err });
+        return res.json({ status: true, mes: 'Thành công', doc })
+    });
+})
+
+router.put('/ads', async(req, res, next) => {
+    if (!req.body.videoUrl) return res.json({ status: false, mes: 'Bạn chưa chọn hình ảnh' });
+    var id = mongoose.Types.ObjectId(req.body._id);
+    delete req.body._id;
+    Post.findOneAndUpdate({ _id: id }, req.body).exec(function(err, post) {
+        return res.json({ status: true, mes: 'Thành công', post })
+    })
+})
+
+router.delete('/ads', async(req, res, next) => {
+    if (!req.body._id) return res.json({ status: false, mes: 'Xóa thất bại' });
+    var id = mongoose.Types.ObjectId(req.body._id);
+    Post.findOneAndUpdate({ _id: id }, req.body).exec(function(err, post) {
+        return res.json({ status: true, mes: 'Thành công', post })
+    })
+})
+
+
+router.post('/ads/all', async(req, res, next) => {
+    Post.find({ postType: 3 }).sort({ videoTitle: 1 }).exec(function(err, posts) {
+        res.json(posts);
+    });
+
+})
+
 
 
 router.get('/*', function(req, res, next) {

@@ -30,6 +30,10 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider, $mdD
             templateUrl: "/tpls/admin/slider.html",
             controller: "sliderCtrl"
         })
+        .when("/ads", {
+            templateUrl: "/tpls/admin/ads.html",
+            controller: "adsCtrl"
+        })
         .when("/site-config", {
             templateUrl: "/tpls/admin/site-config.html",
             controller: "siteConfigCtrl"
@@ -76,8 +80,7 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider, $mdD
                 projectId: { squash: true, value: null },
             }
         })
-
-    .when("/product", {
+        .when("/product", {
             templateUrl: "/tpls/admin/product/product.html",
             controller: "productCtrl"
         })
@@ -88,15 +91,7 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider, $mdD
                 productId: { squash: true, value: null },
             }
         })
-
-    // .when("/hair-sample/:hairId/:action", {
-    //     templateUrl: "/tpls/admin/hair-sample/hair-sample-detail.html",
-    //     controller: "hairSampleCtrl",
-    //     params: {
-    //         productId: { squash: true, value: null },
-    //     }
-    // })
-    .when("/promotion", {
+        .when("/promotion", {
             templateUrl: "/tpls/admin/promotion/index.html",
             controller: "promotionCtrl"
         })
@@ -120,12 +115,9 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider, $mdD
             templateUrl: "/tpls/admin/member/moderator.html",
             controller: "memberCtrl"
         })
-        // .when("/user-invest", {
-        //     templateUrl: "/tpls/admin/member/user-invest.html",
-        //     controller: "userInvestCtrl"
-        // })
 
 
+        
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false

@@ -39,7 +39,7 @@ router.post('/all', function(req, res, next) {
 })
 
 router.post('/filter-all', function(req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     var options = {};
     if (req.body.groupType) {
         options['groupType'] = req.body.groupType;
