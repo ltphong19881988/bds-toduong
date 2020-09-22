@@ -142,13 +142,13 @@ app.run(function($rootScope, $window, $http, $location, MetadataService, SEOServ
         if ($rootScope['locationChangeSuccess'] != $rootScope['locationChangeStart']) {
             console.log('angularjs router change href', location.pathname);
             getSeoInfo(location.pathname, $http, function(res) {
-                console.log('getSeoInfo', res);
+                // console.log('getSeoInfo', res);
                 if (res.status) {
                     SEOService.setMetaTags(res.seoInfo);
                 }
             })
         } else {
-            console.log('web được tải lại');
+            // console.log('web được tải lại');
         }
 
     });
@@ -169,7 +169,6 @@ app.run(function($rootScope, $window, $http, $location, MetadataService, SEOServ
         if ($window.innerWidth <= 450)
             $rootScope.postCateContentNumer = 120;
 
-        // console.log($window.innerWidth);
     });
 
     angular.element($window).on('load', function() {
@@ -212,7 +211,7 @@ var InitWebsite = function($rootScope, $http) {
     }
 
     submitFrontEnd(params, $http, function(res) {
-        console.log('init website', res);
+        // console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
         $rootScope.listAds = res.listAds;
