@@ -135,7 +135,7 @@ var InitTreeMember = function(initData, $rootScope, $scope, $http) {
 app.controller("membersCtrl", function($rootScope, $scope, $http, $translate, $location, $routeParams) {
     // console.log($location);
     $translate('MEMBER').then(function(title) {
-        $rootScope.pageTitle = $rootScope.siteTitle + ' - ' + title;
+        // $rootScope.pageTitle = $rootScope.siteTitle + ' - ' + title;
     });
     $rootScope.$watch('logedUser', function(value) {
         if (value) {

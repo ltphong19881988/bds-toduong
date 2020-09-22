@@ -47,6 +47,14 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         else
             MetadataService.setMetaTags('keywords', $scope.product.productContent.title);
 
+
+        jQuery('p > img').ready(function(){
+            jQuery('p > img').each(function(){
+                console.log(jQuery(this).parent());
+                jQuery(this).parent().css('text-align', 'center');
+            });
+        });
+
         setTimeout(function() {
             $scope.copyOwl = $('.gallery > .owl-carousel').clone().prop({
                 id: 'copyOwl'

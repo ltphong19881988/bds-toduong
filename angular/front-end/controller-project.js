@@ -88,6 +88,13 @@ app.controller("projectDetailCtrl", function($rootScope, $scope, $http, $compile
         if (res.district && res.district.link) $scope.nearestLocal = res.district;
         if (res.ward && res.ward.link) $scope.nearestLocal = res.ward;
 
+        jQuery('p > img').ready(function(){
+            jQuery('p > img').each(function(){
+                console.log(jQuery(this).parent());
+                jQuery(this).parent().css('text-align', 'center');
+            });
+        });
+
         setTimeout(function() {
             $scope.copyOwl = $('.portfolio-details-carousel').clone().prop({
                 id: 'copyOwl'

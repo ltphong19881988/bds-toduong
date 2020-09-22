@@ -238,7 +238,7 @@
             ads_right.css('right', abc - 170);
         }else{
             $('.ads').hide();
-            console.log('khong du cho');
+            // console.log('khong du cho');
         }
         
     });
