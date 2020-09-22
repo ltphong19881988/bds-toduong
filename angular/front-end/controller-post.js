@@ -31,6 +31,7 @@ app.controller("postDetailCtrl", function($rootScope, $scope, $http, $compile, $
         jQuery('p  img').ready(function(){
             jQuery('p  img').each(function(){
                 jQuery(this).closest("p").css('text-align', 'center');
+                //thua
             });
         });
         

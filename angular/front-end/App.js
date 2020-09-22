@@ -113,7 +113,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 
 // Run a function for init the app ( before content loaded )
 app.run(function($rootScope, $window, $http, $location, MetadataService, SEOService) {
-    // console.log('app run');
+    // console.log('app run'); fe
     $rootScope['web_key'] = 'toduong';
     if (location.hostname.indexOf('totnhat.vn') != -1)
         $rootScope['web_key'] = 'totnhat';

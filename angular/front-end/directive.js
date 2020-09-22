@@ -99,7 +99,7 @@ var initCategory = function($scope, $compile, $http) {
         url: '/product/category/all-category?idCategoryType=5f166a011ab04a0e50f990b3',
     }
     submitFrontEnd(params, $http, function(res) {
-        // console.log('all category', res);
+        // console.log('all category', res); a
         $scope.arrCategory = res;
         var html = `
             <div class="node" parent="null" >
