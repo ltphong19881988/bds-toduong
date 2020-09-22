@@ -45,7 +45,7 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
         // url: '/get-slider',
         url: '/data-index',
         data: {
-            webname: 'bds-totnhat',
+            webname: 'bds-' + $rootScope['web_key'],
         }
     }
     submitFrontEnd(params, $http, function(res) {
