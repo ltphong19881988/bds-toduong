@@ -231,7 +231,7 @@ router.post('/init-web', async(req, res, next) => {
 
     var optionsAds = { postType: 3, normalPrice : 1, videoTitle : "bds-toduong" };
     if (req.headers.host.indexOf('batdongsantotnhat') != -1) {
-        optionsSlider.videoTitle = "bds-totnhat";
+        optionsAds.videoTitle = "bds-totnhat";
     }
     var listAds = new Promise(resolve => {
         Post.aggregate([
