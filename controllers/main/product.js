@@ -183,6 +183,7 @@ router.post('/filter-url', async(req, res, next) => {
 
     var options = {
         idCategory: { $elemMatch: { $eq: cate._id } },
+        visible : 1,
     };
     if (local) {
         options['$or'] = [
@@ -235,7 +236,7 @@ router.post('/filter-url', async(req, res, next) => {
 
 router.post('/filter-product', async(req, res, next) => {
     // console.log(req.body);
-    var options = {};
+    var options = {visible : 1};
     var skip = 0;
     var limit = 10;
     if (req.body.filter.idCategory) {
