@@ -1911,8 +1911,8 @@ a.footer-logo img {
     font-size: 14px;
 }
 
-.post_detail img {
-    max-width: 80%;
+.post_detail img, #product_detail img {
+    max-width: 100%;
 }
 
 .link-nha-dat a {
