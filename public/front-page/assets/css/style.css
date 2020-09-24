@@ -2159,7 +2159,7 @@ a.footer-logo img {
     .breadcrumbs h1 {
         font-size: 17px;
     }
-    .post_detail img {
+    .post_detail img, #product_detail img {
         max-width: 100%;
     }
     .post-item {
