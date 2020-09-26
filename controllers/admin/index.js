@@ -368,7 +368,7 @@ var download_Image = function(uri, filename, callback){
 
 router.post('/download-img', async(req, res, next) => {
     console.log(req.body);
-    if(req.body.link.indexOf('http') == -1 || req.body.link.indexOf('toduongbatdongsan') != -1 || req.body.link.indexOf('batdongsantotnhat') != -1) 
+    if(req.body.link.indexOf('http') == -1  || req.body.link.indexOf('batdongsantotnhat') != -1) 
         return res.json(req.body.link);
     var dauxanh = config.publicPath + req.body.path;
     var filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png' ;

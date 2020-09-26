@@ -340,7 +340,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             });
             var listProcess = [];
             listStr.forEach(element => {
-                if(element.indexOf('http') != -1 && element.indexOf('toduongbatdongsan') == -1 && element.indexOf('batdongsantotnhat') == -1) {
+                if(element.indexOf('http') != -1  && element.indexOf('batdongsantotnhat') == -1) {
                     var html = `<div class="form-group"> 
                                 <span> ` + element + ` </span> <br/>
                                 <span> Đang xử lý ... </span>

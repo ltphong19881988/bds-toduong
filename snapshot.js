@@ -5,7 +5,7 @@ module.exports = function(grunt) {
             all: {
                 options: {
                     snapshotPath: './snapshots/',
-                    sitePath: 'http://toduongbatdongsan.com/',
+                    sitePath: 'http://batdongsantotnhat.vn/',
                     urls: ['#!/', '#!/nha-dat-ban', '#!/nha-dat-cho-thue'],
                     sanitize: function(requestUri) {
                         //returns 'index.html' if the url is '/', otherwise a prefix
