@@ -335,10 +335,11 @@ router.get('/name-key/:key', async(req, res, next) => {
         var relateOpts = {
             nameKey: { $ne: req.params.key },
             visible: 1,
-            idCategory: { $elemMatch: { $eq: products[0].category[0]._id } },
+            idCategory: { $elemMatch: { $eq: products[0].category[1]._id } },
             $or: [
-                { 'province.link': products[0].province['link'] },
+                { 'ward.link': products[0].ward['link'] },
                 { 'district.link': products[0].district['link'] },
+                { 'province.link': products[0].province['link'] },
             ]
         };
         var count = await Product.countDocuments(relateOpts).exec();
@@ -365,7 +366,10 @@ router.get('/name-key/:key', async(req, res, next) => {
                 },
             },
             { $unwind: "$productContent" },
-            { $skip: skipRecords },
+            {
+                $sort: { "ward.ID": -1, 'district.ID': -1, 'province.ID': -1 }
+            },
+            { $skip: 0 },
             { $limit: 5 }
         ], function(err, relatedProducts) {
             // console.log('relatedProducts', relatedProducts);

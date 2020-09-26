@@ -1800,10 +1800,11 @@ a.footer-logo img {
 
 .product-related-item {
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .product-related-item .pi-content a {
-    color: #B32626;
+    color: #c12f25;
     font-weight: 700;
     font-size: 14px;
 }
@@ -1851,7 +1852,7 @@ a.footer-logo img {
 
 .product-item .pi-content a,
 .post-item .pi-title a {
-    color: #B32626;
+    color: #c12f25;
     font-weight: 700;
     text-transform: uppercase;
 }
