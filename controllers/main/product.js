@@ -330,17 +330,21 @@ router.get('/name-key/:key', async(req, res, next) => {
         // },
     ], async function(err, products) {
         console.log('result', products);
-
+        var orOpt = [
+            { 'province.link': products[0].province['link'] },
+        ] ;
+        if(products[0].district){
+            orOpt.push({ 'district.link': products[0].district['link'] });
+        }
+        if(products[0].ward){
+            orOpt.push({ 'ward.link': products[0].ward['link'] });
+        }
         var limitrecords = 5;
         var relateOpts = {
             nameKey: { $ne: req.params.key },
             visible: 1,
             idCategory: { $elemMatch: { $eq: products[0].category[1]._id } },
-            $or: [
-                { 'ward.link': products[0].ward['link'] },
-                { 'district.link': products[0].district['link'] },
-                { 'province.link': products[0].province['link'] },
-            ]
+            $or: orOpt
         };
         var count = await Product.countDocuments(relateOpts).exec();
         var checklimit = count - limitrecords;
