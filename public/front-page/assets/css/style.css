@@ -1798,6 +1798,21 @@ a.footer-logo img {
     height: 220px;
 }
 
+.product-related-item {
+    margin-bottom: 15px;
+}
+
+.product-related-item .pi-content a {
+    color: #B32626;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.product-related-item .pi-content .wrap strong {
+    font-size: 13px;
+    color: #02518c;
+}
+
 .product-item .pi-img {
     width: 35%;
     height: 158px;
@@ -2204,7 +2219,7 @@ a.footer-logo img {
         font-size: 12px;
     }
     .container {
-        padding-left: 5px;
+        padding-left: 10px;
         padding-right: 5px;
     }
     .section-title h2 {

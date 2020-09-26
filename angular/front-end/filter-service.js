@@ -56,6 +56,9 @@ app.filter("productPrice", ['$sce', function($sce) {
 
     return function(htmlCode) {
         if (htmlCode) {
+            if(htmlCode == '' || htmlCode == null || htmlCode == 0){
+                return "Liên hệ" ;
+            }
             var chuoi = htmlCode.toString();
             var pre = "";
             if (chuoi.length > 6 && chuoi.length < 10) {
@@ -68,6 +71,8 @@ app.filter("productPrice", ['$sce', function($sce) {
             }
             // console.log(htmlCode.toString().length);
             return htmlCode.toString().replace('.', ',') + pre;
+        }else{
+            return "Liên hệ" ;
         }
 
     }

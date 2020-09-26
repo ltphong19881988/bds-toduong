@@ -82,13 +82,14 @@
                 <div class="pr-content" ng-bind-html="product.productContent.content | trust">
                 </div>
             </div>
+            <br/>
             <div class="related_product col-lg-12">
                 <div class="title-list">Bất động sản tương tự</div>
                 <div class="row ">
-                    <div ng-if="relatedProducts && relatedProducts.length > 0" class="product-item" ng-repeat="item in relatedProducts">
-                        <div class="pi-img">
+                    <div ng-if="relatedProducts && relatedProducts.length > 0" class="product-related-item" ng-repeat="item in relatedProducts">
+                        <!-- <div class="pi-img">
                             <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
-                        </div>
+                        </div> -->
                         <div class="pi-content">
                             <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
                                 {{item.productContent.title}}
