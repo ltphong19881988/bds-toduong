@@ -14,10 +14,7 @@ var GetHotProduct = function(filter, $http, callback) {
 
 app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile, $routeParams, MetadataService) {
     $rootScope.pageTitle = "Bất động sản Tô Dương - ";
-    // console.log('category', $routeParams);
-    // console.log('location', location.pathname);
     var abc = location.pathname.split('-pr');
-    console.log('abc', abc);
     let params = {
         method: 'GET',
         url: '/product/name-key/' + 'pr' + abc[1],
@@ -28,6 +25,7 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         $scope.product = res.product;
         $scope.relatedProducts = res.relatedProducts;
         $scope.nearestCate = JSON.parse(localStorage.getItem('nearestCate'));
+        console.log('nearestCate', $scope.nearestCate, $rootScope.menuDistrict);
         // $scope.nearestCate = res.category.reduce(function(prev, current) {
         //     if (+current.priority > +prev.priority) {
         //         return current;
@@ -75,32 +73,32 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
             });
         }, 500);
 
-        setTimeout(function() {
-            // console.log(jQuery('.testimonial-img').eq(0).width());
-            jQuery('.related_product-carousel').owlCarousel({
-                autoplay: true,
-                dots: false,
-                loop: true,
-                onInitialized: function(e) {
-                    fixImgSlider($scope);
-                },
-                onRefreshed: function(e) {
-                    fixImgSlider($scope);
-                },
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    768: {
-                        items: 2
-                    },
-                    992: {
-                        items: 3
-                    },
-                }
-            });
+        // setTimeout(function() {
+        //     // console.log(jQuery('.testimonial-img').eq(0).width());
+        //     jQuery('.related_product-carousel').owlCarousel({
+        //         autoplay: true,
+        //         dots: false,
+        //         loop: true,
+        //         onInitialized: function(e) {
+        //             fixImgSlider($scope);
+        //         },
+        //         onRefreshed: function(e) {
+        //             fixImgSlider($scope);
+        //         },
+        //         responsive: {
+        //             0: {
+        //                 items: 1
+        //             },
+        //             768: {
+        //                 items: 2
+        //             },
+        //             992: {
+        //                 items: 3
+        //             },
+        //         }
+        //     });
 
-        }, 300);
+        // }, 300);
     })
 
     $scope.viewFullImg = function(src) {

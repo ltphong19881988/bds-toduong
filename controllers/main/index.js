@@ -481,7 +481,7 @@ router.post('/login', loginMW, async(req, res, next) => {
 router.get('/*', async function(req, res, next) {
     if (req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.map') && req.originalUrl.indexOf('.ico') == -1 && req.originalUrl.indexOf('.png') == -1 
     && req.originalUrl.indexOf('.jpg') == -1 && req.originalUrl.indexOf('.css') == -1) {
-        console.log('vao lay SEOINFO', req.originalUrl);
+        // console.log('vao lay SEOINFO', req.originalUrl);
         req.seoInfo = await getSEO_Info(null, req, res, next);
     }
 

@@ -368,10 +368,8 @@ router.get('/name-key/:key', async(req, res, next) => {
             { $skip: skipRecords },
             { $limit: 5 }
         ], function(err, relatedProducts) {
-            console.log('relatedProducts', relatedProducts);
+            // console.log('relatedProducts', relatedProducts);
             res.json({ product: products[0], relatedProducts: relatedProducts });
-
-
         });
     });
 })

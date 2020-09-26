@@ -335,10 +335,39 @@ app.directive('autoScroll', function($document, $timeout, $location) {
     };
 });
 
+function compressImg(dataUrl, newWidth, imageType, imageArguments){
+    var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
+
+    // Provide default values
+    imageType = imageType || "image/jpeg";
+    imageArguments = imageArguments || 0.7;
+
+    // Create a temporary image so that we can compute the height of the downscaled image.
+    image = new Image();
+    image.src = dataUrl;
+    oldWidth = image.width;
+    oldHeight = image.height;
+    newHeight = Math.floor(oldHeight / oldWidth * newWidth)
+
+    // Create a temporary canvas to draw the downscaled image on.
+    canvas = document.createElement("canvas");
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    // Draw the downscaled image on the canvas and return the new data URL.
+    ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, newWidth, newHeight);
+    newDataUrl = canvas.toDataURL(imageType, imageArguments);
+    return newDataUrl;
+}
+
 app.directive('orientimgload', function() {
     return {
         link: function(scope, element, attrs) {
+
             element.bind("load", function(e) {
+                // var abc = compressImg(jQuery(this).attr('src'), 500, 'png', 0.5);
+                // jQuery(this).attr('src', abc); 
                 var parent = jQuery(this).parent();
                 var a = parent.height() / parent.width();
                 var b = jQuery(this).height() / jQuery(this).width();

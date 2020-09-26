@@ -1799,7 +1799,7 @@ a.footer-logo img {
 }
 
 .product-item .pi-img {
-    width: 40%;
+    width: 35%;
     height: 158px;
     overflow: hidden;
     position: relative;
@@ -1820,7 +1820,7 @@ a.footer-logo img {
 }
 
 .product-item .pi-content {
-    width: 60%;
+    width: 64%;
     float: right;
     padding: 0px 0px 0px 10px;
     font-size: 15px;
