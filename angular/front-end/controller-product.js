@@ -1,15 +1,4 @@
-var GetHotProduct = function(filter, $http, callback) {
-    let params = {
-        method: 'POST',
-        url: '/product/filter-product',
-        data: {
-            filter: filter
-        }
-    }
-    submitFrontEnd(params, $http, function(res) {
-        callback(res);
-    })
-}
+
 
 
 app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile, $routeParams, MetadataService) {
@@ -23,19 +12,18 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
         console.log('details', res);
         $rootScope.pageTitle += res.product.productContent.title;
         $scope.product = res.product;
+        $scope.countMT = res.countMT;
+        $scope.countTH = res.countTH;
         $scope.relatedProducts = res.relatedProducts;
         $scope.nearestCate = JSON.parse(localStorage.getItem('nearestCate'));
-        console.log('nearestCate', $scope.nearestCate, $rootScope.menuDistrict);
-        // $scope.nearestCate = res.category.reduce(function(prev, current) {
-        //     if (+current.priority > +prev.priority) {
-        //         return current;
-        //     } else {
-        //         return prev;
-        //     }
-        // });
-        $scope.nearestLocal = res.province;
+        // console.log('nearestCate', $scope.nearestCate, $rootScope.menuDistrict);
+        $scope.nearestLocal = res.product.province;
+
         if (res.product.district && res.product.district.link) $scope.nearestLocal = res.product.district;
         if (res.product.ward && res.product.ward.link) $scope.nearestLocal = res.product.ward;
+
+       
+
         if ($scope.product.productContent.seoDescriptions)
             MetadataService.setMetaTags('description', $scope.product.productContent.seoDescriptions);
         else
@@ -48,7 +36,7 @@ app.controller("productDetailCtrl", function($rootScope, $scope, $http, $compile
 
         jQuery('p > img').ready(function(){
             jQuery('p > img').each(function(){
-                console.log(jQuery(this).parent());
+                // console.log(jQuery(this).parent());
                 jQuery(this).parent().css('text-align', 'center');
             });
         });

@@ -246,12 +246,18 @@ router.post('/filter-product', async(req, res, next) => {
         var proType = await ProductType.findOne({ groupType: "productType", value: req.body.filter.productType });
         options['productType'] = { $elemMatch: { _id: proType._id.toString() } };
     }
+    if(req.body.filter.district){
+        options["$or"] = [
+            { 'district.link': req.body.filter.district['link'] },
+        ]
+    }
     if (req.body.filter.skip && typeof req.body.filter.skip === 'number' && (req.body.filter.skip % 1) === 0) {
         skip = parseInt(req.body.filter.skip);
     }
     if (req.body.filter.limit && typeof req.body.filter.limit === 'number' && (req.body.filter.limit % 1) === 0) {
         limit = parseInt(req.body.filter.limit);
     }
+    
     Product.aggregate([{
             $match: options,
         },
@@ -275,17 +281,6 @@ router.post('/filter-product', async(req, res, next) => {
             },
         },
         { $unwind: "$productContent" },
-        // {
-        //     $project: {
-        //         // "categoryName": '$category.name',
-        //         "nameKey": 1,
-        //         "normalPrice": 1,
-        //         "pictures": 1,
-        //         "salePrice": 1,
-        //         "datecreate": 1,
-        //         "title": '$postContent.title',
-        //     }
-        // },
         { "$skip": skip },
         { "$limit": skip + limit },
 
@@ -317,19 +312,19 @@ router.get('/name-key/:key', async(req, res, next) => {
             },
         },
         { $unwind: "$productContent" },
-        // {
-        //     $project: {
-        //         // "categoryName": '$category.name',
-        //         "nameKey": 1,
-        //         "normalPrice": 1,
-        //         "pictures": 1,
-        //         "salePrice": 1,
-        //         "datecreate": 1,
-        //         "title": '$postContent.title',
-        //     }
-        // },
     ], async function(err, products) {
         console.log('result', products);
+        var mt = await PostContent.findOne({oneLvlUrl : 'ban-nha-mat-tien'});
+        // console.log('mt', mt);
+        var mattien = await Post.findOne({_id : mt.idPost});
+        // console.log('mattien', mattien);
+        var countMTOpt = {'idCategory' : { $elemMatch: { $eq: mongoose.Types.ObjectId(mattien.idCategory[0]) } } };
+
+        var th = await PostContent.findOne({oneLvlUrl : 'ban-nha-trong-hem'});
+        var tronghem = await Post.findOne({_id : th.idPost});
+        // console.log('tronghem', tronghem);
+        var countTHOpt = {'idCategory' : { $elemMatch: { $eq: mongoose.Types.ObjectId(tronghem.idCategory[0]) } } };
+
         var orOpt = [
             { 'province.link': products[0].province['link'] },
         ] ;
@@ -338,6 +333,12 @@ router.get('/name-key/:key', async(req, res, next) => {
         }
         if(products[0].ward){
             orOpt.push({ 'ward.link': products[0].ward['link'] });
+            countMTOpt['$or'] = [
+                { 'district.link': products[0].district['link'] }
+            ];
+            countTHOpt['$or'] = [
+                { 'district.link': products[0].district['link'] }
+            ]
         }
         var limitrecords = 5;
         var relateOpts = {
@@ -346,10 +347,13 @@ router.get('/name-key/:key', async(req, res, next) => {
             idCategory: { $elemMatch: { $eq: products[0].category[1]._id } },
             $or: orOpt
         };
-        var count = await Product.countDocuments(relateOpts).exec();
-        var checklimit = count - limitrecords;
-        if (checklimit < 0) checklimit = 0;
-        var skipRecords = Tool.getRandomArbitrary(0, checklimit);
+        // var count = await Product.countDocuments(relateOpts).exec();
+        // var checklimit = count - limitrecords;
+        // if (checklimit < 0) checklimit = 0;
+        // var skipRecords = Tool.getRandomArbitrary(0, checklimit);
+        console.log(countMTOpt);
+        
+
         Product.aggregate([{
                 $match: relateOpts,
             },
@@ -375,10 +379,13 @@ router.get('/name-key/:key', async(req, res, next) => {
             },
             { $skip: 0 },
             { $limit: 5 }
-        ], function(err, relatedProducts) {
+        ], async function(err, relatedProducts) {
             // console.log('relatedProducts', relatedProducts);
-            res.json({ product: products[0], relatedProducts: relatedProducts });
+            var countMT = await Product.countDocuments(countMTOpt).exec();
+            var countTH = await Product.countDocuments(countTHOpt).exec();
+            res.json({ product: products[0], relatedProducts: relatedProducts, countMT, countTH });
         });
+
     });
 })
 

@@ -106,6 +106,22 @@
 
                 </div>
             </div>
+
+            <br/>
+            <div class="related_product col-lg-12">
+                <div class="title-list">Bất động sản dành cho bạn tại <span ng-if="product.district" ng-bind="product.district.title"></span></div>
+                <div class="row ">
+                    <ul>
+                        <li>
+                            <a href="/ban-nha-mat-tien-{{product.district.link}}">Nhà đất mặt tiền (<span ng-bind="countMT"></span>) </a>
+                        </li>
+                        <li>
+                            <a href="/ban-nha-trong-hem-{{product.district.link}}" >Nhà đất trong hẻm (<span ng-bind="countTH"></span>) </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
         </div>
 
         <div id="main-right" class="">
