@@ -119,14 +119,20 @@
         </div>
     </div>
     <main id="main">
-
         <ng-view></ng-view>
-
     </main>
     <!-- End #main -->
 
+    <div class="container">
+        <div ng-if="adsCenter" class="ads-center row" style="text-align: center;">
+            <a href="{{adsCenter[0].nameKey}}">
+                <img ng-src="{{adsCenter[0].videoUrl}}" style="max-width: 100%;" />
+            </a>
+        </div>
+    </div>
+
     <!-- ======= Footer ======= -->
-    <footer id="footer">
+    <footer id="footer" >
         <div class="hotline-phone-ring-wrap">
             <div class="hotline-phone-ring">
                 <div class="hotline-phone-ring-circle"></div>

@@ -8,6 +8,21 @@ if (curtoken) {
     });
 }
 
+function getRandomArbitrary(min, max) {
+    return Math.ceil(Math.random() * (max - min) + min);
+}
+
+function getRandomArr(arr, num){
+    if(num >= arr.length) return arr;
+    var length = arr.length - 1;
+    var kq = [];
+    while(kq.length < num){
+        var abc = getRandomArbitrary(0, length);
+        if(kq.indexOf(arr[abc]) == -1) kq.push(arr[abc]);
+    }
+    return kq;
+}
+
 var getUrlParameter = function(name) {
     var url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -114,7 +129,7 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 // Run a function for init the app ( before content loaded )
 app.run(function($rootScope, $window, $http, $location, MetadataService, SEOService) {
     // console.log('app run'); fe
-    $rootScope['web_key'] = 'toduong';
+    $rootScope['web_key'] = 'totnhat';
     if (location.hostname.indexOf('totnhat.vn') != -1)
         $rootScope['web_key'] = 'totnhat';
     InitWebsite($rootScope, $http);
@@ -211,12 +226,16 @@ var InitWebsite = function($rootScope, $http) {
     }
 
     submitFrontEnd(params, $http, function(res) {
-        // console.log('init website', res);
+        console.log('init website', res);
         $rootScope.menuDistrict = res.menuDistrict;
         $rootScope.menuNews = res.listNews;
         $rootScope.listAds = res.listAds;
         $rootScope['adsLeft'] = res.listAds.filter(x => (x.position == 'left' && x.videoTitle == 'bds-' + $rootScope['web_key']))[0];
         $rootScope['adsRight'] = res.listAds.filter(x => (x.position == 'right' && x.videoTitle == 'bds-' + $rootScope['web_key']))[0];
+        var arr =  res.listAds.filter(x => (x.position == 'center' && x.videoTitle == 'bds-' + $rootScope['web_key']));
+        $rootScope['adsCenter'] = getRandomArr(arr, 1);
+        console.log("$rootScope['adsCenter']", arr);
+
 
         // $rootScope['pageTitle'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;
         $rootScope['webName'] = res.siteConfig.filter(x => x.key == 'web-name-' + $rootScope['web_key'])[0].value;

@@ -229,7 +229,7 @@ router.post('/init-web', async(req, res, next) => {
         })
     })
 
-    var optionsAds = { postType: 3, normalPrice : 1, videoTitle : "bds-toduong" };
+    var optionsAds = { postType: 3, normalPrice : 1, videoTitle : "bds-totnhat" };
     if (req.headers.host.indexOf('batdongsantotnhat') != -1) {
         optionsAds.videoTitle = "bds-totnhat";
     }

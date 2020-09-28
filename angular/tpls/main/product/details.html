@@ -125,22 +125,28 @@
         </div>
 
         <div id="main-right" class="">
-            <div id="product_search">
-                <div class="box-title">
-                    <span ng-bind="nearestCate.title"> </span>
+                <div id="product_search" class="row">
+                    <div class="box-title" style="width: 100%;">
+                        <span ng-bind="nearestCate.title"> </span>
+                    </div>
+                    <div class="box-content" style="width: 100%;">
+                        <ul class="count-product">
+    
+                            <li ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
+                                <h4 class="normal">
+                                    <a href="/{{nearestCate.oneLvlUrl}}-{{item.link}}">  <span ng-bind="item.title"> </span></a>
+                                </h4>
+                            </li>
+    
+                        </ul>
+    
+                    </div>
                 </div>
-                <div class="box-content">
-                    <ul class="count-product">
-
-                        <li ng-repeat="item in menuDistrict" ng-if="item.ID != 657">
-                            <h4 class="normal">
-                                <a href="/{{nearestCate.oneLvlUrl}}-{{item.link}}">  <span ng-bind="item.title"> </span></a>
-                            </h4>
-                        </li>
-
-                    </ul>
-
-                </div>
+            
+            <div ng-if="adsCenter" class="ads-center row" style="text-align: center;">
+                <a href="{{adsCenter[0].nameKey}}">
+                    <img ng-src="{{adsCenter[0].videoUrl}}" style="max-width: 100%;" />
+                </a>
             </div>
         </div>
     </div>
