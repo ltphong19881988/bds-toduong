@@ -114,6 +114,7 @@ router.post('/filter-url', async(req, res, next) => {
     if (req.body.limit && typeof req.body.limit === 'number' && (req.body.limit % 1) === 0) {
         limit = parseInt(req.body.limit);
     }
+    
     Post.aggregate([{
             $match: {
                 idCategory: { $elemMatch: { $eq: cateContent.category._id } },
@@ -142,8 +143,19 @@ router.post('/filter-url', async(req, res, next) => {
             },
         },
         { $unwind: "$postContent" },
-    ], function(err, result) {
-        res.json({ status: true, listPost: result, category: cateContent });
+        {
+            $facet: {
+                paginatedResults: [{ $skip: skip }, { $limit: limit }],
+                totalCount: [{
+                    $count: 'count'
+                }]
+            }
+        }
+    ], function(err, results) {
+        // res.json({ status: true, listPost: result, category: cateContent });
+        var totalCount = 0;
+        if (results[0].totalCount[0]) totalCount = results[0].totalCount[0].count;
+        res.json({ status: true, category: cateContent, listPost : results[0].paginatedResults, totalCount, redirect: false });
     });
 
 })

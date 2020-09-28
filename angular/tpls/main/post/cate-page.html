@@ -38,9 +38,10 @@
                         </div>
                     </div>
 
+                    <ul  ng-if="pagination.totalItems > 0" uib-pagination boundary-links="true" total-items="pagination.totalItems" ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                        last-text="&raquo;" max-size="3" boundary-link-numbers="true" rotate="false" ng-change="pageChanged()"></ul>
+
                 </div>
-
-
 
             </div>
 

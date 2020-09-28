@@ -61,6 +61,9 @@ var filterUrlCategory = function(params, $rootScope, $scope, $http, MetadataServ
             }
         }
 
+        jQuery('html, body').animate({
+            scrollTop: 0
+        }, 1500, 'easeInOutExpo');
     });
 };
 
