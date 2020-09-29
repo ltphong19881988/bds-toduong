@@ -27,6 +27,7 @@ app.controller("postDetailCtrl", function($rootScope, $scope, $http, $compile, $
         $rootScope.pageTitle += ' - ' + res.post.postContent.title;
         $scope.post = res.post;
         $scope.relatedPosts = res.relatedPosts;
+        $scope.hotProducts = res.hotProducts;
 
         jQuery('p  img').ready(function(){
             jQuery('p  img').each(function(){

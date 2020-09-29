@@ -72,11 +72,11 @@
         </div>
 
         <div id="main-right" class="">
-            <div id="product_search">
-                <div class="box-title">
+            <div id="product_search" class="row">
+                <div class="box-title" style="width: 100%;">
                     Tin mục khác
                 </div>
-                <div class="box-content">
+                <div class="box-content" style="width: 100%;">
                     <ul class="count-product">
 
                         <li>
@@ -99,6 +99,24 @@
 
                 </div>
             </div>
+
+
+            <div id="product_search" class="row">
+                <div class="box-title" style="width: 100%;">
+                    Sản phẩm hot
+                </div>
+                <div class="box-content" style="width: 100%;">
+                    <div ng-if="hotProducts" class="hotProducts" ng-repeat="item in hotProducts" style="text-align: center; margin-bottom: 35px;">
+                        <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}">
+                            <h7>{{item.productContent.title}}</h7>
+                            <img ng-src="{{item.pictures[0]}}" style="max-width: 100%;" />
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            
+
         </div>
     </div>
 

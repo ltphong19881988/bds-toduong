@@ -3,6 +3,8 @@ const Category = require('../../models/category');
 const ListProvince = require("../../models/listprovince");
 const Post = require("../../models/post");
 const PostContent = require("../../models/post-content");
+const ProductType = require("../../models/product-type");
+const Product = require("../../models/product");
 const Tool = require("../../models/helpers/tool");
 const mongoose = require('mongoose');
 
@@ -162,29 +164,34 @@ router.post('/filter-url', async(req, res, next) => {
 
 router.get('/name-key/:key', async(req, res, next) => {
 
-    Post.aggregate([{
-            $match: { nameKey: req.params.key },
-        },
-        {
-            $lookup: {
-                from: "categories",
-                localField: "idCategory",
-                foreignField: "_id",
-                as: "category"
+    var postDetail = new Promise((resolve, reject) => {
+        Post.aggregate([{
+                $match: { nameKey: req.params.key },
             },
-        },
-        {
-            $lookup: {
-                from: "postcontents",
-                localField: "_id",
-                foreignField: "idPost",
-                as: "postContent"
+            {
+                $lookup: {
+                    from: "categories",
+                    localField: "idCategory",
+                    foreignField: "_id",
+                    as: "category"
+                },
             },
-        },
-        { $unwind: "$postContent" },
-    ], async function(err, post) {
-        console.log('result', post);
-        // res.json(post[0]);
+            {
+                $lookup: {
+                    from: "postcontents",
+                    localField: "_id",
+                    foreignField: "idPost",
+                    as: "postContent"
+                },
+            },
+            { $unwind: "$postContent" },
+        ], async function(err, post) {
+            if(err != null) reject(err)
+            else  resolve(post[0]);
+        });
+    })
+
+    var relatedPosts = new Promise(async(resolve, reject) => {
         var limitrecords = 5;
         var count = await Post.countDocuments({ postType: 1, visible: 1 }).exec();
         var checklimit = count - limitrecords;
@@ -213,9 +220,111 @@ router.get('/name-key/:key', async(req, res, next) => {
             { $skip: skipRecords },
             { $limit: 5 }
         ], async function(err, lienquans) {
-            res.json({ post: post[0], relatedPosts: lienquans });
+            if(err != null) reject(err)
+            else  resolve(lienquans);
         });
-    });
+    })
+
+    var options = {visible : 1};
+    var hotType = await ProductType.findOne({ groupType: "productType", value: "hot" });
+    console.log(hotType);
+    options['productType'] = { $elemMatch: { _id: hotType._id.toString() } };
+    var count = await Product.countDocuments(options).exec();
+    var skipRecords = Tool.getRandomArbitrary(0, count - 5);
+    var hotProducts = new Promise(async(resolve, reject)=>{
+        Product.aggregate([{
+                $match: options,
+            },
+            {
+                $sort: { datecreate: -1 }
+            },
+            // {
+            //     $lookup: {
+            //         from: "categories",
+            //         localField: "idCategory",
+            //         foreignField: "_id",
+            //         as: "category"
+            //     },
+            // },
+            {
+                $lookup: {
+                    from: "productcontents",
+                    localField: "_id",
+                    foreignField: "idProduct",
+                    as: "productContent"
+                },
+            },
+            { $unwind: "$productContent" },
+            { "$skip": skipRecords },
+            { "$limit": 3 },
+
+        ], function(err, result) {
+            if(err != null) reject(err)
+            else  resolve(result);
+        });
+    })
+    
+
+    Promise.all([postDetail, relatedPosts, hotProducts]).then(values => {
+        res.json({ post: values[0], relatedPosts: values[1], hotProducts: values[2] });
+    })
+
+    // Post.aggregate([{
+    //         $match: { nameKey: req.params.key },
+    //     },
+    //     {
+    //         $lookup: {
+    //             from: "categories",
+    //             localField: "idCategory",
+    //             foreignField: "_id",
+    //             as: "category"
+    //         },
+    //     },
+    //     {
+    //         $lookup: {
+    //             from: "postcontents",
+    //             localField: "_id",
+    //             foreignField: "idPost",
+    //             as: "postContent"
+    //         },
+    //     },
+    //     { $unwind: "$postContent" },
+    // ], async function(err, post) {
+    //     console.log('result', post);
+    //     // res.json(post[0]);
+    //     var limitrecords = 5;
+    //     var count = await Post.countDocuments({ postType: 1, visible: 1 }).exec();
+    //     var checklimit = count - limitrecords;
+    //     if (checklimit < 0) checklimit = 0;
+    //     var skipRecords = Tool.getRandomArbitrary(0, checklimit);
+    //     Post.aggregate([{
+    //             $match: { nameKey: { $ne: req.params.key }, postType: 1, visible: 1 },
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: "categories",
+    //                 localField: "idCategory",
+    //                 foreignField: "_id",
+    //                 as: "category"
+    //             },
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: "postcontents",
+    //                 localField: "_id",
+    //                 foreignField: "idPost",
+    //                 as: "postContent"
+    //             },
+    //         },
+    //         { $unwind: "$postContent" },
+    //         { $skip: skipRecords },
+    //         { $limit: 5 }
+    //     ], async function(err, lienquans) {
+    //         res.json({ post: post[0], relatedPosts: lienquans });
+
+
+    //     });
+    // });
 })
 
 
