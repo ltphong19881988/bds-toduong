@@ -23,15 +23,17 @@ const ProductContent = require('../../models/product-content');
 var secretKey = config.secret;
 
 var getSEO_Info = async function(url, req, res, next) {
-    if (req.originalUrl.startsWith('/admin') == true) {
+    console.log(req);
+    console.log(req.path);
+    if (req.path.startsWith('/admin') == true) {
         return next();
     }
     // console.log('start url', url);
-    if (url == null) url = req.originalUrl.replace('/', '');
+    if (url == null) url = req.path.replace('/', '');
     else url = url.replace('/', '');
     if (url.indexOf('-pr') != -1 || url.indexOf('-pj') != -1 || url.indexOf('-nr') != -1) {
-        if (req.originalUrl.indexOf('-pr') != -1) {
-            var abc = req.originalUrl.split('-pr');
+        if (req.path.indexOf('-pr') != -1) {
+            var abc = req.path.split('-pr');
             var product = await Product.findOne({ nameKey: 'pr' + abc[abc.length - 1] });
             var productContent = await ProductContent.findOne({ idProduct: product._id });
             return productContent;
