@@ -78,19 +78,43 @@ server.listen(port, function() {
     //socketapp.Init(server);
 });
 
+
+
+
+
 // require('./models/investmentpackage').Init(function(a) {})
 // require('./models/investmenttime').Init(function(a) {})
 // require('./models/group').Init()
 // require('./models/initdata').Init()
 
+// const Jimp = require('jimp');
+// const fileManager = require('file-manager-js');
+// console.log('__basedir', global.__basedir);
+// fileManager.list(global.__basedir + '/public/uploads/media').then(async(info) => {
+//     // console.log(info);
+//     await Promise.all(
+// 		info.files.map(async imgPath => {
+//             const image = await Jimp.read(imgPath);
+//             console.log(image.getBufferAsync('image/bmp'));
+//             // console.log(imgPath, image.bitmap.data.toString().length/2048);
+//             // var width = image.bitmap.width;
+//             // if(width > 1200) width = 1200;
+// 			// await image.resize(1200, Jimp.AUTO);
+// 			// await image.quality(90);
+// 			// await image.writeAsync(imgPath);
+// 		})
+// 	).then(()=>{
+//         console.log('done all images');
+//     });
+
+// }).catch((error) => {
+//     console.log(error);
+//     // res.json({ dirs: [], files: [] });
+// });
 
 // MyFunction.senGmailEmail('BazanLand Group', 'tesst', 'ltphong1988@gmail.com', '', 'tesst html');
-
 // // Transaction.deleteMany({ method: /interest/ }).exec();
 // Role.Init();
-
-
-
 
 
 // setTimeout(function() {

@@ -23,8 +23,6 @@ const ProductContent = require('../../models/product-content');
 var secretKey = config.secret;
 
 var getSEO_Info = async function(url, req, res, next) {
-    console.log(req);
-    console.log(req.path);
     if (req.path.startsWith('/admin') == true) {
         return next();
     }

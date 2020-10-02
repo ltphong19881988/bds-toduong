@@ -42,7 +42,57 @@
                         last-text="&raquo;" max-size="3" boundary-link-numbers="true" rotate="false" ng-change="pageChanged()"></ul>
 
                 </div>
+            </div>
 
+
+            <br/>
+            <div class="related_product col-lg-12">
+                <div class="title-list">Bất động sản hot</div>
+                <div class="row ">
+                    <div ng-if="hotProducts && hotProducts.length > 0" class="product-related-item" ng-repeat="item in hotProducts">
+                        <!-- <div class="pi-img">
+                            <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                        </div> -->
+                        <div class="pi-content">
+                            <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
+                                {{item.productContent.title}}
+                            </a>
+                            <div class="wrap">
+                                <span class="wrap-price">
+                        <span class="price"> <i class="fa fa-tags" aria-hidden="true"></i>: <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong></span>
+                                <span class="area"> Diện tích: <strong class="product-area">{{item.acreage}} m²</strong></span></span>
+                                <span class="contact floatright"></span> <br/>
+                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i>: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <br/>
+            <div class="related_product col-lg-12">
+                <div class="title-list">Bất động sản mới</div>
+                <div class="row ">
+                    <div ng-if="newProducts && newProducts.length > 0" class="product-related-item" ng-repeat="item in newProducts">
+                        <!-- <div class="pi-img">
+                            <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                        </div> -->
+                        <div class="pi-content">
+                            <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
+                                {{item.productContent.title}}
+                            </a>
+                            <div class="wrap">
+                                <span class="wrap-price">
+                        <span class="price"> <i class="fa fa-tags" aria-hidden="true"></i>: <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong></span>
+                                <span class="area"> Diện tích: <strong class="product-area">{{item.acreage}} m²</strong></span></span>
+                                <span class="contact floatright"></span> <br/>
+                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i>: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
         </div>
@@ -53,21 +103,32 @@
                 </div>
                 <div class="box-content">
                     <ul class="count-product">
-                        <li>
-                            <h4 class="normal"><a href="/news/tin-tuc">
-                        Tin tức</a></h4>
+                        <li class="drop-down" ng-repeat="item in menuNews" ng-if="item.priority == 2 && item.idParent == '5f2e60e731fb1f20f8aa783d' ">
+                            <h4 class="normal">
+                                <a href="/news/{{item.catePostContent.oneLvlUrl}}">{{item.name}}</a><h4 class="normal">
+                            </h4>
+                            <ul>
+                                <li ng-repeat="lvl_2 in menuNews" ng-if="lvl_2.priority == 3 && lvl_2.idParent == item._id ">
+                                    <h4 class="normal">
+                                        <a href="/news/{{lvl_2.catePostContent.oneLvlUrl}}">{{lvl_2.name}}</a>
+                                    </h4>
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <h4 class="normal"><a href="/news/tu-van-luat">
-                        Tư vấn luật</a></h4>
-                        </li>
-                        <li>
-                            <h4 class="normal"><a href="/news/kinh-nghiem">
-                        Kinh nghiệm</a></h4>
-                        </li>
-                        <li>
-                            <h4 class="normal"><a href="/news/phong-thuy">
-                        Phong thủy</a></h4>
+                    </ul>
+
+                    <ul class="count-product">
+                        <li class="drop-down" ng-repeat="item in menuNews" ng-if="item.priority == 2 && item.idParent == '5f3f4c1183c2f72c8c4e600e' ">
+                            <h4 class="normal">
+                                <a href="/news/{{item.catePostContent.oneLvlUrl}}">{{item.name}}</a>
+                            </h4>
+                            <ul>
+                                <li ng-repeat="lvl_2 in menuNews" ng-if="lvl_2.priority == 3 && lvl_2.idParent == item._id ">
+                                    <h4 class="normal">
+                                        <a href="/news/{{lvl_2.catePostContent.oneLvlUrl}}">{{lvl_2.name}}</a>
+                                    </h4>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
 

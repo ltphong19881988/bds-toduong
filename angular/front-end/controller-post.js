@@ -28,6 +28,7 @@ app.controller("postDetailCtrl", function($rootScope, $scope, $http, $compile, $
         $scope.post = res.post;
         $scope.relatedPosts = res.relatedPosts;
         $scope.hotProducts = res.hotProducts;
+        $scope.newProducts = res.newProducts;
 
         jQuery('p  img').ready(function(){
             jQuery('p  img').each(function(){

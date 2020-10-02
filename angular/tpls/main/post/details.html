@@ -69,6 +69,34 @@
                     </i>
                 </a>
             </div>
+
+            <br/>
+            <div class="related_product othernews col-lg-12">
+                <h2 class="normalblue row" style="white-space: nowrap;">Bất động sản mới</h2>
+                <div class="otherline">
+                    &nbsp;
+                </div>
+                <div class="row " style="width: 100%;">
+                    <div ng-if="newProducts && newProducts.length > 0" class="product-related-item" ng-repeat="item in newProducts">
+                        <!-- <div class="pi-img">
+                            <img ng-src="{{item.pictures[0]}}" alt="{{item.productContent.title}}" orientimgload />
+                        </div> -->
+                        <div class="pi-content">
+                            <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.productContent.title}}" style="text-rendering: optimizelegibility;">
+                                {{item.productContent.title}}
+                            </a>
+                            <div class="wrap">
+                                <span class="wrap-price">
+                        <span class="price"> <i class="fa fa-tags" aria-hidden="true"></i>: <strong class="product-price" ng-bind="item.normalPrice | productPrice"></strong></span>
+                                <span class="area"> Diện tích: <strong class="product-area">{{item.acreage}} m²</strong></span></span>
+                                <span class="contact floatright"></span> <br/>
+                                <span class="p-district"> <i class="fa fa-map-marker" aria-hidden="true"></i>: <strong class="product-city-dist">{{item.district.title}}, {{item.province.title}}</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <div id="main-right" class="">

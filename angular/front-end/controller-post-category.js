@@ -49,6 +49,8 @@ app.controller("postCategoryCtrl", function($rootScope, $scope, $http, $compile,
             $scope.listPosts = res.listPost;
             $scope.postCategory = res.category;
             $scope.pagination.totalItems = res.totalCount;
+            $scope.hotProducts = res.hotProducts;
+            $scope.newProducts = res.newProducts;
 
             jQuery('html, body').animate({
                 scrollTop: 0
