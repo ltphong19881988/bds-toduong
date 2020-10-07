@@ -40,7 +40,7 @@ var getSEO_Info = async function(url, req, res, next) {
             if(!productContent.seoSocial['type']) productContent.seoSocial['type'] = 'article' ;
             if(!productContent.seoSocial['title']) productContent.seoSocial['title'] = productContent.title ;
             if(!productContent.seoSocial['description']) productContent.seoSocial['description'] = productContent.seoDescriptions ;
-            if(!productContent.seoSocial['image']) productContent.seoSocial['image'] = req.headers.host + product.pictures[0] ;
+            if(!productContent.seoSocial['image']) productContent.seoSocial['image'] = 'https://' + req.headers.host + product.pictures[0] ;
             return productContent;
         }else
             return null;
@@ -499,7 +499,7 @@ router.get('/*', async function(req, res, next) {
     if (!req.seoInfo['seoDescriptions']) req.seoInfo['seoDescriptions'] = '';
 
     if (!req.seoInfo["seoSocial"]) req.seoInfo["seoSocial"] = {};
-    if (!req.seoInfo.seoSocial["url"]) req.seoInfo.seoSocial["url"] = req.headers.host + req.originalUrl;
+    if (!req.seoInfo.seoSocial["url"]) req.seoInfo.seoSocial["url"] = 'https://' + req.headers.host + req.originalUrl;
     // console.log('main index get seoInfo \n', req.seoInfo);
     res.render('layout/frontPage', { seoInfo: req.seoInfo });
 })
