@@ -83,6 +83,15 @@ router.post("/item", async(req, res, next) => {
         seoDescriptions: req.body.product.productContent.seoDescriptions,
     };
 
+    if(!req.productContent.seoSocial){
+        product_content["seoSocial"] = {
+            type : "article",
+            title : product_content.title,
+            description : product_content.seoDescriptions,
+            image : product.pictures[0]
+        };
+    }
+
     var result = await Product.AddProduct(product, product_content);
     res.json(result);
 

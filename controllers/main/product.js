@@ -313,7 +313,7 @@ router.get('/name-key/:key', async(req, res, next) => {
         },
         { $unwind: "$productContent" },
     ], async function(err, products) {
-        console.log('result', products);
+        // console.log('result', products);
         var mt = await PostContent.findOne({oneLvlUrl : 'ban-nha-mat-tien'});
         // console.log('mt', mt);
         var mattien = await Post.findOne({_id : mt.idPost});
@@ -351,7 +351,7 @@ router.get('/name-key/:key', async(req, res, next) => {
         // var checklimit = count - limitrecords;
         // if (checklimit < 0) checklimit = 0;
         // var skipRecords = Tool.getRandomArbitrary(0, checklimit);
-        console.log(countMTOpt);
+        // console.log(countMTOpt);
         
 
         Product.aggregate([{

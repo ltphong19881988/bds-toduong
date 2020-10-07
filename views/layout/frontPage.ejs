@@ -11,17 +11,17 @@
         <meta name="robots" content="index, follow">
 
         <title>
-            <%- seoInfo.title %>
+            <%= seoInfo.title %>
         </title>
 
-        <meta  name="keywords" content="<%- seoInfo.seoKeyWord %>" >
-        <meta name="description" content="<%- seoInfo.seoDescriptions %>" >
-        <% if (seoInfo.social) { %>
-        <meta property="og:url" content="" />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="" />
-        <meta property="og:description" content="" />
-        <meta property="og:image" content="" />
+        <meta name="keywords" content="<%= seoInfo.seoKeyWord %>" >
+        <meta name="description" content="<%= seoInfo.seoDescriptions %>" >
+        <% if (seoInfo.seoSocial) { %>
+        <meta property="og:url" content="<%= seoInfo.seoSocial.url %>" />
+        <meta property="og:type" content="<%= seoInfo.seoSocial.type %>" />
+        <meta property="og:title" content="<%= seoInfo.seoSocial.title %>" />
+        <meta property="og:description" content="<%= seoInfo.seoSocial.description %>" />
+        <meta property="og:image" content="<%= seoInfo.seoSocial.image %>" />
         <% } %>
 
         <!-- Favicons -->

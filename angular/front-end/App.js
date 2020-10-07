@@ -155,9 +155,9 @@ app.run(function($rootScope, $window, $http, $location, MetadataService, SEOServ
         // console.log('locationChangeSuccess', location);
         $rootScope['locationChangeSuccess'] = location.href;
         if ($rootScope['locationChangeSuccess'] != $rootScope['locationChangeStart']) {
-            console.log('angularjs router change href', location.pathname);
+            // console.log('angularjs router change href', location.pathname);
             getSeoInfo(location.pathname, $http, function(res) {
-                // console.log('getSeoInfo', res);
+                console.log('getSeoInfo', res);
                 if (res.status) {
                     SEOService.setMetaTags(res.seoInfo);
                 }

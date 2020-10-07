@@ -23,6 +23,7 @@ const ProductContent = require('../../models/product-content');
 var secretKey = config.secret;
 
 var getSEO_Info = async function(url, req, res, next) {
+    // console.log(req, req.headers.host);
     if (req.path.startsWith('/admin') == true) {
         return next();
     }
@@ -34,9 +35,15 @@ var getSEO_Info = async function(url, req, res, next) {
             var abc = req.path.split('-pr');
             var product = await Product.findOne({ nameKey: 'pr' + abc[abc.length - 1] });
             var productContent = await ProductContent.findOne({ idProduct: product._id });
+            if(!productContent.seoDescriptions) productContent["seoDescriptions"] = productContent.title;
+            if(!productContent.seoSocial) productContent["seoSocial"] = {};
+            if(!productContent.seoSocial['type']) productContent.seoSocial['type'] = 'article' ;
+            if(!productContent.seoSocial['title']) productContent.seoSocial['title'] = productContent.title ;
+            if(!productContent.seoSocial['description']) productContent.seoSocial['description'] = productContent.seoDescriptions ;
+            if(!productContent.seoSocial['image']) productContent.seoSocial['image'] = req.headers.host + product.pictures[0] ;
             return productContent;
-        }
-        return null;
+        }else
+            return null;
     }
     if (url.indexOf('news') != -1)
         url = url.replace('news/', '');
@@ -486,10 +493,14 @@ router.get('/*', async function(req, res, next) {
     }
 
     if (!req['seoInfo']) req['seoInfo'] = {};
+    // if (!req.seoInfo['type']) req.seoInfo['type'] = 'article';
     if (!req.seoInfo['title']) req.seoInfo['title'] = '';
     if (!req.seoInfo['seoKeyWord']) req.seoInfo['seoKeyWord'] = '';
     if (!req.seoInfo['seoDescriptions']) req.seoInfo['seoDescriptions'] = '';
-    // res.redirect('/lending');
+
+    if (!req.seoInfo["seoSocial"]) req.seoInfo["seoSocial"] = {};
+    if (!req.seoInfo.seoSocial["url"]) req.seoInfo.seoSocial["url"] = req.headers.host + req.originalUrl;
+    // console.log('main index get seoInfo \n', req.seoInfo);
     res.render('layout/frontPage', { seoInfo: req.seoInfo });
 })
 
