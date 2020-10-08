@@ -42,6 +42,17 @@ var getSEO_Info = async function(url, req, res, next) {
             if(!productContent.seoSocial['description']) productContent.seoSocial['description'] = productContent.seoDescriptions ;
             if(!productContent.seoSocial['image']) productContent.seoSocial['image'] = 'https://' + req.headers.host + product.pictures[0] ;
             return productContent;
+        }else if (req.path.indexOf('-nr') != -1) {
+            var abc = req.path.split('-pr');
+            var post = await Post.findOne({ nameKey: 'nr' + abc[abc.length - 1] });
+            var postContent = await Post.findOne({ idPost: post._id });
+            if(!postContent.seoDescriptions) postContent["seoDescriptions"] = postContent.title;
+            if(!postContent.seoSocial) postContent["seoSocial"] = {};
+            if(!postContent.seoSocial['type']) postContent.seoSocial['type'] = 'article' ;
+            if(!postContent.seoSocial['title']) postContent.seoSocial['title'] = postContent.title ;
+            if(!postContent.seoSocial['description']) postContent.seoSocial['description'] = postContent.seoDescriptions ;
+            if(!postContent.seoSocial['image']) postContent.seoSocial['image'] = 'https://' + req.headers.host + product.pictures[0] ;
+            return postContent;
         }else
             return null;
     }
