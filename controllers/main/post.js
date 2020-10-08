@@ -291,7 +291,7 @@ router.get('/name-key/:key', async(req, res, next) => {
 
     var options = {visible : 1};
     var hotType = await ProductType.findOne({ groupType: "productType", value: "hot" });
-    console.log(hotType);
+    // console.log(hotType);
     options['productType'] = { $elemMatch: { _id: hotType._id.toString() } };
     var count = await Product.countDocuments(options).exec();
     var skipRecords = Tool.getRandomArbitrary(0, count - 5);
