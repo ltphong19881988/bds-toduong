@@ -513,6 +513,8 @@ router.get('/*', async function(req, res, next) {
         if (!req.seoInfo.seoSocial["url"]) req.seoInfo.seoSocial["url"] = 'https://' + req.headers.host + req.originalUrl;
         if(req.seoInfo.seoSocial.pictures){
             req.seoInfo.seoSocial.pictures = req.seoInfo.seoSocial.pictures.map( x =>  'https://' + req.headers.host + x);
+        }else{
+            req.seoInfo.seoSocial.pictures = []
         }
 
         // console.log('main index get seoInfo \n', req.seoInfo);
