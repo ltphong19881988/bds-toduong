@@ -128,10 +128,10 @@ var appendFilesToView = function(files, elementNode, $compile, $scope) {
                 <p>` + abc[abc.length - 1] + `</p>
         </li>`;
         angular.element(elementNode).append($compile(html)($scope));
-        $scope.addImgToPost = function(e) {
-            jQuery("#galleryModal button.close").click();
-            appendSelectedImg(jQuery("#productImgs"), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
-        }
+        // $scope.addImgToPost = function(e) {
+        //     jQuery("#galleryModal button.close").click();
+        //     appendSelectedImg(jQuery("#productImgs"), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
+        // }
     })
 }
 
@@ -372,8 +372,9 @@ var selectChangeListener = function($scope, $http, $compile) {
 }
 
 var appendSelectedImg = function(divAppend, listImgs, field) {
-    // console.log(divAppend, listImgs, field);
+    console.log(divAppend, listImgs, field);
     for (var i = 0; i < listImgs.length; i++) {
+        // console.log(listImgs[i]);
         divAppend.append(`
             <div class='divImg'>
                 <img src="` + listImgs.eq(i).attr(field) + `" />

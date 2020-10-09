@@ -124,13 +124,13 @@ adminApp.config(function($routeProvider, $locationProvider, $stateProvider, $mdD
     }).hashPrefix('*');
 
     $mdDateLocaleProvider.formatDate = function(date) {
-
-        var day = date.getDate();
-        var monthIndex = date.getMonth();
-        var year = date.getFullYear();
-
-        return day + '/' + (monthIndex + 1) + '/' + year;
-
+        if(date){
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+            return day + '/' + (monthIndex + 1) + '/' + year;
+        }
+        // console.log('admin check date', date);
     };
 
 });

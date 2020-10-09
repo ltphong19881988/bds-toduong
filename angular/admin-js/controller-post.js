@@ -159,37 +159,35 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         $scope.postItem = {};
         initCategoryNews($scope, $compile, $http)
 
-        uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
+        // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
         // remove pic from post img
-        selectedImgRemoveListener("#postImgs .divImg .fa-close");
+        selectedImgRemoveListener(".postImgs .divImg .fa-close");
 
         $scope.addImgsToPostNews = function() {
             jQuery("#galleryModal button.close").click();
-            appendSelectedImg(jQuery("#postImgs"), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
+            appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
         }
 
         // Click to Open modal get pics from gallery
+        // Event submit selected images from gallery and add images to main add post content
         jQuery(document).on("click", "#formAddPost button[data-target='#galleryModal']", function() {
+            $scope['elementAddImgs'] = jQuery(this).data('content');
             selectChangeListener($scope, $http, $compile);
         })
 
         // Event click slect or diselect images from modal gallery list
         jQuery(document).on("click", "#galleryModal #listFiles li", function(e) {
-                var abc = jQuery(this).find('img').eq(0).attr('src');
-                if ($scope.listGallerySelect.indexOf(abc) == -1) {
-                    $scope.listGallerySelect.push(abc);
-                    jQuery(e.currentTarget).addClass('selected');
-                } else {
-                    $scope.listGallerySelect.splice($scope.listGallerySelect.indexOf(abc), 1);
-                    jQuery(this).removeClass('selected');
-                };
-                // console.log($scope.listGallerySelect);
-            })
-            // Event submit selected images from gallery and add images to main add post content
-
-        jQuery(document).on("click", "#galleryModal .btn-primary", function() {
-
+            var abc = jQuery(this).find('img').eq(0).attr('src');
+            if ($scope.listGallerySelect.indexOf(abc) == -1) {
+                $scope.listGallerySelect.push(abc);
+                jQuery(e.currentTarget).addClass('selected');
+            } else {
+                $scope.listGallerySelect.splice($scope.listGallerySelect.indexOf(abc), 1);
+                jQuery(this).removeClass('selected');
+            };
+            // console.log($scope.listGallerySelect);
         })
+            
 
         jQuery("select[name='folderName']").change(function() {
             var abc = jQuery(this).val();
@@ -342,7 +340,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         $scope.postItem.postContent.descriptions = CKEDITOR.instances['editorDescription'].getData();
         $scope.postItem.postContent.content = CKEDITOR.instances['editorContent'].getData();
         var ImgElements = jQuery("#postImgs .divImg img");
-
+        var socialImgElements = jQuery("#seoSocialImgs .divImg img");
         if ($scope.checkVisible && $scope.checkVisible == true) {
             $scope.postItem.visible = 1;
         } else {
@@ -351,8 +349,11 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
 
         $scope.postItem.pictures = [];
         for (var i = 0; i < ImgElements.length; i++) {
-            console.log(ImgElements.eq(i).attr('src'));
             $scope.postItem.pictures.push(ImgElements.eq(i).attr('src'));
+        }
+        $scope.postItem.postContent.seoSocial.pictures = [];
+        for (var i = 0; i < socialImgElements.length; i++) {
+            $scope.postItem.postContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
         }
         let params = {
             method: 'POST',

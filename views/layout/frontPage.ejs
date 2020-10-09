@@ -21,7 +21,9 @@
         <meta property="og:type" content="<%= seoInfo.seoSocial.type %>" />
         <meta property="og:title" content="<%= seoInfo.seoSocial.title %>" />
         <meta property="og:description" content="<%= seoInfo.seoSocial.description %>" />
-        <meta property="og:image" content="<%= seoInfo.seoSocial.image %>" />
+            <% seoInfo.seoSocial.pictures.forEach(element => {  %>
+            <meta property="og:image" content="<%= element %>" />
+            <% }); %>
         <% } %>
 
         <!-- Favicons -->

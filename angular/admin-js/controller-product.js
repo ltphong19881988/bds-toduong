@@ -240,43 +240,41 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
     }
 
     if ($routeParams.action != null) {
-        $scope.productItem = {};
+        $scope.productItem = {productContent:{seoSocial:{}}};
         initCategory($scope, $compile, $http);
         initProvince($scope, $compile, $http);
         initDirecton($scope, $compile, $http);
         initProductType($scope, $compile, $http);
 
-        uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
+        // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
         // remove pic from products img
-        selectedImgRemoveListener("#productImgs .divImg .fa-close");
+        selectedImgRemoveListener(".postImgs .divImg .fa-close");
 
-        $scope.addImgsToPost = function() {
-            jQuery("#uploadModal button.close").click();
-            appendSelectedImg(jQuery("#productImgs"), jQuery("#uploadProcess ul li img"), 'name');
+        $scope.addImgsToProduct = function() {
+            jQuery("#galleryModal button.close").click();
+            appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
         }
 
         // Click to Open modal get pics from gallery
+        // Event submit selected images from gallery and add images to main add product content
         jQuery(document).on("click", "#formAddProduct button[data-target='#galleryModal']", function() {
+            $scope['elementAddImgs'] = jQuery(this).data('content');
             selectChangeListener($scope, $http, $compile);
         })
 
         // Event click slect or diselect images from modal gallery list
         jQuery(document).on("click", "#galleryModal #listFiles li", function(e) {
-                var abc = jQuery(this).find('img').eq(0).attr('src');
-                if ($scope.listGallerySelect.indexOf(abc) == -1) {
-                    $scope.listGallerySelect.push(abc);
-                    jQuery(e.currentTarget).addClass('selected');
-                } else {
-                    $scope.listGallerySelect.splice($scope.listGallerySelect.indexOf(abc), 1);
-                    jQuery(this).removeClass('selected');
-                };
-                // console.log($scope.listGallerySelect);
-            })
-            // Event submit selected images from gallery and add images to main add product content
-
-        jQuery(document).on("click", "#galleryModal .btn-primary", function() {
-
+            var abc = jQuery(this).find('img').eq(0).attr('src');
+            if ($scope.listGallerySelect.indexOf(abc) == -1) {
+                $scope.listGallerySelect.push(abc);
+                jQuery(e.currentTarget).addClass('selected');
+            } else {
+                $scope.listGallerySelect.splice($scope.listGallerySelect.indexOf(abc), 1);
+                jQuery(this).removeClass('selected');
+            };
+            // console.log($scope.listGallerySelect);
         })
+            
 
         jQuery("select[name='folderName']").change(function() {
             var abc = jQuery(this).val();
@@ -440,7 +438,10 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             //     return moment(new Date(full.datecreate)).format('DD-MM-YYYY');
             // }),
             DTColumnBuilder.newColumn('province.title').withTitle('Tỉnh thành'),
-            DTColumnBuilder.newColumn('district.title').withTitle('Quận huyện'),
+            DTColumnBuilder.newColumn('district.title').withTitle('Quận huyện').renderWith(function(data, type, full) {
+                if(full.district && full.district.title) return full.district.title;
+                else return "";
+            }),
             DTColumnBuilder.newColumn('datecreate').withTitle('Ngày đăng').renderWith(function(data, type, full) {
                 return moment(new Date(full.datecreate)).format('DD-MM-YYYY');
             }),
@@ -466,6 +467,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
         $scope.productItem.productContent.descriptions = CKEDITOR.instances['editorDescription'].getData();
         $scope.productItem.productContent.content = CKEDITOR.instances['editorContent'].getData();
         var ImgElements = jQuery("#productImgs .divImg img");
+        var socialImgElements = jQuery("#seoSocialImgs .divImg img");
         if ($scope.checkHot && $scope.checkHot == true) {
             $scope.productItem.productType = [$scope.productTypeHot];
         } else {
@@ -479,8 +481,11 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
 
         $scope.productItem.pictures = [];
         for (var i = 0; i < ImgElements.length; i++) {
-            console.log(ImgElements.eq(i).attr('src'));
             $scope.productItem.pictures.push(ImgElements.eq(i).attr('src'));
+        }
+        $scope.productItem.productContent.seoSocial.pictures = [];
+        for (var i = 0; i < socialImgElements.length; i++) {
+            $scope.productItem.productContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
         }
         let params = {
             method: 'POST',

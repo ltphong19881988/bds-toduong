@@ -40,7 +40,7 @@ var getSEO_Info = async function(url, req, res, next) {
             if(!productContent.seoSocial['type']) productContent.seoSocial['type'] = 'article' ;
             if(!productContent.seoSocial['title']) productContent.seoSocial['title'] = productContent.title ;
             if(!productContent.seoSocial['description']) productContent.seoSocial['description'] = productContent.seoDescriptions ;
-            if(!productContent.seoSocial['image']) productContent.seoSocial['image'] = 'https://' + req.headers.host + product.pictures[0] ;
+            if(!productContent.seoSocial['pictures']) productContent.seoSocial['pictures'] = product.pictures ;
             return productContent;
         }else if (req.path.indexOf('-nr') != -1) {
             var abc = req.path.split('-nr');
@@ -51,7 +51,7 @@ var getSEO_Info = async function(url, req, res, next) {
             if(!postContent.seoSocial['type']) postContent.seoSocial['type'] = 'article' ;
             if(!postContent.seoSocial['title']) postContent.seoSocial['title'] = postContent.title ;
             if(!postContent.seoSocial['description']) postContent.seoSocial['description'] = postContent.seoDescriptions ;
-            if(!postContent.seoSocial['image']) postContent.seoSocial['image'] = 'https://' + req.headers.host + post.pictures[0] ;
+            if(!postContent.seoSocial['pictures']) postContent.seoSocial['pictures'] = post.pictures;
             return postContent;
         }else
             return null;
@@ -497,22 +497,30 @@ router.post('/login', loginMW, async(req, res, next) => {
 })
 
 router.get('/*', async function(req, res, next) {
+    
     if (req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.map') && req.originalUrl.indexOf('.ico') == -1 && req.originalUrl.indexOf('.png') == -1 
-    && req.originalUrl.indexOf('.jpg') == -1 && req.originalUrl.indexOf('.css') == -1) {
-        // console.log('vao lay SEOINFO', req.originalUrl);
+    && req.originalUrl.indexOf('.jpg') == -1 && req.originalUrl.indexOf('.css') == -1 ) {
+        console.log('vao lay SEOINFO', req.originalUrl);
         req.seoInfo = await getSEO_Info(null, req, res, next);
+
+        if (!req['seoInfo']) req['seoInfo'] = {};
+        // if (!req.seoInfo['type']) req.seoInfo['type'] = 'article';
+        if (!req.seoInfo['title']) req.seoInfo['title'] = '';
+        if (!req.seoInfo['seoKeyWord']) req.seoInfo['seoKeyWord'] = '';
+        if (!req.seoInfo['seoDescriptions']) req.seoInfo['seoDescriptions'] = '';
+
+        if (!req.seoInfo["seoSocial"]) req.seoInfo["seoSocial"] = {};
+        if (!req.seoInfo.seoSocial["url"]) req.seoInfo.seoSocial["url"] = 'https://' + req.headers.host + req.originalUrl;
+        if(req.seoInfo.seoSocial.pictures){
+            req.seoInfo.seoSocial.pictures = req.seoInfo.seoSocial.pictures.map( x =>  'https://' + req.headers.host + x);
+        }
+
+        // console.log('main index get seoInfo \n', req.seoInfo);
+        res.render('layout/frontPage', { seoInfo: req.seoInfo });
+    }else{
+        next();
     }
-
-    if (!req['seoInfo']) req['seoInfo'] = {};
-    // if (!req.seoInfo['type']) req.seoInfo['type'] = 'article';
-    if (!req.seoInfo['title']) req.seoInfo['title'] = '';
-    if (!req.seoInfo['seoKeyWord']) req.seoInfo['seoKeyWord'] = '';
-    if (!req.seoInfo['seoDescriptions']) req.seoInfo['seoDescriptions'] = '';
-
-    if (!req.seoInfo["seoSocial"]) req.seoInfo["seoSocial"] = {};
-    if (!req.seoInfo.seoSocial["url"]) req.seoInfo.seoSocial["url"] = 'https://' + req.headers.host + req.originalUrl;
-    // console.log('main index get seoInfo \n', req.seoInfo);
-    res.render('layout/frontPage', { seoInfo: req.seoInfo });
+    
 })
 
 

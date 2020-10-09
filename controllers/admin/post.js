@@ -63,6 +63,15 @@ router.post("/item", async(req, res, next) => {
         seoDescriptions: req.body.post.postContent.seoDescriptions,
     };
 
+    if(!post_content.seoSocial['type'] || post_content.seoSocial['type'] == '')
+        post_content.seoSocial['type'] = 'article';
+    if(!post_content.seoSocial['title'] || post_content.seoSocial['title'] == '')
+        post_content.seoSocial['title'] = post_content.title;
+    if(!post_content.seoSocial['description'] || post_content.seoSocial['description'] == '')
+        post_content.seoSocial['description'] = post_content.seoDescriptions;
+    if(!post_content.seoSocial['pictures'] || post_content.seoSocial['pictures'].length == 0)
+        post_content.seoSocial['pictures'] = post.pictures;
+
     var result = await Post.AddPost(post, post_content);
     res.json(result);
 

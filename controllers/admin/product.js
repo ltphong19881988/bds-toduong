@@ -81,16 +81,17 @@ router.post("/item", async(req, res, next) => {
         content: req.body.product.productContent.content,
         seoKeyWord: req.body.product.productContent.seoKeyWord,
         seoDescriptions: req.body.product.productContent.seoDescriptions,
+        seoSocial : req.body.product.productContent.seoSocial
     };
-
-    if(!req.productContent.seoSocial){
-        product_content["seoSocial"] = {
-            type : "article",
-            title : product_content.title,
-            description : product_content.seoDescriptions,
-            image : product.pictures[0]
-        };
-    }
+    
+    if(!product_content.seoSocial['type'] || product_content.seoSocial['type'] == '')
+        product_content.seoSocial['type'] = 'article';
+    if(!product_content.seoSocial['title'] || product_content.seoSocial['title'] == '')
+        product_content.seoSocial['title'] = product_content.title;
+    if(!product_content.seoSocial['description'] || product_content.seoSocial['description'] == '')
+        product_content.seoSocial['description'] = product_content.seoDescriptions;
+    if(!product_content.seoSocial['pictures'] || product_content.seoSocial['pictures'].length == 0)
+        product_content.seoSocial['pictures'] = product.pictures;
 
     var result = await Product.AddProduct(product, product_content);
     res.json(result);

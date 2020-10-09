@@ -106,7 +106,12 @@
 }
 
 .example-modal .modal-dialog .modal-content {
-    max-height: 700px;
+    max-height: 830px;
+    overflow: auto;
+}
+
+.modal-dialog .modal-content .modal-body {
+    /* max-height: 660px; */
     overflow: auto;
 }
 
@@ -171,6 +176,8 @@
 
 ul#listFiles {
     margin-top: 10px;
+    max-height: 600px;
+    overflow: auto;
 }
 
 ul#listFiles li {
@@ -194,13 +201,13 @@ ul#listFiles li p {
     margin-bottom: 5px;
 }
 
-#productImgs,
+.postImgs,
 #postImgs,
 #projectImgs {
     margin-top: 10px;
 }
 
-#productImgs .divImg,
+.postImgs .divImg,
 #postImgs .divImg,
 #projectImgs .divImg {
     display: inline;
@@ -208,7 +215,7 @@ ul#listFiles li p {
     position: relative;
 }
 
-#productImgs img,
+.postImgs img,
 #postImgs img,
 #projectImgs img {
     max-height: 80px;
@@ -216,7 +223,7 @@ ul#listFiles li p {
     margin-right: 15px;
 }
 
-#productImgs .divImg .fa-close,
+.postImgs .divImg .fa-close,
 #postImgs .divImg .fa-close,
 #projectImgs .divImg .fa-close {
     position: absolute;
