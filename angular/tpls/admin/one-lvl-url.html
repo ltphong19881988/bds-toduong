@@ -47,81 +47,108 @@
                 <div class="card-header bg-dark">
                     <strong class="card-title text-light">SEO một cấp</strong>
                 </div>
-                <div class="card-body ">
-
-                    <div class="row form-group">
-                        <div class="row col-md-6">
-                            <div class="col col-md-3"><label class=" form-control-label">Danh mục : </label></div>
-                            <div class="col-12 col-md-9">
-                                <input class="form-control" name="idCategory" ng-click='showHideCategory()' />
-                                <div id='listCategory' status="0" style="display:none;">
-
+                <div class="card-body row">
+                    <div class="col-md 7">
+                        <div class="row form-group">
+                            <div class="row col-md-6">
+                                <div class="col col-md-3"><label class=" form-control-label">Danh mục : </label></div>
+                                <div class="col-12 col-md-9">
+                                    <input class="form-control" name="idCategory" ng-click='showHideCategory()' />
+                                    <div id='listCategory' status="0" style="display:none;">
+    
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row col-md-6">
+                                <div class="col col-md-4"><label class=" form-control-label">Tỉnh thành  : </label></div>
+                                <div class="col-12 col-md-8">
+                                    <input type="text" placeholder="Tỉnh thành" auto-complete-url class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
+                                    <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
+                                        <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
+                                            {{item.title}}
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row col-md-6">
-                            <div class="col col-md-4"><label class=" form-control-label">Tỉnh thành  : </label></div>
-                            <div class="col-12 col-md-8">
-                                <input type="text" placeholder="Tỉnh thành" auto-complete-url class="form-control" ui-items="listProvinces" ng-model="selectedprovince" key='province' ng-click='showHideList($event)' />
-                                <ul class="showlist showlist-province ui-autocomplete" ng-show="showlistprovince">
-                                    <li ng-repeat="item in listProvinces  | filter: selectedprovince track by $index" ng-click="selectedProvince($event, item)">
-                                        {{item.title}}
-                                    </li>
-                                </ul>
+                        <div class="row form-group">
+    
+                            <div class="row col-md-6">
+                                <div class="col col-md-4"><label class=" form-control-label">Quận huyện : </label></div>
+                                <div class="col-12 col-md-8">
+                                    <input type="text" placeholder="Quận huyện" class="form-control" auto-complete-url ui-items="listDistricts" ng-model="selecteddistrict" key='district' ng-click='showHideList($event)' />
+                                    <ul class="showlist showlist-district ui-autocomplete" ng-show="showlistdistrict">
+                                        <li ng-repeat="item in listDistricts  | filter: selecteddistrict track by $index" ng-click="selectedDistrict($event, item)">
+                                            {{item.title}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row col-md-6">
+                                <div class="col col-md-4"><label class=" form-control-label">Phường xã  : </label></div>
+                                <div class="col-12 col-md-8">
+                                    <input type="text" placeholder="Phường xã" class="form-control" auto-complete-url ui-items="listWards" ng-model="selectedward" key='ward' ng-click='showHideList($event)' />
+                                    <ul class="showlist showlist-ward ui-autocomplete" ng-show="showlistward">
+                                        <li ng-repeat="item in listWards  | filter: selectedward track by $index" ng-click="selectedWard($event, item)">
+                                            {{item.title}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col col-md-3 "><label class=" form-control-label ">Url (Không nên sửa): </label></div>
+                            <div class="col-12 col-md-9 ui-widget ">
+                                <input type="text " placeholder="key " ng-model='urlItem.oneLvlUrl' class="form-control  ">
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col col-md-3 "><label class=" form-control-label ">Tiêu đề: </label></div>
+                            <div class="col-12 col-md-9 ui-widget ">
+                                <input type="text " placeholder="key " ng-model='urlItem.title' class="form-control  ">
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col col-md-3 "><label class=" form-control-label ">SEO keywords : </label></div>
+                            <div class="col-12 col-md-9 ">
+                                <input type="text " placeholder="value " ng-model='urlItem.seoKeyWord' class="form-control ">
+                            </div>
+                        </div>
+                        <div class="row form-group ">
+                            <div class="col col-md-3 "><label class=" form-control-label ">SEO descriptions : </label></div>
+                            <div class="col-12 col-md-9 ">
+                                <input type="text " placeholder="type " ng-model='urlItem.seoDescriptions' class="form-control ">
                             </div>
                         </div>
                     </div>
-                    <div class="row form-group">
-
-                        <div class="row col-md-6">
-                            <div class="col col-md-4"><label class=" form-control-label">Quận huyện : </label></div>
-                            <div class="col-12 col-md-8">
-                                <input type="text" placeholder="Quận huyện" class="form-control" auto-complete-url ui-items="listDistricts" ng-model="selecteddistrict" key='district' ng-click='showHideList($event)' />
-                                <ul class="showlist showlist-district ui-autocomplete" ng-show="showlistdistrict">
-                                    <li ng-repeat="item in listDistricts  | filter: selecteddistrict track by $index" ng-click="selectedDistrict($event, item)">
-                                        {{item.title}}
-                                    </li>
-                                </ul>
+                    
+                    <div class="col-md-5 form-group">
+                        <div class="col-md-12"> <label class=" form-control-label"> (OG type) : </label></div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" placeholder="article, book, profile, website " ng-model="productItem.productContent.seoSocial.type" />
+                        </div>
+                        <div class="col-md-12"> <label class=" form-control-label"> (OG title) : </label></div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" ng-model="productItem.productContent.seoSocial.title" />
+                        </div>
+                        <div class="col-md-12"> <label class=" form-control-label">(OG description) : </label></div>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" ng-model="productItem.productContent.seoSocial.description" />
+                        </div>
+                        <div class="col-md-12"> <label class=" form-control-label">(OG image) : </label></div>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary selectImage" data-toggle="modal" data-content="#seoSocialImgs" data-target="#galleryModal">Chọn từ thư viện</button>
+                            <div id="seoSocialImgs" class="postImgs">
+                                <div ng-if="productItem.productContent.seoSocial.pictures" ng-repeat="src in productItem.productContent.seoSocial.pictures track by $index" class="divImg">
+                                    <img src="{{src}}">
+                                    <i class="fa fa-close"></i>
+                                </div>
                             </div>
                         </div>
-                        <div class="row col-md-6">
-                            <div class="col col-md-4"><label class=" form-control-label">Phường xã  : </label></div>
-                            <div class="col-12 col-md-8">
-                                <input type="text" placeholder="Phường xã" class="form-control" auto-complete-url ui-items="listWards" ng-model="selectedward" key='ward' ng-click='showHideList($event)' />
-                                <ul class="showlist showlist-ward ui-autocomplete" ng-show="showlistward">
-                                    <li ng-repeat="item in listWards  | filter: selectedward track by $index" ng-click="selectedWard($event, item)">
-                                        {{item.title}}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
-                    <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">Url (Không nên sửa): </label></div>
-                        <div class="col-12 col-md-9 ui-widget ">
-                            <input type="text " placeholder="key " ng-model='urlItem.oneLvlUrl' class="form-control  ">
-                        </div>
-                    </div>
-                    <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">Tiêu đề: </label></div>
-                        <div class="col-12 col-md-9 ui-widget ">
-                            <input type="text " placeholder="key " ng-model='urlItem.title' class="form-control  ">
-                        </div>
-                    </div>
-                    <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">SEO keywords : </label></div>
-                        <div class="col-12 col-md-9 ">
-                            <input type="text " placeholder="value " ng-model='urlItem.seoKeyWord' class="form-control ">
-                        </div>
-                    </div>
-                    <div class="row form-group ">
-                        <div class="col col-md-3 "><label class=" form-control-label ">SEO descriptions : </label></div>
-                        <div class="col-12 col-md-9 ">
-                            <input type="text " placeholder="type " ng-model='urlItem.seoDescriptions' class="form-control ">
-                        </div>
-                    </div>
-                    <div class="row form-group">
+                    
+                    <div class="col-md-12 row form-group" style="margin-top: 20px;">
                         <div class="col col-md-12"><label class=" form-control-label">Mô tả ngắn : </label></div>
                         <textarea name="" id="editorDescriptionUrl" rows="4" cols="80">
                                     
@@ -137,7 +164,7 @@
                             });
                         </script>
                     </div>
-                    <div class="row form-group">
+                    <div class="col-md-12 row form-group" style="margin-top: 20px;">
                         <div class="col col-md-12"><label class=" form-control-label">Nội dung chi tiết : </label></div>
                         <textarea name="" id="editorContentUrl" rows="10" cols="80">
                                 Nội dung chi tiết
@@ -174,6 +201,40 @@
     </div>
 
 </div>
+
+
+
+<div id="galleryModal" class="example-modal modal fade">
+    <div class="modal modal-primary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" style="position: absolute;">Enter Folder Name :</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group" style="background-color : #fff;">
+                        <span class="input-group-addon">public\uploads\</span>
+                        <select class="form-control" name="folderName">
+                        <option value="">media</option>
+                    </select>
+                    </div>
+                    <ul id="listFiles">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="addImgsToProduct($event)" class="btn btn-primary">Chèn ảnh vào bài</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
 
 <div class="row ">
     <div class="col-sm-12 col-md-12 ">

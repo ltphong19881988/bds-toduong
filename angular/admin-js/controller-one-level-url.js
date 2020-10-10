@@ -59,6 +59,10 @@ var createUrlFromCateAndLocal = function($scope, local) {
 
 adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $http, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
     $rootScope.pageTitle = "Admin - urlOneLevelCtrl";
+    $scope.rootFolderPath = 'public/uploads/media/';
+    $scope.acviteFolderPath = 'public/uploads/media/';
+    $scope.checkSelect = 0;
+    $scope.listGallerySelect = [];
     jQuery('.card-footer .btn-danger').hide();
     jQuery('.card-footer .btn-info').hide();
     $scope.allUrlItem = [];
@@ -66,6 +70,45 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
 
     initCategory($scope, $compile, $http);
     initProvince($scope, $compile, $http);
+
+    ///// for select image from gallery
+    // Event submit selected images from gallery and add images to main add product content
+    jQuery(document).on("click", " button[data-target='#galleryModal'].selectImage", function() {
+        $scope['elementAddImgs'] = jQuery(this).data('content');
+        jQuery("#galleryModal .modal-footer .btn-primary").prop('disabled', false);
+        selectChangeListener($scope, $http, $compile);
+    })
+
+    $scope.addImgsToProduct = function(e) {
+        jQuery(e.currentTarget).prop('disabled', true);
+        jQuery("#galleryModal button.close").click();
+        appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
+    }
+
+    // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
+    // remove pic from products img
+    selectedImgRemoveListener(".postImgs .divImg .fa-close");
+
+    // Event click slect or diselect images from modal gallery list
+    jQuery(document).on("click", "#galleryModal #listFiles li", function(e) {
+        var abc = jQuery(this).find('img').eq(0).attr('src');
+        if ($scope.listGallerySelect.indexOf(abc) == -1) {
+            $scope.listGallerySelect.push(abc);
+            jQuery(e.currentTarget).addClass('selected');
+        } else {
+            $scope.listGallerySelect.splice($scope.listGallerySelect.indexOf(abc), 1);
+            jQuery(this).removeClass('selected');
+        };
+        // console.log($scope.listGallerySelect);
+    })
+        
+    jQuery("select[name='folderName']").change(function() {
+        var abc = jQuery(this).val();
+        if (abc != '') abc += "/";
+        $scope.acviteFolderPath = $scope.rootFolderPath + abc;
+        selectChangeListener($scope, $http, $compile);
+    })
+    ///// End for select image from gallery
 
     $scope.showHideCategory = function() {
         tonggleCategory();

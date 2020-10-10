@@ -223,7 +223,9 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                     CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
                     CKEDITOR.instances['editorContent'].setData(res.productContent.content);
                 }, 1000);
-
+                if(!$scope.productItem.productContent.seoSocial){
+                    $scope.productItem.productContent.seoSocial = {};
+                }
             }
             loopSelectedCategory(null, $scope.productItem.category);
             if ($scope.productItem.province)
@@ -246,21 +248,24 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
         initDirecton($scope, $compile, $http);
         initProductType($scope, $compile, $http);
 
-        // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
-        // remove pic from products img
-        selectedImgRemoveListener(".postImgs .divImg .fa-close");
-
-        $scope.addImgsToProduct = function() {
-            jQuery("#galleryModal button.close").click();
-            appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
-        }
-
+        
         // Click to Open modal get pics from gallery
         // Event submit selected images from gallery and add images to main add product content
         jQuery(document).on("click", "#formAddProduct button[data-target='#galleryModal']", function() {
             $scope['elementAddImgs'] = jQuery(this).data('content');
+            jQuery("#galleryModal .modal-footer .btn-primary").prop('disabled', false);
             selectChangeListener($scope, $http, $compile);
         })
+
+        $scope.addImgsToProduct = function(e) {
+            jQuery(e.currentTarget).prop('disabled', true);
+            jQuery("#galleryModal button.close").click();
+            appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
+        }
+
+        // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
+        // remove pic from products img
+        selectedImgRemoveListener(".postImgs .divImg .fa-close");
 
         // Event click slect or diselect images from modal gallery list
         jQuery(document).on("click", "#galleryModal #listFiles li", function(e) {

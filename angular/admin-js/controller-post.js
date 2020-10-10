@@ -145,9 +145,9 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                     CKEDITOR.instances['editorContent'].setData(res.postContent.content);
                     CKEDITOR.instances['editorDescription'].setData(res.postContent.descriptions);
                 }, 1000);
-
-
-
+                if(!$scope.postItem.postContent.seoSocial){
+                    $scope.postItem.postContent.seoSocial = {};
+                }
             }
             loopSelectedCategory(null, $scope.postItem.category);
             // jQuery('#productCategory option').text(res.category.name);
@@ -156,7 +156,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
     }
 
     if ($routeParams.action != null) {
-        $scope.postItem = {};
+        $scope.postItem = {postContent:{seoSocial:{}}};
         initCategoryNews($scope, $compile, $http)
 
         // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
@@ -164,6 +164,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         selectedImgRemoveListener(".postImgs .divImg .fa-close");
 
         $scope.addImgsToPostNews = function() {
+            jQuery(e.currentTarget).prop('disabled', true);
             jQuery("#galleryModal button.close").click();
             appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
         }
@@ -172,6 +173,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         // Event submit selected images from gallery and add images to main add post content
         jQuery(document).on("click", "#formAddPost button[data-target='#galleryModal']", function() {
             $scope['elementAddImgs'] = jQuery(this).data('content');
+            jQuery("#galleryModal .modal-footer .btn-primary").prop('disabled', false);
             selectChangeListener($scope, $http, $compile);
         })
 
