@@ -302,7 +302,15 @@ router.post('/one-lvl-url', async(req, res, next) => {
         content: req.body.content,
         seoKeyWord: req.body.seoKeyWord,
         seoDescriptions: req.body.seoDescriptions,
+        seoSocial : req.body.seoSocial
     })
+
+    if(!item.seoSocial['type'] || item.seoSocial['type'] == '')
+        item.seoSocial['type'] = 'article';
+    if(!item.seoSocial['title'] || item.seoSocial['title'] == '')
+        item.seoSocial['title'] = item.title;
+    if(!item.seoSocial['description'] || item.seoSocial['description'] == '')
+        item.seoSocial['description'] = item.seoDescriptions;
 
     item.save(function(err, doc) {
         if (err) return res.json({ status: false, mes: 'Lỗi không lưu được, vui lòng thử lại sau', err: err });

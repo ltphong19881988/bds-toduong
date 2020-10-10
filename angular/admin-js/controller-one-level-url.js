@@ -66,7 +66,7 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
     jQuery('.card-footer .btn-danger').hide();
     jQuery('.card-footer .btn-info').hide();
     $scope.allUrlItem = [];
-    $scope.urlItem = {};
+    $scope.urlItem = {seoSocial:{}};
 
     initCategory($scope, $compile, $http);
     initProvince($scope, $compile, $http);
@@ -83,6 +83,7 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
         jQuery(e.currentTarget).prop('disabled', true);
         jQuery("#galleryModal button.close").click();
         appendSelectedImg(jQuery($scope['elementAddImgs']), jQuery("#galleryModal ul#listFiles li.selected img"), 'src');
+        // console.log($scope.urlItem);
     }
 
     // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
@@ -159,7 +160,12 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
         $scope.urlItem.descriptions = CKEDITOR.instances['editorDescriptionUrl'].getData();
         $scope.urlItem.content = CKEDITOR.instances['editorContentUrl'].getData();
         console.log($scope.urlItem, action);
-
+        var socialImgElements = jQuery("#seoSocialImgs .divImg img");
+        if(!$scope.urlItem.seoSocial) $scope.urlItem.seoSocial = {};
+        $scope.urlItem.seoSocial.pictures = [];
+        for (var i = 0; i < socialImgElements.length; i++) {
+            $scope.urlItem.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
+        }
         let params = {
             method: 'POST',
             url: '/admin/one-lvl-url',
@@ -190,7 +196,8 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
             $scope['post'] = res;
         });
         $scope.urlItem = item;
-        jQuery('input[name="idCategory"]').val(item.category.name);
+        if(item.category)
+            jQuery('input[name="idCategory"]').val(item.category.name);
         if (item.content) {
             setTimeout(() => {
                 CKEDITOR.instances['editorDescriptionUrl'].setData(item.descriptions);
@@ -198,7 +205,7 @@ adminApp.controller("urlOneLevelCtrl", function($rootScope, $scope, $compile, $h
             }, 200);
 
         }
-        if (item.local.provinceID && item.local.provinceID != -1) {
+        if (item.local && item.local.provinceID && item.local.provinceID != -1) {
             // console.log($scope.listProvinces);
             var checkProvince = $scope.listProvinces.filter(x => x.ID == item.local.provinceID)[0];
             // console.log('province selected', checkProvince);

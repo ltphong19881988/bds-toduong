@@ -488,6 +488,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
         for (var i = 0; i < ImgElements.length; i++) {
             $scope.productItem.pictures.push(ImgElements.eq(i).attr('src'));
         }
+        if(!$scope.productItem.productContent.seoSocial) $scope.productItem.productContent.seoSocial = {};
         $scope.productItem.productContent.seoSocial.pictures = [];
         for (var i = 0; i < socialImgElements.length; i++) {
             $scope.productItem.productContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));

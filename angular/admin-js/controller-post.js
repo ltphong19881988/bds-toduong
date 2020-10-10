@@ -353,6 +353,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         for (var i = 0; i < ImgElements.length; i++) {
             $scope.postItem.pictures.push(ImgElements.eq(i).attr('src'));
         }
+        if(!$scope.postItem.postContent.seoSocial) $scope.postItem.postContent.seoSocial = {};
         $scope.postItem.postContent.seoSocial.pictures = [];
         for (var i = 0; i < socialImgElements.length; i++) {
             $scope.postItem.postContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));

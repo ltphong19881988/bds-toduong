@@ -126,21 +126,21 @@
                     <div class="col-md-5 form-group">
                         <div class="col-md-12"> <label class=" form-control-label"> (OG type) : </label></div>
                         <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="article, book, profile, website " ng-model="productItem.productContent.seoSocial.type" />
+                            <input type="text" class="form-control" placeholder="article, book, profile, website " ng-model="urlItem.seoSocial.type" />
                         </div>
                         <div class="col-md-12"> <label class=" form-control-label"> (OG title) : </label></div>
                         <div class="col-md-12">
-                            <input type="text" class="form-control" ng-model="productItem.productContent.seoSocial.title" />
+                            <input type="text" class="form-control" ng-model="urlItem.seoSocial.title" />
                         </div>
                         <div class="col-md-12"> <label class=" form-control-label">(OG description) : </label></div>
                         <div class="col-md-12">
-                            <input type="text" class="form-control" ng-model="productItem.productContent.seoSocial.description" />
+                            <input type="text" class="form-control" ng-model="urlItem.seoSocial.description" />
                         </div>
                         <div class="col-md-12"> <label class=" form-control-label">(OG image) : </label></div>
                         <div class="col-md-12">
                             <button type="button" class="btn btn-primary selectImage" data-toggle="modal" data-content="#seoSocialImgs" data-target="#galleryModal">Chọn từ thư viện</button>
                             <div id="seoSocialImgs" class="postImgs">
-                                <div ng-if="productItem.productContent.seoSocial.pictures" ng-repeat="src in productItem.productContent.seoSocial.pictures track by $index" class="divImg">
+                                <div ng-if="urlItem.seoSocial.pictures" ng-repeat="src in urlItem.seoSocial.pictures track by $index" class="divImg">
                                     <img src="{{src}}">
                                     <i class="fa fa-close"></i>
                                 </div>

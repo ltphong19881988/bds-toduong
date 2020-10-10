@@ -62,6 +62,11 @@ var getSEO_Info = async function(url, req, res, next) {
     if (abc[0] == '') abc[0] = '/';
     // console.log('find url', abc);
     var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
+    if(!onelvlData.seoSocial) onelvlData['seoSocial'] = {};
+    if(!onelvlData.seoSocial['type']) onelvlData.seoSocial['type'] = 'article' ;
+    if(!onelvlData.seoSocial['title']) onelvlData.seoSocial['title'] = onelvlData.title ;
+    if(!onelvlData.seoSocial['description']) onelvlData.seoSocial['description'] = onelvlData.seoDescriptions ;
+    if(!onelvlData.seoSocial['pictures']) onelvlData.seoSocial['pictures'] = [];
     if (!onelvlData) return null;
     return onelvlData;
 }
@@ -500,7 +505,7 @@ router.get('/*', async function(req, res, next) {
     
     if (req.originalUrl.indexOf('.js') == -1 && req.originalUrl.indexOf('.map') && req.originalUrl.indexOf('.ico') == -1 && req.originalUrl.indexOf('.png') == -1 
     && req.originalUrl.indexOf('.jpg') == -1 && req.originalUrl.indexOf('.css') == -1 ) {
-        console.log('vao lay SEOINFO', req.originalUrl);
+        // console.log('vao lay SEOINFO', req.originalUrl);
         req.seoInfo = await getSEO_Info(null, req, res, next);
 
         if (!req['seoInfo']) req['seoInfo'] = {};

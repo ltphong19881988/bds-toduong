@@ -252,6 +252,7 @@ router.get('/get-post-content/:id', async(req, res, next) => {
     var id = mongoose.Types.ObjectId(req.params.id);
     var post = await Post.findOne({ postType: 0, idCategory: id });
     // console.log('post', post);
+    if(!post) return res.json({});
     var postContent = await PostContent.findOne({ idPost: post._id });
     // console.log('postContent', postContent);
     post._doc['postContent'] = postContent;
