@@ -62,12 +62,13 @@ var getSEO_Info = async function(url, req, res, next) {
     if (abc[0] == '') abc[0] = '/';
     // console.log('find url', abc);
     var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
+    if (!onelvlData) return null;
     if(!onelvlData.seoSocial) onelvlData['seoSocial'] = {};
     if(!onelvlData.seoSocial['type']) onelvlData.seoSocial['type'] = 'article' ;
     if(!onelvlData.seoSocial['title']) onelvlData.seoSocial['title'] = onelvlData.title ;
     if(!onelvlData.seoSocial['description']) onelvlData.seoSocial['description'] = onelvlData.seoDescriptions ;
     if(!onelvlData.seoSocial['pictures']) onelvlData.seoSocial['pictures'] = [];
-    if (!onelvlData) return null;
+    
     return onelvlData;
 }
 
