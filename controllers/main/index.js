@@ -40,7 +40,7 @@ var getSEO_Info = async function(url, req, res, next) {
             if(!productContent.seoSocial['type']) productContent.seoSocial['type'] = 'article' ;
             if(!productContent.seoSocial['title']) productContent.seoSocial['title'] = productContent.title ;
             if(!productContent.seoSocial['description']) productContent.seoSocial['description'] = productContent.seoDescriptions ;
-            if(!productContent.seoSocial['pictures']) productContent.seoSocial['pictures'] = product.pictures ;
+            if(!productContent.seoSocial['pictures'] || productContent.seoSocial['pictures'].length == 0) productContent.seoSocial['pictures'] = product.pictures ;
             return productContent;
         }else if (req.path.indexOf('-nr') != -1) {
             var abc = req.path.split('-nr');
@@ -51,7 +51,7 @@ var getSEO_Info = async function(url, req, res, next) {
             if(!postContent.seoSocial['type']) postContent.seoSocial['type'] = 'article' ;
             if(!postContent.seoSocial['title']) postContent.seoSocial['title'] = postContent.title ;
             if(!postContent.seoSocial['description']) postContent.seoSocial['description'] = postContent.seoDescriptions ;
-            if(!postContent.seoSocial['pictures']) postContent.seoSocial['pictures'] = post.pictures;
+            if(!postContent.seoSocial['pictures'] || postContent.seoSocial['pictures']) postContent.seoSocial['pictures'] = post.pictures;
             return postContent;
         }else
             return null;

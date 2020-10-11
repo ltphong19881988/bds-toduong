@@ -118,81 +118,82 @@ router.get('/add-city', function(req, res, next) {
     });
 })
 
-router.get('/add-quan', function(req, res, next) {
-    request.get({
-        // headers: {
-        //     'content-type' : 'application/json',
-        //     'Authorization' : 'key='+config.fcmKey ,
-        // },
-        url: 'https://thongtindoanhnghiep.co/api/city/4/district',
-        // body:   abc,
-        json: true
-    }, function(error, response, body) {
-        console.log({ error, response, body });
-        var listItem = body.map(function(val, index) {
-            var abc = val.SolrID.split('/');
-            return {
-                ID: val.ID,
-                stt: val.STT,
-                title: val.Title,
-                type: val.Type,
-                link: abc[2] + '-' + abc[1],
-                provinceID: val.TinhThanhID,
-                provinceTitle: val.TinhThanhTitle,
-                provinceTitleLink: val.TinhThanhTitleAscii.replace('/', ''),
-            };
-        })
-        var listProvince = require('../../models/listprovince');
-        listProvince.insertMany(listItem, function(err, result) {
-            res.json(result);
-        })
-    });
-})
+// router.get('/add-quan', function(req, res, next) {
+//     request.get({
+//         // headers: {
+//         //     'content-type' : 'application/json',
+//         //     'Authorization' : 'key='+config.fcmKey ,
+//         // },
+//         url: 'https://thongtindoanhnghiep.co/api/city/23/district',
+//         // body:   abc,
+//         json: true
+//     }, function(error, response, body) {
+//         console.log({ error, response, body });
+//         // res.json('fea');
+//         var listItem = body.map(function(val, index) {
+//             var abc = val.SolrID.split('/');
+//             return {
+//                 ID: val.ID,
+//                 stt: val.STT,
+//                 title: val.Title,
+//                 type: val.Type,
+//                 link: abc[2] + '-' + abc[1],
+//                 provinceID: val.TinhThanhID,
+//                 provinceTitle: val.TinhThanhTitle,
+//                 provinceTitleLink: val.TinhThanhTitleAscii.replace('/', ''),
+//             };
+//         })
+//         var listProvince = require('../../models/listprovince');
+//         listProvince.insertMany(listItem, function(err, result) {
+//             res.json(result);
+//         })
+//     });
+// })
 
-router.get('/add-phuong', function(req, res, next) {
-    var listProvince = require('../../models/listprovince');
-    listProvince.find({ type: 2 }, function(err, results) {
-        // console.log(err, results);
-        // res.json(results);
-        var promises = results.map(function(element) {
-            console.log('dau', element.ID);
-            return new Promise(function(resolve, reject) {
-                request.get({
-                    url: 'https://thongtindoanhnghiep.co/api/district/' + element.ID + '/ward',
-                    json: true
-                }, function(error, response, body) {
-                    var listItem = body.map(function(val, index) {
-                        var abc = val.SolrID.split('/');
-                        return {
-                            ID: val.ID,
-                            stt: val.STT,
-                            title: val.Title,
-                            type: val.Type,
-                            link: abc[abc.length - 1] + '-' + element.link,
-                            provinceID: val.TinhThanhID,
-                            provinceTitle: val.TinhThanhTitle,
-                            provinceTitleLink: element.provinceTitleLink,
-                            districtID: val.QuanHuyenID,
-                            districtTitle: val.QuanHuyenTitle,
-                            districtTitleLink: element.link,
-                        };
-                    })
-                    listProvince.insertMany(listItem, function(err, result) {
-                        console.log('cuoi', element.ID);
-                        resolve(element.ID);
-                    })
-                });
+// router.get('/add-phuong', function(req, res, next) {
+//     var listProvince = require('../../models/listprovince');
+//     listProvince.find({ type: 2, provinceID: 23 }, function(err, results) {
+//         // console.log(err, results);
+//         // res.json(results);
+//         var promises = results.map(function(element) {
+//             console.log('dau', element.ID);
+//             return new Promise(function(resolve, reject) {
+//                 request.get({
+//                     url: 'https://thongtindoanhnghiep.co/api/district/' + element.ID + '/ward',
+//                     json: true
+//                 }, function(error, response, body) {
+//                     var listItem = body.map(function(val, index) {
+//                         var abc = val.SolrID.split('/');
+//                         return {
+//                             ID: val.ID,
+//                             stt: val.STT,
+//                             title: val.Title,
+//                             type: val.Type,
+//                             link: abc[abc.length - 1] + '-' + element.link,
+//                             provinceID: val.TinhThanhID,
+//                             provinceTitle: val.TinhThanhTitle,
+//                             provinceTitleLink: element.provinceTitleLink,
+//                             districtID: val.QuanHuyenID,
+//                             districtTitle: val.QuanHuyenTitle,
+//                             districtTitleLink: element.link,
+//                         };
+//                     })
+//                     listProvince.insertMany(listItem, function(err, result) {
+//                         console.log('cuoi', element.ID);
+//                         resolve(element.ID);
+//                     })
+//                 });
 
-            })
-        });
+//             })
+//         });
 
-        Promise.all(promises).then((data) => {
-            res.json(data);
-        });
+//         Promise.all(promises).then((data) => {
+//             res.json(data);
+//         });
 
-    })
+//     })
+// })
 
-})
 
 // ======= all site config request 
 router.post('/site-config', async(req, res, next) => {
