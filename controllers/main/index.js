@@ -56,11 +56,12 @@ var getSEO_Info = async function(url, req, res, next) {
         }else
             return null;
     }
-    // if (url.indexOf('news') != -1)
-    //     url = url.replace('news/', '');
+    
     var abc = url.split('/');
     if (abc[0] == '') abc[0] = '/';
-    // console.log('find url', abc);
+    if (url.indexOf('news') != -1)
+        abc[0] = url ;
+    console.log('find url', abc);
     var onelvlData = await OneLvlUrl.findOne({ oneLvlUrl: abc[0] });
     if (!onelvlData) return null;
     if(!onelvlData.seoSocial) onelvlData['seoSocial'] = {};

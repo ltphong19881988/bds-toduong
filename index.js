@@ -22,7 +22,7 @@ global.__basedir = __dirname;
 // =======================
 // configuration =========
 // =======================
-var port = process.env.PORT || 2000; // used to create, sign, and verify tokens
+var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
 // mongoose.Promise = require('bluebird');
 mongoose.Promise = global.Promise;
 // mongoose.set('useFindAndModify', false);
