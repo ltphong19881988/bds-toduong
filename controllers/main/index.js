@@ -56,8 +56,8 @@ var getSEO_Info = async function(url, req, res, next) {
         }else
             return null;
     }
-    if (url.indexOf('news') != -1)
-        url = url.replace('news/', '');
+    // if (url.indexOf('news') != -1)
+    //     url = url.replace('news/', '');
     var abc = url.split('/');
     if (abc[0] == '') abc[0] = '/';
     // console.log('find url', abc);
