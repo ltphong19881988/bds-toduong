@@ -152,44 +152,44 @@ authPage.directive('autoComplete', function($timeout) {
     };
 });
 
-authPage.controller("loginCtrl", function($scope, $rootScope, $http, $translate) {
-    $translate('LOGIN').then(function(title) {
-        $rootScope.pageTitle = $rootScope.siteTitle + ' - ' + title;
-    });
-    $scope.submitLogin = function(e) {
-        jQuery('#loadingModalTitle').html('Đang xử lý ...');
-        jQuery("#loadingModal").modal('show');
+// authPage.controller("loginCtrl", function($scope, $rootScope, $http, $translate) {
+//     $translate('LOGIN').then(function(title) {
+//         $rootScope.pageTitle = $rootScope.siteTitle + ' - ' + title;
+//     });
+//     $scope.submitLogin = function(e) {
+//         jQuery('#loadingModalTitle').html('Đang xử lý ...');
+//         jQuery("#loadingModal").modal('show');
 
-        let params = {
-            method: 'POST',
-            url: '/login',
-            data: {
-                login: $scope.login,
-                password: $scope.password,
-                recaptchaResponse: $("#g-recaptcha-response").val()
-            }
-        };
-        submitFrontEnd(params, $http, function(loginResponse) {
-            // jQuery("#loadingModal").modal('hide');
-            console.log('post login response', loginResponse);
-            if (loginResponse.status == true) {
-                jQuery('#loadingModalTitle').html('Đăng nhập thành công, vui lòng đợi chuyển trang');
-                localStorage.setItem('token', loginResponse.token);
-                $("#formLogin")[0].reset();
-                var abc = getUrlParameter("redirect");
-                if (typeof abc === "undefined" || abc == null) {
-                    abc = "/dashboard";
-                }
-                setTimeout(function() {
-                    window.location.href = abc;
-                }, 1500);
-            } else {
-                jQuery('#loadingModalTitle').html(loginResponse.mes);
-            }
-        });
+//         let params = {
+//             method: 'POST',
+//             url: '/login',
+//             data: {
+//                 login: $scope.login,
+//                 password: $scope.password,
+//                 recaptchaResponse: $("#g-recaptcha-response").val()
+//             }
+//         };
+//         submitFrontEnd(params, $http, function(loginResponse) {
+//             // jQuery("#loadingModal").modal('hide');
+//             console.log('post login response', loginResponse);
+//             if (loginResponse.status == true) {
+//                 jQuery('#loadingModalTitle').html('Đăng nhập thành công, vui lòng đợi chuyển trang');
+//                 localStorage.setItem('token', loginResponse.token);
+//                 $("#formLogin")[0].reset();
+//                 var abc = getUrlParameter("redirect");
+//                 if (typeof abc === "undefined" || abc == null) {
+//                     abc = "/dashboard";
+//                 }
+//                 setTimeout(function() {
+//                     window.location.href = abc;
+//                 }, 1500);
+//             } else {
+//                 jQuery('#loadingModalTitle').html(loginResponse.mes);
+//             }
+//         });
 
-    };
-});
+//     };
+// });
 
 authPage.controller("verifyEmailCtrl", function($rootScope, $scope, $http, $translate) {
     $translate('VERIFY_EMAIL').then(function(title) {

@@ -13,14 +13,22 @@ var submitBackend = function(params, $http, callback) {
 
 var doAddImageToElement = function(file, contentDiv, $scope, $compile) {
     return new Promise((resolve) => {
-        convertFiletoBase64(file).then(abc => {
-            var html = `<li>
-                            <img name="` + abc.name + `" src="` + abc.data + `" />
+        var objectUrl = URL.createObjectURL(file);
+        var html = `<li>
+                            <img name="` + file.name + `" src="` + objectUrl + `" />
                             <button class="btn btn-danger" ng-click="removeImageUpload($event)">Xóa bỏ</button>
+                            <button class="btn btn-info pull-right" ng-click="cropImageBeforeUpload($event, '` + objectUrl + `')">Cắt hình</button>
                         </li>`;
-            angular.element(contentDiv.find("ul")).append($compile(html)($scope));
-            resolve();
-        });
+        angular.element(contentDiv.find("ul")).append($compile(html)($scope));
+        resolve();
+        // convertFiletoBase64(file).then(abc => {
+        //     var html = `<li>
+        //                     <img name="` + abc.name + `" src="` + abc.data + `" />
+        //                     <button class="btn btn-danger" ng-click="removeImageUpload($event)">Xóa bỏ</button>
+        //                 </li>`;
+        //     angular.element(contentDiv.find("ul")).append($compile(html)($scope));
+        //     resolve();
+        // });
     })
 }
 

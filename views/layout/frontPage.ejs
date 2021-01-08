@@ -1,65 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <base href="/">
-        <meta name="viewport" content="width=device-width">
-        <meta name="fragment" content="!">
+<head>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width">
+    <meta name="fragment" content="!">
 
-        <meta name="google-site-verification" content="h51rQzhopu0OE-Qmdg-ZixawsBE-cvBeiXCk5Z0JD8I" />
-        <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="h51rQzhopu0OE-Qmdg-ZixawsBE-cvBeiXCk5Z0JD8I" />
+    <meta name="robots" content="index, follow">
 
-        <title>
-            <%= seoInfo.title %>
-        </title>
+    <title>
+        <%= seoInfo.title %>
+    </title>
 
-        <meta name="keywords" content="<%= seoInfo.seoKeyWord %>" >
-        <meta name="description" content="<%= seoInfo.seoDescriptions %>" >
-        <% if (seoInfo.seoSocial) { %>
+    <meta name="keywords" content="<%= seoInfo.seoKeyWord %>">
+    <meta name="description" content="<%= seoInfo.seoDescriptions %>">
+    <% if (seoInfo.seoSocial) { %>
         <meta property="og:url" content="<%= seoInfo.seoSocial.url %>" />
         <meta property="og:type" content="<%= seoInfo.seoSocial.type %>" />
         <meta property="og:title" content="<%= seoInfo.seoSocial.title %>" />
         <meta property="og:description" content="<%= seoInfo.seoSocial.description %>" />
-            <% seoInfo.seoSocial.pictures.forEach(element => {  %>
+        <% seoInfo.seoSocial.pictures.forEach(element => {  %>
             <meta property="og:image" content="<%= element %>" />
             <% }); %>
-        <% } %>
+                <% } %>
 
-        <!-- Favicons -->
-        <link href="/front-page/assets/img/favicon.png" rel="icon">
-        <link href="/front-page/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+                    <!-- Favicons -->
+                    <link href="/front-page/assets/img/favicon.png" rel="icon">
+                    <link href="/front-page/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+                    <!-- Google Fonts -->
+                    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-        <!-- Vendor CSS Files -->
-        <link href="/front-page/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-        <link href="/front-page/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="/front-page/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-        <link href="/front-page/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="/front-page/assets/vendor/venobox/venobox.css" rel="stylesheet">
-        <link href="/front-page/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="/front-page/assets/vendor/aos/aos.css" rel="stylesheet">
+                    <!-- Vendor CSS Files -->
+                    <link href="/front-page/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+                    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+                    <link href="/front-page/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+                    <link href="/front-page/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+                    <link href="/front-page/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+                    <link href="/front-page/assets/vendor/venobox/venobox.css" rel="stylesheet">
+                    <link href="/front-page/assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+                    <link href="/front-page/assets/vendor/aos/aos.css" rel="stylesheet">
 
-        <!-- Template Main CSS File -->
-        <link href="/front-page/assets/css/style.css" rel="stylesheet">
+                    <!-- Template Main CSS File -->
+                    <link href="/front-page/assets/css/style.css" rel="stylesheet">
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146789895-2"></script>
-        <script>
-            // console.log('location', location);
-            window.dataLayer = window.dataLayer || [];
+                    <!-- Global site tag (gtag.js) - Google Analytics -->
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146789895-2"></script>
+                    <script>
+                        // console.log('location', location);
+                        window.dataLayer = window.dataLayer || [];
 
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', 'UA-146789895-2');
-        </script>
+                        function gtag() {
+                            dataLayer.push(arguments);
+                        }
+                        gtag('js', new Date());
+                        gtag('config', 'UA-146789895-2');
+                    </script>
 
-    </head>
+</head>
 
 <body ng-app="frontApp" data-auto-scroll>
     <button type="button" class="mobile-nav-toggle d-md-none">
@@ -110,12 +110,12 @@
     <!-- End Hero -->
     <div class="container" style="position: relative;">
         <div class="ads-left ads">
-            <a ng-if="adsLeft" href="{{adsLeft.nameKey}}" >
+            <a ng-if="adsLeft" href="{{adsLeft.nameKey}}">
                 <img ng-src="{{adsLeft.videoUrl}}" alt="" />
             </a>
         </div>
         <div class="ads-right ads">
-            <a ng-if="adsRight" href="{{adsRight.nameKey}}" >
+            <a ng-if="adsRight" href="{{adsRight.nameKey}}">
                 <img ng-src="{{adsRight.videoUrl}}" alt="" />
             </a>
         </div>
@@ -134,7 +134,7 @@
     </div>
 
     <!-- ======= Footer ======= -->
-    <footer id="footer" >
+    <footer id="footer">
         <div class="hotline-phone-ring-wrap">
             <div class="hotline-phone-ring">
                 <div class="hotline-phone-ring-circle"></div>
@@ -151,6 +151,9 @@
                 </a>
             </div>
         </div>
+        <div class="zalo-chat-widget" data-oaid="2352124783484867031" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420"></div>
+
+        <script src="https://sp.zalo.me/plugins/sdk.js"></script>
         <div class="footer-top">
             <div class="container">
                 <div class="row">

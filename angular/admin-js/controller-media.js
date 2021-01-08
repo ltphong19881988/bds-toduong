@@ -18,14 +18,14 @@ var liElementHtml = function(name, path) {
                 <i class="fa fa-plus" path="` + path + `" ng-click="preAddFolder($event)" data-toggle="modal" data-target="#addFolderModal" ></i>
                 <i class="fa fa-close" path="` + path + `" ng-click="deleteFolder($event)"></i>
                 <div class="nono" ng-click="setActiveFolder($event)" path="` + path + `">
-                    <i class="fa fa-folder-open-o"></i><a>` + name + ` </a>
+                    <i class="fa fa-folder"></i> <a>` + name + ` </a>
                 </div>
             </li>`
     return html;
 }
 
 var appendFilesToViewMedia = function(files, elementNode, $compile, $scope) {
-    console.log('file ne', files);
+    // console.log('file ne', files);
     angular.element(elementNode).html('');
     files.forEach(element => {
         var abc = element.split('\\');
@@ -44,8 +44,11 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
     $scope.rootFolderPath = 'public/uploads/media/';
     $scope.acviteFolder = 'media';
     $scope.acviteFolderPath = 'public/uploads/media/';
+    $scope.cropper = null;
 
     function GetAllDirChild(eleNode) {
+        // console.log(eleNode);
+        eleNode.find('i').removeClass('fa-folder').addClass('fa-folder-open');
         jQuery("#listFiles").html('');
         var valuePath = eleNode.attr('path');
         listAllFilesAndFolder($http, { value: valuePath, type: "list" }, function(response) {
@@ -71,14 +74,25 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
     }
 
     $scope.prepareUpload = function(e) {
+
         jQuery("#uploadBtn").val(null);
         jQuery("#uploadBtn").click();
         jQuery('#uploadProcess .btn-success').prop('disabled', false);
     }
 
     $scope.selectedFiles = function(element) {
-        // console.log(element, element.files);
+        console.log(jQuery(element).val(), element.files);
         addImageToElement(Array.prototype.slice.call(element.files).splice(0, element.files.length), jQuery("#uploadProcess"), $scope, $compile);
+    }
+
+    $scope.cropImageBeforeUpload = function(e, objectUrl) {
+        // var abc = jQuery(e.currentTarget).parent().eq(0).find('img').eq(0).attr('src');
+        jQuery('#cropImageModal .img-container').html(`<img id="img_container" src="` + objectUrl + `" alt="Picture">`);
+
+        jQuery('#cropImageModal').modal('show');
+        setTimeout(() => {
+            initCroper(jQuery(e.currentTarget));
+        }, 500);
     }
 
     $scope.doUpload = function(e) {
