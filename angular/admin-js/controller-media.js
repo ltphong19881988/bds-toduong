@@ -16,7 +16,7 @@ var liElementHtml = function(name, path) {
     // <i class="fa fa-edit" ng-click="editFolder($event)"></i>
     var html = `<li style="position:relative;"  >
                 <i class="fa fa-plus" path="` + path + `" ng-click="preAddFolder($event)" data-toggle="modal" data-target="#addFolderModal" ></i>
-                <i class="fa fa-close" path="` + path + `" ng-click="deleteFolder($event)"></i>
+                <i class="fa fa-times" path="` + path + `" ng-click="deleteFolder($event)"></i>
                 <div class="nono" ng-click="setActiveFolder($event)" path="` + path + `">
                     <i class="fa fa-folder"></i> <a>` + name + ` </a>
                 </div>
@@ -210,7 +210,7 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
             item.css('border', '1px solid #666').css('border-radius', '5px').addClass('selected');
             var html = `<div class="picActions">
                             <button class="btn btn-danger btn-sm" ng-click="removePic($event)">
-                                <i class="fa fa-remove"></i>
+                                <i class="fa fa-times"></i>
                             </button>
                         </div>`;
             angular.element(item).append($compile(html)($scope));
