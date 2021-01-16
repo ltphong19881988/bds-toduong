@@ -41,6 +41,16 @@ var getCookies = function(cookie, cname) {
 
 // Helpers.writeLog("abc", {username : 'phongle', status : true}, function(result){});
 
+router.get('/logout', async(req, res, next) => {
+    var token = "";
+    token = jwt.sign({}, secretKey, {
+        expiresIn: 0 // expires in 24 hours
+    });
+    res.cookie('x-access-token', token, { expires: new Date(Date.now()) });
+    res.status(301).redirect("/");
+
+})
+
 router.use(function(req, res, next) {
     // console.log(req);
     var token = req.body.token || req.query.token || getCookies(req.headers.cookie, "x-access-token");
@@ -303,14 +313,14 @@ router.post('/one-lvl-url', async(req, res, next) => {
         content: req.body.content,
         seoKeyWord: req.body.seoKeyWord,
         seoDescriptions: req.body.seoDescriptions,
-        seoSocial : req.body.seoSocial
+        seoSocial: req.body.seoSocial
     })
 
-    if(!item.seoSocial['type'] || item.seoSocial['type'] == '')
+    if (!item.seoSocial['type'] || item.seoSocial['type'] == '')
         item.seoSocial['type'] = 'article';
-    if(!item.seoSocial['title'] || item.seoSocial['title'] == '')
+    if (!item.seoSocial['title'] || item.seoSocial['title'] == '')
         item.seoSocial['title'] = item.title;
-    if(!item.seoSocial['description'] || item.seoSocial['description'] == '')
+    if (!item.seoSocial['description'] || item.seoSocial['description'] == '')
         item.seoSocial['description'] = item.seoDescriptions;
 
     item.save(function(err, doc) {
@@ -367,24 +377,24 @@ router.post('/create-snapshot', async(req, res, next) => {
 })
 
 // ======= download image auto and save
-var download_Image = function(uri, filename, callback){
-  request.head(uri, function(err, res, body){
-    // console.log('content-type:', res.headers['content-type']);
-    // console.log('content-length:', res.headers['content-length']);
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-  });
+var download_Image = function(uri, filename, callback) {
+    request.head(uri, function(err, res, body) {
+        // console.log('content-type:', res.headers['content-type']);
+        // console.log('content-length:', res.headers['content-length']);
+        request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    });
 };
 
 router.post('/download-img', async(req, res, next) => {
     console.log(req.body);
-    if(req.body.link.indexOf('http') == -1  || req.body.link.indexOf('batdongsantotnhat') != -1) 
+    if (req.body.link.indexOf('http') == -1 || req.body.link.indexOf('batdongsantotnhat') != -1)
         return res.json(req.body.link);
     var dauxanh = config.publicPath + req.body.path;
-    var filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png' ;
+    var filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png';
     while (fs.existsSync(dauxanh + '/' + filename)) {
-        filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png' ;
+        filename = Tool.randomStr(6) + '-' + Tool.randomStr(5) + '-' + Tool.randomStr(6) + '.png';
     }
-    download_Image(req.body.link, dauxanh + '/' + filename, function(){
+    download_Image(req.body.link, dauxanh + '/' + filename, function() {
         res.json(req.body.path + '/' + filename);
     });
 })
