@@ -1,6 +1,8 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var async = require('async');
+const express = require('express');
+const mongoose = require('mongoose');
+const { execSync } = require("child_process");
+const os = require("os"); // Comes with node.js
+console.log(os.type());
 var fs = require('fs');
 // var request = require('request');
 // var cheerio = require('cheerio');
@@ -45,12 +47,12 @@ router.post("/item", async(req, res, next) => {
     if (!req.body.product.idCategory) {
         return res.json({ status: false, mes: "Vui lòng chọn danh mục sản phẩm" })
     }
-    if (!req.body.product.normalPrice) {
-        return res.json({ status: false, mes: "Vui lòng nhập giá thường " })
-    }
-    if (!req.body.product.acreage) {
-        return res.json({ status: false, mes: "Vui lòng nhập diện tích " })
-    }
+    // if (!req.body.product.normalPrice) {
+    //     return res.json({ status: false, mes: "Vui lòng nhập giá thường " })
+    // }
+    // if (!req.body.product.acreage) {
+    //     return res.json({ status: false, mes: "Vui lòng nhập diện tích " })
+    // }
     // if (!req.body.product.province) {
     //     return res.json({ status: false, mes: "Vui lòng nhập tỉnh thành" })
     // }
@@ -81,17 +83,19 @@ router.post("/item", async(req, res, next) => {
         content: req.body.product.productContent.content,
         seoKeyWord: req.body.product.productContent.seoKeyWord,
         seoDescriptions: req.body.product.productContent.seoDescriptions,
-        seoSocial : req.body.product.productContent.seoSocial
+        seoSocial: req.body.product.productContent.seoSocial
     };
-    
-    if(!product_content.seoSocial['type'] || product_content.seoSocial['type'] == '')
+
+    if (!product_content.seoSocial) product_content.seoSocial = {};
+
+    if (!product_content.seoSocial['type'] || product_content.seoSocial['type'] == '')
         product_content.seoSocial['type'] = 'article';
-    if(!product_content.seoSocial['title'] || product_content.seoSocial['title'] == '')
+    if (!product_content.seoSocial['title'] || product_content.seoSocial['title'] == '')
         product_content.seoSocial['title'] = product_content.title;
-    if(!product_content.seoSocial['description'] || product_content.seoSocial['description'] == '')
+    if (!product_content.seoSocial['description'] || product_content.seoSocial['description'] == '')
         product_content.seoSocial['description'] = product_content.seoDescriptions;
-    if(!product_content.seoSocial['pictures'] || product_content.seoSocial['pictures'].length == 0)
-        product_content.seoSocial['pictures'] = product.pictures;
+    // if (!product_content.seoSocial['pictures'] || product_content.seoSocial['pictures'].length == 0)
+    //     product_content.seoSocial['pictures'] = product.pictures;
 
     var result = await Product.AddProduct(product, product_content);
     res.json(result);
@@ -141,7 +145,65 @@ router.put("/item", async(req, res, next) => {
     res.json(result);
 })
 
+router.delete("/item/:id", async(req, res, next) => {
+    var id = mongoose.Types.ObjectId(req.params.id);
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
+    try {
+        console.log(config.publicPath);
+        var pathDelete = config.publicPath + '/public/uploads/media/autoupload';
+        console.log(pathDelete);
+        const opts = { session, new: false };
+        var p = await Product.findOneAndDelete({ _id: id }, opts);
+        var c = await ProductContent.findOneAndDelete({ idProduct: id }, opts);
+        // delete folder image 
+        var cm = "cd " + pathDelete + " && rmdir /Q /S " + req.params.id.toString();
+        if (os.type().toLowerCase().indexOf("linux") != -1) {
+
+        }
+        const stdout = execSync(cm);
+
+        console.log(stdout.toString()); // stdout of the command if
+
+        await session.commitTransaction();
+        session.endSession();
+        res.json({ status: true, mes: 'Xóa sản phẩm thành công', product: p, productContent: c });
+    } catch (error) {
+        console.log(error);
+        await session.abortTransaction();
+        session.endSession();
+        res.json({ status: false, mes: error.message });
+        throw error; // Rethrow so calling function sees error
+    }
+})
+
+router.post("/update-field", async(req, res, next) => {
+    console.log('update-field ', req.body);
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const opts = { session, new: true };
+        var id = mongoose.Types.ObjectId(req.body.id);
+        await Product.findOneAndUpdate({ _id: id }, req.body.update, opts);
+        await ProductContent.findOneAndUpdate({ idProduct: id }, { 'seoSocial.pictures': req.body.seoPic }, opts);
+        // res.json({ status: false, mes: err });
+        res.json({ status: true, mes: "OK" });
+
+        await session.commitTransaction();
+        session.endSession();
+        return { status: true, mes: 'OK' };
+    } catch (error) {
+        console.log(error);
+        await session.abortTransaction();
+        session.endSession();
+        return { status: false, mes: error.message };
+        throw error; // Rethrow so calling function sees error
+    }
+
+
+})
 
 
 router.get('/*', function(req, res, next) {

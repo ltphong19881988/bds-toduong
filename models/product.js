@@ -104,7 +104,7 @@ module.exports.AddProduct = async function(product, product_content) {
 
         await session.commitTransaction();
         session.endSession();
-        return { status: true, mes: 'Tạo sản phẩm thành công' };
+        return { status: true, mes: 'Tạo sản phẩm thành công', product: savedDoc, productContent: saveContent };
     } catch (error) {
         console.log(error);
         await session.abortTransaction();
@@ -147,11 +147,16 @@ module.exports.UpdateProduct = async function(product, product_content) {
 }
 
 module.exports.FilterDataTableProduct = async function(data) {
-    // console.log(data);
+    console.log(data);
     let options = {};
     // if (req.body.idCategoryType) {
     //     options.idCategoryType = mongoose.Types.ObjectId(req.body.idCategoryType);
     // }
+    var visible = data[1].value.filter(item => item.data == 'visible')[0];
+    if (visible && visible.search.value) {
+        options['visible'] = parseInt(visible.search.value);
+    }
+
     var hot = data[1].value.filter(item => item.data == 'productType')[0];
     if (hot && hot.search.value) {
         options['productType'] = { $elemMatch: { value: hot.search.value } };
@@ -171,6 +176,7 @@ module.exports.FilterDataTableProduct = async function(data) {
         options['idCategory'] = { $in: listCate };
     }
 
+    console.log('options', options);
 
     return Product.aggregate([{
             $match: options,

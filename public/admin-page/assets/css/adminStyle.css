@@ -211,25 +211,39 @@ ul#listFiles li p {
 #postImgs .divImg,
 #projectImgs .divImg {
     display: inline;
-    max-height: 80px;
+    max-height: 100px;
     position: relative;
 }
 
 .postImgs img,
 #postImgs img,
 #projectImgs img {
-    max-height: 80px;
+    max-height: 100px;
     margin-bottom: 15px;
     margin-right: 15px;
+    min-width: 100px;
 }
 
-.postImgs .divImg .fa-close,
-#postImgs .divImg .fa-close,
-#projectImgs .divImg .fa-close {
+.postImgs .divImg .img-btn-control,
+#postImgs .divImg .img-btn-control,
+#projectImgs .divImg .img-btn-control {
     position: absolute;
-    right: 5px;
-    top: -35px;
-    color: #e74c3c;
+    right: 15px;
+    top: -46px;
+    width: 100px;
+    padding: 1px;
+    background: rgb(255 255 255 / 0.8);
+}
+
+.img-btn-control i.fa {
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+i.fa.fa-close,
+i.fa.fa-times {
+    color: red;
 }
 
 .table-responsive {

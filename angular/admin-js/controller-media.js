@@ -13,6 +13,8 @@ var submitBackend = function(params, $http, callback) {
 }
 
 var liElementHtml = function(name, path) {
+    console.log('name ', name);
+    console.log('path ', path);
     // <i class="fa fa-edit" ng-click="editFolder($event)"></i>
     var html = `<li style="position:relative;"  >
                 <i class="fa fa-plus" path="` + path + `" ng-click="preAddFolder($event)" data-toggle="modal" data-target="#addFolderModal" ></i>
@@ -30,7 +32,7 @@ var appendFilesToViewMedia = function(files, elementNode, $compile, $scope) {
     files.forEach(element => {
         var abc = element.split('\\');
         var html = `<li  ng-mouseover="hoverPic($event)" ng-mouseleave="leavePic($event)" >
-                <img style="max-height:90px;" src="` + ($scope.acviteFolderPath + element).replace(/\\/g, '/').replace('public', '') + `" />
+                <img style="max-height:90px;" src="` + ($scope.acviteFolderPath + element).replace(/\\/g, '/').replace('/public', '') + `" />
                 <p>` + abc[abc.length - 1] + `</p>
         </li>`;
         angular.element(elementNode).append($compile(html)($scope));
@@ -41,9 +43,9 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
     $rootScope.pageTitle = "Admin - Media Manager";
     var item = jQuery("#treeFolder > ul");
     $scope.rootFolder = 'media';
-    $scope.rootFolderPath = 'public/uploads/media/';
+    $scope.rootFolderPath = '/public/uploads/media/';
     $scope.acviteFolder = 'media';
-    $scope.acviteFolderPath = 'public/uploads/media/';
+    $scope.acviteFolderPath = '/public/uploads/media/';
     $scope.cropper = null;
 
     function GetAllDirChild(eleNode) {
@@ -59,6 +61,7 @@ adminApp.controller("mediaCtrl", function($rootScope, $scope, $compile, $http) {
                     angular.element(parent).append($compile("<ul></ul>")($scope));
                     response.dirs.forEach(element => {
                         var html = liElementHtml(element, $scope.acviteFolderPath + element + "/");
+                        // console.log('html', html);
                         angular.element(parent.find('ul').eq(0)).append($compile(html)($scope));
                     });
                 }

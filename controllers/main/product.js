@@ -104,7 +104,7 @@ router.post('/search-form', async(req, res, next) => {
 })
 
 router.post('/product-type/filter-all', async(req, res, next) => {
-    var options = {};
+    var options = { visible: 1 };
     if (req.body.groupType) {
         options['groupType'] = req.body.groupType;
     }
@@ -117,7 +117,7 @@ router.post('/product-type/filter-all', async(req, res, next) => {
 })
 
 var GetNewProduct = async function(req, res, next) {
-    var options = {};
+    var options = { visible: 1 };
     var skip = 0;
     var limit = 10;
     if (req.body.skip && typeof req.body.skip === 'number' && (req.body.skip % 1) === 0) {
@@ -183,7 +183,7 @@ router.post('/filter-url', async(req, res, next) => {
 
     var options = {
         idCategory: { $elemMatch: { $eq: cate._id } },
-        visible : 1,
+        visible: 1,
     };
     if (local) {
         options['$or'] = [
@@ -236,7 +236,7 @@ router.post('/filter-url', async(req, res, next) => {
 
 router.post('/filter-product', async(req, res, next) => {
     // console.log(req.body);
-    var options = {visible : 1};
+    var options = { visible: 1 };
     var skip = 0;
     var limit = 10;
     if (req.body.filter.idCategory) {
@@ -246,7 +246,7 @@ router.post('/filter-product', async(req, res, next) => {
         var proType = await ProductType.findOne({ groupType: "productType", value: req.body.filter.productType });
         options['productType'] = { $elemMatch: { _id: proType._id.toString() } };
     }
-    if(req.body.filter.district){
+    if (req.body.filter.district) {
         options["$or"] = [
             { 'district.link': req.body.filter.district['link'] },
         ]
@@ -257,7 +257,7 @@ router.post('/filter-product', async(req, res, next) => {
     if (req.body.filter.limit && typeof req.body.filter.limit === 'number' && (req.body.filter.limit % 1) === 0) {
         limit = parseInt(req.body.filter.limit);
     }
-    
+
     Product.aggregate([{
             $match: options,
         },
@@ -293,7 +293,7 @@ router.post('/filter-product', async(req, res, next) => {
 router.get('/name-key/:key', async(req, res, next) => {
     // console.log(req.params);
     Product.aggregate([{
-            $match: { nameKey: req.params.key },
+            $match: { nameKey: req.params.key, visible: 1 },
         },
         {
             $lookup: {
@@ -314,24 +314,26 @@ router.get('/name-key/:key', async(req, res, next) => {
         { $unwind: "$productContent" },
     ], async function(err, products) {
         // console.log('result', products);
-        var mt = await PostContent.findOne({oneLvlUrl : 'ban-nha-mat-tien'});
-        // console.log('mt', mt);
-        var mattien = await Post.findOne({_id : mt.idPost});
-        // console.log('mattien', mattien);
-        var countMTOpt = {'idCategory' : { $elemMatch: { $eq: mongoose.Types.ObjectId(mattien.idCategory[0]) } } };
+        if (products.length == 0) return res.redirect("/");
 
-        var th = await PostContent.findOne({oneLvlUrl : 'ban-nha-trong-hem'});
-        var tronghem = await Post.findOne({_id : th.idPost});
+        var mt = await PostContent.findOne({ oneLvlUrl: 'ban-nha-mat-tien' });
+        // console.log('mt', mt);
+        var mattien = await Post.findOne({ _id: mt.idPost });
+        // console.log('mattien', mattien);
+        var countMTOpt = { 'idCategory': { $elemMatch: { $eq: mongoose.Types.ObjectId(mattien.idCategory[0]) } } };
+
+        var th = await PostContent.findOne({ oneLvlUrl: 'ban-nha-trong-hem' });
+        var tronghem = await Post.findOne({ _id: th.idPost });
         // console.log('tronghem', tronghem);
-        var countTHOpt = {'idCategory' : { $elemMatch: { $eq: mongoose.Types.ObjectId(tronghem.idCategory[0]) } } };
+        var countTHOpt = { 'idCategory': { $elemMatch: { $eq: mongoose.Types.ObjectId(tronghem.idCategory[0]) } } };
 
         var orOpt = [
             { 'province.link': products[0].province['link'] },
-        ] ;
-        if(products[0].district){
+        ];
+        if (products[0].district) {
             orOpt.push({ 'district.link': products[0].district['link'] });
         }
-        if(products[0].ward){
+        if (products[0].ward) {
             orOpt.push({ 'ward.link': products[0].ward['link'] });
             countMTOpt['$or'] = [
                 { 'district.link': products[0].district['link'] }
@@ -352,7 +354,7 @@ router.get('/name-key/:key', async(req, res, next) => {
         // if (checklimit < 0) checklimit = 0;
         // var skipRecords = Tool.getRandomArbitrary(0, checklimit);
         // console.log(countMTOpt);
-        
+
 
         Product.aggregate([{
                 $match: relateOpts,

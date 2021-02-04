@@ -1,4 +1,20 @@
 <style>
+    form *,
+    form input,
+    form button,
+    form .form-control {
+        font-size: 14px;
+    }
+    
+    form .form-group {
+        margin-bottom: 0.7rem;
+    }
+    
+    form .form-control {
+        padding: 0px 5px;
+        height: calc(2rem + 2px);
+    }
+    
     .modal .modal-dialog .modal-content {
         min-height: 500px;
     }
@@ -7,7 +23,11 @@
         list-style: none;
         margin-right: 15px;
         overflow: hidden;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    #uploadProcess ul li button {
+        margin-top: 25px;
     }
     
     #uploadProcess img {
@@ -117,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="row form-group">
                                 <div class="row col-md-6">
                                     <div class="col col-md-5"><label class=" form-control-label">Diện tích  : </label></div>
@@ -132,7 +152,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="row form-group">
                                 <div class="row col-md-6">
                                     <div class="col col-md-4"><label class=" form-control-label">Tỉnh thành  : </label></div>
@@ -157,7 +177,7 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="row form-group">
                                 <div class="row col-md-6">
                                     <div class="col col-md-4"><label class=" form-control-label">Phường xã  : </label></div>
@@ -214,25 +234,36 @@
                             <div class="col-md-12"> <label class=" form-control-label">(OG image) : </label></div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-primary selectImage" data-toggle="modal" data-content="#seoSocialImgs" data-target="#galleryModal">Chọn từ thư viện</button>
+                                <button type="button" class="btn btn-primary btnUpload" ng-click="prepareUpload('socical')">Tải ảnh lên</button>
+                                <input id="uploadBtn_socical" type="file" hidden multiple onchange="angular.element(this).scope().selectedFilesUpLoad(this, 'social') " />
                                 <div id="seoSocialImgs" class="postImgs">
                                     <div ng-if="productItem.productContent.seoSocial.pictures" ng-repeat="src in productItem.productContent.seoSocial.pictures track by $index" class="divImg">
                                         <img src="{{src}}">
-                                        <i class="fa fa-close"></i>
+                                        <div class="img-btn-control">
+                                            <i class="fa fa-scissors" ng-click="cropProductImage($event)" aria-hidden="true" role="button" tabindex="0"></i>
+                                            <i class="fa fa-close" ng-click="removeProductImage($event, 'social', $index)" role="button" tabindex="0"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                         <div class="col-md-12 row form-group">
                             <div class="col col-md-3"><label class=" form-control-label">Hình ảnh : </label></div>
                             <div class="col-12 col-md-9">
                                 <button type="button" class="btn btn-primary selectImage" data-toggle="modal" data-content="#productImgs" data-target="#galleryModal">Chọn từ thư viện</button>
-                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Tải ảnh lên</button> -->
+                                <!-- <button type="button" class="btn btn-primary btnUpload" ng-click="prepareUpload()" data-toggle="modal" data-target="#uploadModal">Tải ảnh lên</button> -->
+                                <button type="button" class="btn btn-primary btnUpload" ng-click="prepareUpload('product')">Tải ảnh lên</button>
+                                <input id="uploadBtn_product" type="file" hidden multiple onchange="angular.element(this).scope().selectedFilesUpLoad(this, 'product') " />
                                 <div id="productImgs" class="postImgs">
                                     <div ng-if="productItem.pictures" ng-repeat="src in productItem.pictures track by $index" class="divImg">
-                                        <img src="{{src}}">
-                                        <i class="fa fa-close"></i>
+                                        <img src="{{src}}" />
+                                        <div class="img-btn-control">
+                                            <i class="fa fa-scissors" ng-click="cropProductImage($event)" aria-hidden="true"></i>
+                                            <i class="fa fa-close" ng-click="removeProductImage($event, 'product', $index)"></i>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -336,16 +367,26 @@
                 </div>
                 <div class="modal-body">
                     <div id="prepareBtn">
-                        <button class="btn btn-primary btnUpload"><i class="fa fa-search"></i>Chọn ảnh</button>
-                        <input id="uploadBtn" type="file" hidden multiple />
+                        <button class="btn btn-primary btnUpload" ng-click="prepareUpload()"><i class=" fa fa-search "></i>Chọn ảnh</button>
+                        <!-- <input id="uploadBtn " type="file " hidden multiple /> -->
+                        <input id="uploadBtn" type="file" hidden multiple onchange="angular.element(this).scope().selectedFilesUpLoad(this) " />
                     </div>
 
-                    <div id="uploadProcess" style="display: none;">
-                        <form enctype="multipart/form-data">
+                    <div id="uploadProcess" style="display: block; ">
+
+                        <!-- <form enctype="multipart/form-data ">
                             <ul>
 
                             </ul>
+                            <div class="form-group " style="height: 40px; ">
+                                <button ng-click=doUpload($event) class="btn btn-success ">Tải lên</button>
+                            </div>
+                        </form> -->
+                        <form enctype="multipart/form-data">
+                            <ul>
+                            </ul>
                             <div class="form-group" style="height: 40px;">
+                                <button ng-click="closeUpload($event, 'uploadProcess')" class="btn btn-danger">Đóng</button>
                                 <button ng-click=doUpload($event) class="btn btn-success">Tải lên</button>
                             </div>
                         </form>

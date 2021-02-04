@@ -1,6 +1,6 @@
 const ip = require("ip").address();
 
-var publicPath = '';
+var publicPath = __dirname;
 var databaseCF = {
     connectStr: 'mongodb://149.28.152.179:27118/bds-toduong',
     options: {
@@ -50,6 +50,6 @@ module.exports = {
     'reCaptchaKSecrect': '6LeQNjsUAAAAAMQMspip8e39YQEcC8jKxIOq6Vhp',
     'reCaptchaKeyLocal': '6LfXNjsUAAAAAOPfroYZRzkZTlhKhjTxMQWC3ykd',
     'reCaptchaKSecrectLocal': '6LfXNjsUAAAAABRRFz1eZ5Ujx85voFdBFom6bo8E',
-    'a' : 1
+    'a': 1
 
 };

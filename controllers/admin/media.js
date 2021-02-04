@@ -7,7 +7,7 @@ var request = require('request');
 var moment = require('moment');
 var passwordHasher = require('aspnet-identity-pw');
 var jwt = require('jsonwebtoken');
-var xl = require('excel4node');
+var Tool = require('../../models/helpers/tool');
 var router = express.Router();
 const fileManager = require('file-manager-js');
 var User = require('../../models/user');
@@ -40,15 +40,16 @@ var getCookies = function(cookie, cname) {
 
 router.post("/list", function(req, res, next) {
     var dauxanh = config.publicPath + req.body.value;
-    // console.log(dauxanh);
+    dauxanh = dauxanh.replace(/\\/g, '/');
     fileManager.list(dauxanh).then((info) => {
         var kq = { dirs: [], files: [] };
         info.dirs.forEach(element => {
-            // console.log(element);
-            kq.dirs.push(element.replace(/\\/g, '/').replace(dauxanh, ''));
+            var xxx = element.replace(/\\/g, '/').replace(dauxanh, '');
+            kq.dirs.push(xxx);
         });
         info.files.forEach(element => {
-            kq.files.push(element.replace(/\\/g, '/').replace(dauxanh, ''));
+            var xxx = element.replace(/\\/g, '/').replace(dauxanh, '');
+            kq.files.push(xxx);
         });
         res.json(kq);
     }).catch((error) => {
@@ -79,8 +80,11 @@ router.post("/list-deep", function(req, res, next) {
 })
 
 router.post("/folder", function(req, res, next) {
+    console.log(config.publicPath, req.body.path + req.body.name);
+    var xxx = (config.publicPath + req.body.path + req.body.name).replace(/\\/g, '/');
+    console.log('xxx', xxx);
     if (req.body.type === "add") {
-        fileManager.createDir(req.body.path + req.body.name).then((info) => {
+        fileManager.createDir(xxx).then((info) => {
             console.log('ok', info);
             res.json(info);
         }).catch((error) => {
@@ -89,7 +93,7 @@ router.post("/folder", function(req, res, next) {
         });
     }
     if (req.body.type === "remove") {
-        fileManager.removeDir(req.body.path)
+        fileManager.removeDir((config.publicPath + req.body.path).replace(/\\/g, '/'))
             .then((path) => {
                 res.json(path);
             })
@@ -133,6 +137,50 @@ router.post("/uploadfile", function(req, res, next) {
 })
 
 
+
+
+router.post("/upload-product-img", async function(req, res, next) {
+    // var mimeType = req.body.img.data.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
+    // console.log('mimeType', mimeType);
+    // console.log('upload-product-img', req.body.img);
+    if (req.body.type == "upload") {
+        var mimeType = req.body.img.data.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0].split('/');
+        var base64Data = req.body.img.data.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "");
+        var abc = Tool.randomStr(25);
+
+
+        try {
+            if (!fs.existsSync(req.body.path + req.body.productID)) {
+                fs.mkdirSync(req.body.path + req.body.productID);
+            }
+
+            var imageName = req.body.path + req.body.productID + '/' + abc + '.' + mimeType[1];
+            console.log('file name', imageName);
+            if (fs.existsSync(imageName)) {
+                //file exists
+                res.json({ status: false, mes: 'Ảnh đã tồn tại' });
+            } else {
+                // console.error('chuẩn bị ghi');
+                fs.writeFile(imageName, base64Data, 'base64', function(err) {
+                    console.error('lỗi khi ghi', err);
+                    res.json({ status: true, mes: "Upload thành công", imageName });
+                });
+            }
+        } catch (err) {
+            // console.log(err);
+            res.json({ status: false, mes: err });
+        }
+    }
+    if (req.body.type === 'remove') {
+        fileManager.removeFile(req.body.path)
+            .then((path) => {
+                res.json(path);
+            })
+            .catch((error) => {
+                res.json(error);
+            })
+    }
+})
 
 
 

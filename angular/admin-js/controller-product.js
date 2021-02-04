@@ -37,22 +37,28 @@ var shiftCategoryArr = function(arr, $scope, $compile) {
 }
 
 var initCategory = function($scope, $compile, $http) {
-    let params = {
-        method: 'GET',
-        url: '/admin/category/all-category?idCategoryType=5f166a011ab04a0e50f990b3',
-    }
-    submitBackend(params, $http, function(res) {
-        $scope.arrCategory = res;
-        console.log('all category', $scope.arrCategory);
-        var html = `
+    return new Promise((resolve) => {
+        let params = {
+            method: 'GET',
+            url: '/admin/category/all-category?idCategoryType=5f166a011ab04a0e50f990b3',
+        }
+        submitBackend(params, $http, function(res) {
+            $scope.arrCategory = res;
+            var xxx = [...res];
+            $scope.arrCategoryTemp = xxx;
+            // console.log('all category', $scope.arrCategory);
+            var html = `
             <div class="node" parent="null" >
                 <ul style="list-style: none;">
                 </ul>
             </div>
             `;
-        angular.element("#listCategory").append($compile(html)($scope));
-        shiftCategoryArr(res, $scope, $compile);
-    });
+            angular.element("#listCategory").append($compile(html)($scope));
+            resolve();
+            shiftCategoryArr(res, $scope, $compile);
+        });
+    })
+
 }
 
 var tonggleCategory = function() {
@@ -69,6 +75,7 @@ var loopSelectedCategory = function(idParent, arrCate) {
         jQuery('input[name="idCategory"]').val(xyz.name);
     }
 }
+
 
 jQuery.fn.clickOff = function(callback, selfDestroy) {
     var clicked = false;
@@ -123,17 +130,21 @@ var setAutoComplete = function(key, $scope, $compile, $http) {
 }
 
 var initProvince = function($scope, $compile, $http) {
-    let params = {
-        method: 'POST',
-        url: '/admin/sector/filter-all',
-        data: {
-            type: "1"
+    return new Promise((resolve) => {
+        let params = {
+            method: 'POST',
+            url: '/admin/sector/filter-all',
+            data: {
+                type: "1"
+            }
         }
-    }
-    submitBackend(params, $http, function(provinces) {
-        $scope.listProvinces = provinces;
-        // setAutoComplete('province', $scope, $compile, $http);
+        submitBackend(params, $http, function(provinces) {
+            $scope.listProvinces = provinces;
+            resolve()
+                // setAutoComplete('province', $scope, $compile, $http);
+        });
     });
+
 }
 
 var initDistrict = function($scope, $compile, $http) {
@@ -171,30 +182,38 @@ var initWard = function($scope, $compile, $http) {
 }
 
 var initDirecton = function($scope, $compile, $http) {
-    let params = {
-        method: 'POST',
-        url: '/admin/product-type/filter-all',
-        data: {
-            groupType: "huong-nha",
+    return new Promise((resolve) => {
+        let params = {
+            method: 'POST',
+            url: '/admin/product-type/filter-all',
+            data: {
+                groupType: "huong-nha",
+            }
         }
-    }
-    submitBackend(params, $http, function(directions) {
-        $scope.listDirections = directions;
+        submitBackend(params, $http, function(directions) {
+            $scope.listDirections = directions;
+            resolve();
+        });
     });
+
 }
 
 var initProductType = function($scope, $compile, $http) {
-    let params = {
-        method: 'POST',
-        url: '/admin/product-type/filter-all',
-        data: {
-            groupType: "productType",
+    return new Promise((resolve) => {
+        let params = {
+            method: 'POST',
+            url: '/admin/product-type/filter-all',
+            data: {
+                groupType: "productType",
+            }
         }
-    }
-    submitBackend(params, $http, function(productType) {
-        // console.log('productType', productType);
-        $scope.productTypeHot = productType.filter(type => type.value == 'hot')[0];
+        submitBackend(params, $http, function(productType) {
+            // console.log('productType', productType);
+            $scope.productTypeHot = productType.filter(type => type.value == 'hot')[0];
+            resolve();
+        });
     });
+
 }
 
 adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile, $routeParams, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
@@ -204,51 +223,94 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
     $scope.checkSelect = 0;
     $scope.listGallerySelect = [];
     $scope.listImgsPost = [];
-    if ($routeParams.action == "add") $rootScope.pageTitle = "Admin - Thêm mới sản phẩm";
-    if ($routeParams.action == "edit") {
-        $rootScope.pageTitle = "Admin - Sửa sản phẩm";
-        let params = {
-            method: 'GET',
-            url: '/admin/product/item/' + $routeParams.productId,
-        }
-        submitBackend(params, $http, function(res) {
-            console.log('get product item', res);
-            if (res.productType && res.productType.filter(type => type.value == 'hot').length > 0) {
-                $scope.checkHot = true;
-            }
-            if (res.visible == 1) $scope.checkVisible = true;
-            $scope.productItem = res;
-            if (res && res.productContent) {
-                setTimeout(() => {
-                    CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
-                    CKEDITOR.instances['editorContent'].setData(res.productContent.content);
-                }, 1000);
-                if(!$scope.productItem.productContent.seoSocial){
-                    $scope.productItem.productContent.seoSocial = {};
-                }
-            }
-            loopSelectedCategory(null, $scope.productItem.category);
-            if ($scope.productItem.province)
-                $scope['selectedprovince'] = $scope.productItem.province.title;
-            if ($scope.productItem.district)
-                $scope['selecteddistrict'] = $scope.productItem.district.title;
-            if ($scope.productItem.ward)
-                $scope['selectedward'] = $scope.productItem.ward.title;
-            if ($scope.productItem.direction)
-                $scope['selecteddirection'] = $scope.productItem.direction.name;
-            jQuery('#productCategory option').text(res.category.name);
-            jQuery('#productCategory option').val(res.category._id);
-        });
-    }
 
     if ($routeParams.action != null) {
-        $scope.productItem = {productContent:{seoSocial:{}}};
-        initCategory($scope, $compile, $http);
-        initProvince($scope, $compile, $http);
-        initDirecton($scope, $compile, $http);
-        initProductType($scope, $compile, $http);
+        $scope.productItem = { pictures: [], productContent: { seoSocial: {} } };
+        $scope.tempImage = [];
+        var promiseF = [];
+        promiseF.push(initCategory($scope, $compile, $http));
+        promiseF.push(initProvince($scope, $compile, $http));
+        promiseF.push(initDirecton($scope, $compile, $http));
+        promiseF.push(initProductType($scope, $compile, $http));
+        // IF this is ADD product
+        if ($routeParams.action == "add") {
+            // $scope.productItem = {};
+            var xxx = localStorage.getItem('addProductTemp');
+            if (xxx && xxx.length > 50) {
+                $scope.productItem = JSON.parse(xxx);
+                console.log('tìm nháp addProductTemp', $scope.productItem);
+            }
+            $rootScope.pageTitle = "Admin - Thêm mới sản phẩm";
+            var listenerTemProduct = setInterval(function() {
+                if ($scope.productItem.productContent.title && $scope.productItem.idCategory.length > 0) {
+                    var xxx = JSON.stringify($scope.productItem);
 
-        
+                    localStorage.setItem("addProductTemp", xxx);
+                    clearInterval(listenerTemProduct);
+                }
+            }, 60000);
+        }
+        // IF this is EDIT product
+        if ($routeParams.action == "edit") {
+            $rootScope.pageTitle = "Admin - Sửa sản phẩm";
+            let params = {
+                method: 'GET',
+                url: '/admin/product/item/' + $routeParams.productId,
+            }
+            submitBackend(params, $http, function(res) {
+                console.log('get product item', res);
+                if (res.productType && res.productType.filter(type => type.value == 'hot').length > 0) {
+                    $scope.checkHot = true;
+                }
+                if (res.visible == 1) $scope.checkVisible = true;
+                $scope.productItem = res;
+                if (res && res.productContent) {
+                    setTimeout(() => {
+                        CKEDITOR.instances['editorDescription'].setData(res.productContent.descriptions);
+                        CKEDITOR.instances['editorContent'].setData(res.productContent.content);
+                    }, 1000);
+                    if (!$scope.productItem.productContent.seoSocial) {
+                        $scope.productItem.productContent.seoSocial = {};
+                    }
+                }
+                loopSelectedCategory(null, $scope.productItem.category);
+                if ($scope.productItem.province)
+                    $scope['selectedprovince'] = $scope.productItem.province.title;
+                if ($scope.productItem.district)
+                    $scope['selecteddistrict'] = $scope.productItem.district.title;
+                if ($scope.productItem.ward)
+                    $scope['selectedward'] = $scope.productItem.ward.title;
+                if ($scope.productItem.direction)
+                    $scope['selecteddirection'] = $scope.productItem.direction.name;
+                jQuery('#productCategory option').text(res.category.name);
+                jQuery('#productCategory option').val(res.category._id);
+            });
+        }
+        Promise.all(promiseF).then(() => {
+
+            if ($routeParams.action == "add" && JSON.stringify($scope.productItem).length > 50) {
+                console.log($scope.productItem);
+                if ($scope.productItem.province)
+                    $scope['selectedprovince'] = $scope.productItem.province.title;
+                if ($scope.productItem.district)
+                    $scope['selecteddistrict'] = $scope.productItem.district.title;
+                if ($scope.productItem.ward)
+                    $scope['selectedward'] = $scope.productItem.ward.title;
+                if ($scope.productItem.direction)
+                    $scope['selecteddirection'] = $scope.productItem.direction.name;
+                // console.log('$scope.arrCategoryTemp', $scope.arrCategoryTemp);
+                var xyz = $scope.arrCategoryTemp.filter(element => element._id == $scope.productItem.idCategory[0])[0];
+                jQuery('input[name="idCategory"]').val(xyz.name);
+
+                $scope.$apply();
+            }
+        })
+
+        jQuery('#uploadProcess .btn-success').prop('disabled', true);
+
+
+
+
         // Click to Open modal get pics from gallery
         // Event submit selected images from gallery and add images to main add product content
         jQuery(document).on("click", "#formAddProduct button[data-target='#galleryModal']", function() {
@@ -265,7 +327,21 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
 
         // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
         // remove pic from products img
-        selectedImgRemoveListener(".postImgs .divImg .fa-close");
+        $scope.removeProductImage = function(e, type, index) {
+            console.log('type, index ', type, index);
+            // var img = jQuery(e.currentTarget).parent().parent().find('img').eq(0);
+            // console.log(img, $scope.productItem.pictures, $scope.productItem.pictures.indexOf(img.attr('src')));
+            // $scope.productItem.pictures.splice($scope.productItem.pictures.indexOf(img.attr('src')), 1);
+            if (type == "product")
+                $scope.productItem.pictures.splice(index, 1);
+            if (type == "social") {
+
+                $scope.productItem.productContent.seoSocial.pictures.splice(index, 1);
+            }
+
+        };
+        // selectedImgRemoveListener(".postImgs .divImg .fa-close");
+
 
         // Event click slect or diselect images from modal gallery list
         jQuery(document).on("click", "#galleryModal #listFiles li", function(e) {
@@ -278,8 +354,49 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                 jQuery(this).removeClass('selected');
             };
             // console.log($scope.listGallerySelect);
-        })
-            
+        });
+
+        $scope.prepareUpload = function(type) {
+            jQuery("#uploadBtn_" + type).val(null);
+            jQuery("#uploadBtn_" + type).click();
+
+        }
+
+        var DARK = async function(file, $scope, type) {
+            console.log($scope.productItem.pictures);
+            // var base64_data = await convertFiletoBase64(file); // {data(base64), name}
+            var objectUrl_Blob = URL.createObjectURL(file); // blob:....
+            // var yolo = await imgSrcToBase64(objectUrl); // base64
+            console.log('blob', objectUrl_Blob);
+            if (type == 'product')
+                $scope.productItem.pictures.push(objectUrl_Blob);
+            if (type == 'social') {
+                if (!$scope.productItem.productContent.seoSocial.pictures)
+                    $scope.productItem.productContent.seoSocial['pictures'] = [];
+                $scope.productItem.productContent.seoSocial.pictures.push(objectUrl_Blob);
+            }
+
+        }
+
+        $scope.selectedFilesUpLoad = function(element, type) {
+            console.log('chonj anh tai len loai ', type);
+            // console.log(jQuery(element).val(), element.files);
+            var promise = [];
+            if (!$scope.productItem.pictures) $scope.productItem['pictures'] = [];
+            for (var i = element.files.length - 1; i >= 0; i--) {
+                var file = element.files[i];
+                // $scope.productItem.pictures.push(dark);
+                // promise.push(doAddImageToElement(file, jQuery("#uploadProcess"), $scope, $compile));
+                promise.push(DARK(file, $scope, type));
+            }
+            Promise.all(promise).then((value) => {
+                // jQuery('#uploadProcess .btn-success').prop('disabled', false);
+                $scope.$apply();
+                // console.log($scope.productItem.pictures.filter(x => x.indexOf('blob') != -1));
+            });
+            // addImageToElement(Array.prototype.slice.call(element.files).splice(0, element.files.length), jQuery("#uploadProcess"), $scope, $compile);
+        }
+
 
         jQuery("select[name='folderName']").change(function() {
             var abc = jQuery(this).val();
@@ -304,6 +421,11 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             }
             tonggleCategory();
             console.log($scope.productItem);
+            if ($routeParams.action == "add" && $scope.productItem.productContent.title && $scope.productItem.idCategory.length > 0) {
+                var xxx = JSON.stringify($scope.productItem);
+                console.log('lưu lai addProductTemp', xxx);
+                localStorage.setItem("addProductTemp", xxx);
+            }
         }
 
         $scope.selectedProvince = function($event, item) {
@@ -338,12 +460,12 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             // console.log(content);
             var listStr = content.match(/src\=([^\s]*)\s/g);
             // console.log('list img', listStr);
-            listStr = jQuery.map( listStr, function( x ) {
-                return (x.substr(5,x.length - 7));
+            listStr = jQuery.map(listStr, function(x) {
+                return (x.substr(5, x.length - 7));
             });
             var listProcess = [];
             listStr.forEach(element => {
-                if(element.indexOf('http') != -1  && element.indexOf('batdongsantotnhat') == -1) {
+                if (element.indexOf('http') != -1 && element.indexOf('batdongsantotnhat') == -1) {
                     var html = `<div class="form-group"> 
                                 <span> ` + element + ` </span> <br/>
                                 <span> Đang xử lý ... </span>
@@ -355,17 +477,17 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                             url: '/admin/download-img',
                             data: {
                                 link: element,
-                                path : 'public/uploads/media/autodownload'
+                                path: 'public/uploads/media/autodownload'
                             }
                         }
                         submitBackend(params, $http, function(res) {
                             // console.log('auto download', element, res);
-                            resolve({old : element, new : res.replace('public', '')});
+                            resolve({ old: element, new: res.replace('public', '') });
                         });
                     })
                     listProcess.push(p);
                 }
-                
+
             });
             alert('đang xử lý');
             Promise.all(listProcess).then(results => {
@@ -377,8 +499,160 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             }).catch(err => {
                 console.log('promise all error', err);
             })
-            
 
+
+        }
+
+        // Process upload image, support for Process_Add_UploadImage() function
+        var do_Upload_Product_Image = function(proImage, index, productID, type) {
+            console.log('proImage', proImage);
+            return new Promise(async(resolve, reject) => {
+                if (proImage.indexOf('uploads/media') != -1) {
+                    console.log('deo lam');
+                    resolve({ index: index, replace: null });
+                } else {
+                    var yolo = '';
+                    console.log('lam thi lam')
+                    if (proImage.indexOf('blob') != -1) {
+                        yolo = await imgSrcToBase64(proImage);
+                    } else {
+                        yolo = proImage;
+                    }
+                    let params = {
+                        method: 'POST',
+                        url: '/admin/media/upload-product-img',
+                        data: {
+                            type: "upload",
+                            path: 'public/uploads/media/autoupload/',
+                            productID: productID,
+                            img: {
+                                data: yolo,
+                                name: ''
+                            }
+                        }
+                    }
+                    submitBackend(params, $http, function(res) {
+                        console.log(res);
+                        if (res.status) {
+                            resolve({ index: index, type: type, replace: res.imageName.replace('public', '') });
+                        } else {
+                            resolve({ index: index, type: type, replace: null });
+                        }
+                        // setAutoComplete('province', $scope, $compile, $http);
+                    });
+                }
+
+            });
+
+        }
+
+        // Upload all images if post ADD action
+        var Process_Add_UploadImage = function($scope, res) {
+            console.log('$scope.productItem.pictures truoc', $scope.productItem.pictures);
+            // $scope.productItem.productContent = res.productContent;
+            // console.log('$scope.productItem result', res);
+            var promiseD_U = [];
+            for (var i = $scope.productItem.pictures.length; i--; i >= 0) {
+                promiseD_U.push(do_Upload_Product_Image($scope.productItem.pictures[i], i, res.product._id, 'product'));
+            }
+            if ($scope.productItem.productContent.seoSocial && $scope.productItem.productContent.seoSocial.pictures) {
+                for (var i = $scope.productItem.productContent.seoSocial.pictures.length; i--; i >= 0) {
+                    promiseD_U.push(do_Upload_Product_Image($scope.productItem.productContent.seoSocial.pictures[i], i, res.product._id, 'social'));
+                }
+            }
+            Promise.all(promiseD_U).then((values) => {
+                console.log('values', values);
+                values.forEach(element => {
+                    if (element.replace != null) {
+                        if (element.type == 'product')
+                            $scope.productItem.pictures[element.index] = element.replace;
+                        if (element.type == 'social')
+                            $scope.productItem.productContent.seoSocial.pictures[element.index] = element.replace;
+                    }
+                });
+                console.log('$scope.productItem.pictures sau ', $scope.productItem.pictures);
+                console.log('$scope.productItem.productContent.seoSocial ', $scope.productItem.productContent.seoSocial);
+                if (!$scope.productItem.productContent.seoSocial.pictures || $scope.productItem.productContent.seoSocial.pictures.length == 0) {
+                    console.log('cap nhat lai anh cua productContent seo social');
+                    $scope.productItem.productContent.seoSocial.pictures = $scope.productItem.pictures;
+                }
+                // Update product picture array 
+                let params = {
+                    method: 'POST',
+                    url: '/admin/product/update-field',
+                    data: {
+                        id: res.product._id,
+                        update: {
+                            pictures: $scope.productItem.pictures
+                        },
+                        seoPic: $scope.productItem.productContent.seoSocial.pictures
+                    }
+                }
+                submitBackend(params, $http, function(resUpdate) {
+                    console.log(resUpdate);
+                    if (resUpdate.status) {
+                        console.log('ok hết, xóa temp');
+                        localStorage.setItem("addProductTemp", null);
+                        console.log(localStorage.getItem('addProductTemp'));
+                    }
+                    // setAutoComplete('province', $scope, $compile, $http);
+                });
+            })
+        }
+
+        $scope.submitProduct = function(e) {
+            $scope.productItem.idCategoryType = "5f166a011ab04a0e50f990b3";
+            $scope.productItem.productContent.descriptions = CKEDITOR.instances['editorDescription'].getData();
+            $scope.productItem.productContent.content = CKEDITOR.instances['editorContent'].getData();
+            var ImgElements = jQuery("#productImgs .divImg img");
+            var socialImgElements = jQuery("#seoSocialImgs .divImg img");
+            if ($scope.checkHot && $scope.checkHot == true) {
+                $scope.productItem.productType = [$scope.productTypeHot];
+            } else {
+                $scope.productItem.productType = [];
+            }
+            if ($scope.checkVisible && $scope.checkVisible == true) {
+                $scope.productItem.visible = 1;
+            } else {
+                $scope.productItem.visible = 0;
+            }
+
+            // $scope.productItem.pictures = [];
+            // for (var i = 0; i < ImgElements.length; i++) {
+            //     $scope.productItem.pictures.push(ImgElements.eq(i).attr('src'));
+            // }
+            // if (!$scope.productItem.productContent.seoSocial) $scope.productItem.productContent.seoSocial = {};
+            // $scope.productItem.productContent.seoSocial.pictures = [];
+            // for (var i = 0; i < socialImgElements.length; i++) {
+            //     $scope.productItem.productContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
+            // }
+            let params = {
+                method: 'POST',
+                url: '/admin/product/item',
+                data: {
+                    product: $scope.productItem
+                }
+            }
+            if ($routeParams.action == "edit") params.method = "PUT";
+            // console.log(params);
+            submitBackend(params, $http, function(res) {
+                alert(res.mes);
+                console.log(res);
+                if (res.status == true) {
+                    $scope.productItem._id = res.product._id;
+                    // do upload image
+                    if ($scope.productItem.pictures.length > 0 && $routeParams.action == "add") {
+                        Process_Add_UploadImage($scope, res);
+                    } else {
+                        alert('Không có ảnh để upload');
+                    }
+
+                    // window.location.reload();
+                }
+
+                // setAutoComplete('province', $scope, $compile, $http);
+            });
+            e.preventDefault();
         }
 
     } else {
@@ -444,7 +718,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
             // }),
             DTColumnBuilder.newColumn('province.title').withTitle('Tỉnh thành'),
             DTColumnBuilder.newColumn('district.title').withTitle('Quận huyện').renderWith(function(data, type, full) {
-                if(full.district && full.district.title) return full.district.title;
+                if (full.district && full.district.title) return full.district.title;
                 else return "";
             }),
             DTColumnBuilder.newColumn('datecreate').withTitle('Ngày đăng').renderWith(function(data, type, full) {
@@ -458,7 +732,9 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
         ];
 
         function render(data, type, full) {
-            return ' <button class="btn btn-primary" ng-click="goToEdit(\'' + full._id + '\');"> ' + "EDIT" + '</button>';
+            var html = ' <button class="btn btn-primary" ng-click="goToEdit(\'' + full._id + '\');"> ' + "EDIT" + '</button>' +
+                ' <button class="btn btn-danger" ng-click="deleteProduct(\'' + full._id + '\', \'' + full.title + '\');"> ' + "DELETE" + '</button>';
+            return html;
         }
     }
 
@@ -467,52 +743,25 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
         window.location = '/admin/product/' + id + '/edit';
     }
 
-    $scope.submitProduct = function(e) {
-        $scope.productItem.idCategoryType = "5f166a011ab04a0e50f990b3";
-        $scope.productItem.productContent.descriptions = CKEDITOR.instances['editorDescription'].getData();
-        $scope.productItem.productContent.content = CKEDITOR.instances['editorContent'].getData();
-        var ImgElements = jQuery("#productImgs .divImg img");
-        var socialImgElements = jQuery("#seoSocialImgs .divImg img");
-        if ($scope.checkHot && $scope.checkHot == true) {
-            $scope.productItem.productType = [$scope.productTypeHot];
-        } else {
-            $scope.productItem.productType = [];
-        }
-        if ($scope.checkVisible && $scope.checkVisible == true) {
-            $scope.productItem.visible = 1;
-        } else {
-            $scope.productItem.visible = 0;
-        }
 
-        $scope.productItem.pictures = [];
-        for (var i = 0; i < ImgElements.length; i++) {
-            $scope.productItem.pictures.push(ImgElements.eq(i).attr('src'));
-        }
-        if(!$scope.productItem.productContent.seoSocial) $scope.productItem.productContent.seoSocial = {};
-        $scope.productItem.productContent.seoSocial.pictures = [];
-        for (var i = 0; i < socialImgElements.length; i++) {
-            $scope.productItem.productContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
-        }
-        let params = {
-            method: 'POST',
-            url: '/admin/product/item',
-            data: {
-                product: $scope.productItem
+    $scope.deleteProduct = function(id, title) {
+        var r = confirm("Bạn có chắc muốn xóa : " + title);
+        if (r == true) {
+            let params = {
+                method: 'DELETE',
+                url: '/admin/product/item/' + id,
             }
+            submitBackend(params, $http, function(res) {
+                console.log(res);
+                alert(res.mes);
+                if (res.status == true) {
+                    // window.location.reload();
+                }
+            });
+        } else {
+
         }
-        if ($routeParams.action == "edit") params.method = "PUT";
-        // console.log(params);
-        submitBackend(params, $http, function(res) {
-            alert(res.mes);
-            if (res.status == true) {
-                window.location.reload();
-            }
-            console.log(res);
-            // setAutoComplete('province', $scope, $compile, $http);
-        });
-        e.preventDefault();
     }
-
 
 
 

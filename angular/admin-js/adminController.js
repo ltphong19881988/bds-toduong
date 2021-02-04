@@ -12,11 +12,12 @@ var submitBackend = function(params, $http, callback) {
 }
 
 var doAddImageToElement = function(file, contentDiv, $scope, $compile) {
+    console.log('doAddImageToElement', contentDiv);
     return new Promise((resolve) => {
         var objectUrl = URL.createObjectURL(file);
         var html = `<li>
                             <img name="` + file.name + `" src="` + objectUrl + `" />
-                            <button class="btn btn-danger" ng-click="removeImageUpload($event)">Xóa bỏ</button>
+                            <button class="btn btn-danger pull-right" ng-click="removeImageUpload($event)">Xóa bỏ</button>
                             <button class="btn btn-info pull-right" ng-click="cropImageBeforeUpload($event, '` + objectUrl + `')">Cắt hình</button>
                         </li>`;
         angular.element(contentDiv.find("ul")).append($compile(html)($scope));
