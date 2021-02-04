@@ -1,6 +1,7 @@
 const ip = require("ip").address();
 
 var publicPath = __dirname;
+console.log('publicPath', publicPath);
 var databaseCF = {
     connectStr: 'mongodb://149.28.152.179:27118/bds-toduong',
     options: {
@@ -34,7 +35,7 @@ if (ip == '149.28.152.179') {
             pass: 'toduong!@#@123'
         }
     }
-    publicPath = '/home/bds-toduong/';
+    publicPath = '/home/bds-toduong';
 }
 
 

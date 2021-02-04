@@ -639,7 +639,8 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                 alert(res.mes);
                 console.log(res);
                 if (res.status == true) {
-                    $scope.productItem._id = res.product._id;
+                    if($routeParams.action == "add")
+                        $scope.productItem._id = res.product._id;
                     // do upload image
                     if ($scope.productItem.pictures.length > 0 && $routeParams.action == "add") {
                         Process_Add_UploadImage($scope, res);

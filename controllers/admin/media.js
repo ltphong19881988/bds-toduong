@@ -39,12 +39,15 @@ var getCookies = function(cookie, cname) {
 
 
 router.post("/list", function(req, res, next) {
+    // console.log(req.body);
     var dauxanh = config.publicPath + req.body.value;
     dauxanh = dauxanh.replace(/\\/g, '/');
+    // console.log('dauxanh', dauxanh);
     fileManager.list(dauxanh).then((info) => {
         var kq = { dirs: [], files: [] };
         info.dirs.forEach(element => {
             var xxx = element.replace(/\\/g, '/').replace(dauxanh, '');
+            // console.log('xxx', xxx);
             kq.dirs.push(xxx);
         });
         info.files.forEach(element => {

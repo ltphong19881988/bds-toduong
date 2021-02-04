@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { execSync } = require("child_process");
 const os = require("os"); // Comes with node.js
-console.log(os.type());
+// console.log(os.type());
 var fs = require('fs');
 // var request = require('request');
 // var cheerio = require('cheerio');
@@ -160,7 +160,7 @@ router.delete("/item/:id", async(req, res, next) => {
         // delete folder image 
         var cm = "cd " + pathDelete + " && rmdir /Q /S " + req.params.id.toString();
         if (os.type().toLowerCase().indexOf("linux") != -1) {
-
+            cm = "cd " + pathDelete + " && rm -rf " + req.params.id.toString();
         }
         const stdout = execSync(cm);
 
