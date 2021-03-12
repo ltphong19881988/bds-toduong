@@ -1,7 +1,7 @@
 var express = require('express');
 var async = require('async');
 var fs = require('fs');
-var request = require('request');
+var os = require('os');
 // var blobUtil = require('blob-util');
 // var querystring = require('querystring');
 var moment = require('moment');
@@ -63,21 +63,25 @@ router.post("/list", function(req, res, next) {
 
 router.post("/list-deep", function(req, res, next) {
     var dauxanh = config.publicPath + req.body.value;
-    // console.log(dauxanh);
+    dauxanh = dauxanh.replace(/\\/g, '/');
+    // if (os.type().toLowerCase().indexOf("linux") != -1) {
+    //         cm = "cd " + pathDelete + " && rm -rf " + req.params.id.toString();
+    //     }
     fileManager.listDeep(dauxanh).then((info) => {
         var kq = { dirs: [], files: [] };
         info.dirs.forEach(element => {
-            console.log('dir', element);
             kq.dirs.push(element.replace(/\\/g, '/').replace(dauxanh, ''));
         });
         info.files.forEach(element => {
-
             var abc = element.replace(/\\/g, '/').replace(dauxanh, '');
-            if (abc.indexOf('/') < 0)
+            if (abc.indexOf('/') < 0) {
+                console.log(abc);
                 kq.files.push(abc);
+            }
         });
         res.json(kq);
     }).catch((error) => {
+        console.log(error);
         res.json({ dirs: [], files: [] });
     });
 })
@@ -185,6 +189,48 @@ router.post("/upload-product-img", async function(req, res, next) {
     }
 })
 
+
+router.post("/upload-post-img", async function(req, res, next) {
+    // var mimeType = req.body.img.data.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0];
+    // console.log('mimeType', mimeType);
+    // console.log('upload-product-img', req.body.img);
+    if (req.body.type == "upload") {
+        var mimeType = req.body.img.data.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0].split('/');
+        var base64Data = req.body.img.data.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "");
+        var abc = Tool.randomStr(25);
+
+        try {
+            if (!fs.existsSync(req.body.path + req.body.postID)) {
+                fs.mkdirSync(req.body.path + req.body.postID);
+            }
+
+            var imageName = req.body.path + req.body.postID + '/' + abc + '.' + mimeType[1];
+            console.log('file name', imageName);
+            if (fs.existsSync(imageName)) {
+                //file exists
+                res.json({ status: false, mes: 'Ảnh đã tồn tại' });
+            } else {
+                // console.error('chuẩn bị ghi');
+                fs.writeFile(imageName, base64Data, 'base64', function(err) {
+                    console.error('lỗi khi ghi', err);
+                    res.json({ status: true, mes: "Upload thành công", imageName });
+                });
+            }
+        } catch (err) {
+            // console.log(err);
+            res.json({ status: false, mes: err });
+        }
+    }
+    if (req.body.type === 'remove') {
+        fileManager.removeFile(req.body.path)
+            .then((path) => {
+                res.json(path);
+            })
+            .catch((error) => {
+                res.json(error);
+            })
+    }
+})
 
 
 router.get('/*', function(req, res, next) {

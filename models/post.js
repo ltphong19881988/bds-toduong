@@ -21,7 +21,7 @@ var Post = new Schema({
     pictures: [],
     tags: [],
     visible: { type: Number, default: 1 }, // 1 is visible
-    position : String,
+    position: String,
 });
 var Post = mongoose.model('Post', Post);
 module.exports = Post;
@@ -61,7 +61,7 @@ module.exports.AddPost = async function(post, post_content) {
 
         await session.commitTransaction();
         session.endSession();
-        return { status: true, mes: 'Thêm bài viết thành công' };
+        return { status: true, mes: 'Thêm bài viết thành công', post: savedDoc, postContent: saveContent };
     } catch (error) {
         console.log(error);
         await session.abortTransaction();

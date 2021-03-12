@@ -124,8 +124,8 @@ var setAutoComplete = function(key, $scope, $compile, $http) {
 
 adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $routeParams, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
     // console.log($routeParams);
-    $scope.rootFolderPath = 'public/uploads/media/';
-    $scope.acviteFolderPath = 'public/uploads/media/';
+    $scope.rootFolderPath = '/public/uploads/media/';
+    $scope.acviteFolderPath = '/public/uploads/media/';
     $scope.checkSelect = 0;
     $scope.listGallerySelect = [];
     $scope.listImgsPost = [];
@@ -145,7 +145,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                     CKEDITOR.instances['editorContent'].setData(res.postContent.content);
                     CKEDITOR.instances['editorDescription'].setData(res.postContent.descriptions);
                 }, 1000);
-                if(!$scope.postItem.postContent.seoSocial){
+                if (!$scope.postItem.postContent.seoSocial) {
                     $scope.postItem.postContent.seoSocial = {};
                 }
             }
@@ -156,12 +156,22 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
     }
 
     if ($routeParams.action != null) {
-        $scope.postItem = {postContent:{seoSocial:{}}};
+        $scope.postItem = { pictures: [], postContent: { seoSocial: {} } };
+        $scope.tempImage = [];
         initCategoryNews($scope, $compile, $http)
 
         // uploadListener(jQuery("#prepareBtn"), jQuery("#uploadProcess"), $compile, $scope, $http);
         // remove pic from post img
-        selectedImgRemoveListener(".postImgs .divImg .fa-close");
+        $scope.removePostImage = function(e, type, index) {
+            console.log('type, index ', type, index);
+            if (type == "post")
+                $scope.postItem.pictures.splice(index, 1);
+            if (type == "psocial") {
+                $scope.postItem.postContent.seoSocial.pictures.splice(index, 1);
+            }
+
+        };
+        // selectedImgRemoveListener(".postImgs .divImg .fa-close");
 
         $scope.addImgsToPostNews = function() {
             jQuery(e.currentTarget).prop('disabled', true);
@@ -175,7 +185,43 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             $scope['elementAddImgs'] = jQuery(this).data('content');
             jQuery("#galleryModal .modal-footer .btn-primary").prop('disabled', false);
             selectChangeListener($scope, $http, $compile);
-        })
+        });
+
+        $scope.prepareUploadPostImg = function(type) {
+            jQuery("#uploadBtn_" + type).val(null);
+            jQuery("#uploadBtn_" + type).click();
+        }
+
+        var DARK_Post = async function(file, $scope, type) {
+            console.log($scope.postItem.pictures);
+            // var base64_data = await convertFiletoBase64(file); // {data(base64), name}
+            var objectUrl_Blob = URL.createObjectURL(file); // blob:....
+            // var yolo = await imgSrcToBase64(objectUrl); // base64
+            console.log('blob', objectUrl_Blob);
+            if (type == 'post')
+                $scope.postItem.pictures.push(objectUrl_Blob);
+            if (type == 'psocial') {
+                if (!$scope.postItem.postContent.seoSocial.pictures)
+                    $scope.postItem.postContent.seoSocial['pictures'] = [];
+                $scope.postItem.postContent.seoSocial.pictures.push(objectUrl_Blob);
+            }
+        }
+
+        $scope.selectedFilesUpLoad_Post = function(element, type) {
+            console.log('chonj anh tai len loai ', type);
+            // console.log(jQuery(element).val(), element.files);
+            var promise = [];
+            if (!$scope.postItem.pictures) $postItem.productItem['pictures'] = [];
+            for (var i = element.files.length - 1; i >= 0; i--) {
+                var file = element.files[i];
+                promise.push(DARK_Post(file, $scope, type));
+            }
+            Promise.all(promise).then((value) => {
+                // jQuery('#uploadProcess .btn-success').prop('disabled', false);
+                $scope.$apply();
+                // console.log($scope.productItem.pictures.filter(x => x.indexOf('blob') != -1));
+            });
+        }
 
         // Event click slect or diselect images from modal gallery list
         jQuery(document).on("click", "#galleryModal #listFiles li", function(e) {
@@ -189,7 +235,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             };
             // console.log($scope.listGallerySelect);
         })
-            
+
 
         jQuery("select[name='folderName']").change(function() {
             var abc = jQuery(this).val();
@@ -223,12 +269,12 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             // console.log(content);
             var listStr = content.match(/src\=([^\s]*)\s/g);
             // console.log('list img', listStr);
-            listStr = jQuery.map( listStr, function( x ) {
-                return (x.substr(5,x.length - 7));
+            listStr = jQuery.map(listStr, function(x) {
+                return (x.substr(5, x.length - 7));
             });
             var listProcess = [];
             listStr.forEach(element => {
-                if(element.indexOf('http') != -1  && element.indexOf('batdongsantotnhat') == -1) {
+                if (element.indexOf('http') != -1 && element.indexOf('batdongsantotnhat') == -1) {
                     var html = `<div class="form-group"> 
                                 <span> ` + element + ` </span> <br/>
                                 <span> Đang xử lý ... </span>
@@ -240,17 +286,17 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
                             url: '/admin/download-img',
                             data: {
                                 link: element,
-                                path : 'public/uploads/media/autodownload'
+                                path: 'public/uploads/media/autodownload'
                             }
                         }
                         submitBackend(params, $http, function(res) {
                             // console.log('auto download', element, res);
-                            resolve({old : element, new : res.replace('public', '')});
+                            resolve({ old: element, new: res.replace('public', '') });
                         });
                     })
                     listProcess.push(p);
                 }
-                
+
             });
             alert('đang xử lý');
             Promise.all(listProcess).then(results => {
@@ -262,7 +308,7 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             }).catch(err => {
                 console.log('promise all error', err);
             })
-            
+
 
         }
 
@@ -328,13 +374,110 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         ];
 
         function render(data, type, full) {
-            return ' <button class="btn btn-primary" ng-click="goToEdit(\'' + full._id + '\');"> ' + "EDIT" + '</button>';
+            var html = ' <button class="btn btn-primary" ng-click="goToEdit(\'' + full._id + '\');"> ' + "EDIT" + '</button> ';
+            html += ' <button class="btn btn-danger" ng-click="deletePost(\'' + full._id + '\', \'' + '\');"> ' + "DELETE" + '</button>';
+            return html;
         }
     }
 
     $scope.goToEdit = function(id) {
         // console.log(id);
         window.location = '/admin/post/' + id + '/edit';
+    }
+
+    // Process upload image, support for Process_Add_UploadImage() function
+    var do_Upload_Post_Image = function(postImage, index, postID, type) {
+        console.log('postImage', postImage);
+        return new Promise(async(resolve, reject) => {
+            if (postImage.indexOf('uploads/media') != -1) {
+                console.log('deo lam');
+                resolve({ index: index, replace: null });
+            } else {
+                var yolo = '';
+                console.log('lam thi lam')
+                if (postImage.indexOf('blob') != -1) {
+                    yolo = await imgSrcToBase64(postImage);
+                } else {
+                    yolo = postImage;
+                }
+                let params = {
+                    method: 'POST',
+                    url: '/admin/media/upload-post-img',
+                    data: {
+                        type: "upload",
+                        path: 'public/uploads/media/autoupload-post/',
+                        postID: postID,
+                        img: {
+                            data: yolo,
+                            name: ''
+                        }
+                    }
+                }
+                submitBackend(params, $http, function(res) {
+                    console.log(res);
+                    if (res.status) {
+                        resolve({ index: index, type: type, replace: res.imageName.replace('public', '') });
+                    } else {
+                        resolve({ index: index, type: type, replace: null });
+                    }
+                    // setAutoComplete('province', $scope, $compile, $http);
+                });
+            }
+
+        });
+
+    }
+
+    // Upload all images if post ADD action
+    var Process_Add_Post_UploadImage = function($scope, res) {
+        console.log('$scope.productItem.pictures truoc', $scope.postItem.pictures);
+        // $scope.postItem.postContent = res.postContent;
+        // console.log('$scope.productItem result', res);
+        var promiseD_U = [];
+        for (var i = $scope.postItem.pictures.length; i--; i >= 0) {
+            promiseD_U.push(do_Upload_Post_Image($scope.postItem.pictures[i], i, res.post._id, 'post'));
+        }
+        if ($scope.postItem.postContent.seoSocial && $scope.postItem.postContent.seoSocial.pictures) {
+            for (var i = $scope.postItem.postContent.seoSocial.pictures.length; i--; i >= 0) {
+                promiseD_U.push(do_Upload_Post_Image($scope.postItem.postContent.seoSocial.pictures[i], i, res.post._id, 'psocial'));
+            }
+        }
+        Promise.all(promiseD_U).then((values) => {
+            console.log('values', values);
+            values.forEach(element => {
+                if (element.replace != null) {
+                    if (element.type == 'post')
+                        $scope.postItem.pictures[element.index] = element.replace;
+                    if (element.type == 'psocial')
+                        $scope.postItem.postContent.seoSocial.pictures[element.index] = element.replace;
+                }
+            });
+            console.log('$scope.postItem.pictures sau ', $scope.postItem.pictures);
+            console.log('$scope.postItem.postContent.seoSocial ', $scope.postItem.postContent.seoSocial);
+            if (!$scope.postItem.postContent.seoSocial.pictures || $scope.postItem.postContent.seoSocial.pictures.length == 0) {
+                console.log('cap nhat lai anh cua postContent seo social');
+                $scope.postItem.postContent.seoSocial.pictures = $scope.postItem.pictures;
+            }
+            // Update product picture array 
+            let params = {
+                method: 'POST',
+                url: '/admin/post/update-field',
+                data: {
+                    id: res.post._id,
+                    update: {
+                        pictures: $scope.postItem.pictures
+                    },
+                    seoPic: $scope.postItem.postContent.seoSocial.pictures
+                }
+            }
+            submitBackend(params, $http, function(resUpdate) {
+                console.log(resUpdate);
+                if (resUpdate.status) {
+                    console.log('ok hết, xóa temp');
+                }
+                // setAutoComplete('province', $scope, $compile, $http);
+            });
+        })
     }
 
     $scope.submitPost = function(e) {
@@ -349,15 +492,15 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
             $scope.postItem.visible = 0;
         }
 
-        $scope.postItem.pictures = [];
-        for (var i = 0; i < ImgElements.length; i++) {
-            $scope.postItem.pictures.push(ImgElements.eq(i).attr('src'));
-        }
-        if(!$scope.postItem.postContent.seoSocial) $scope.postItem.postContent.seoSocial = {};
-        $scope.postItem.postContent.seoSocial.pictures = [];
-        for (var i = 0; i < socialImgElements.length; i++) {
-            $scope.postItem.postContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
-        }
+        // $scope.postItem.pictures = [];
+        // for (var i = 0; i < ImgElements.length; i++) {
+        //     $scope.postItem.pictures.push(ImgElements.eq(i).attr('src'));
+        // }
+        // if (!$scope.postItem.postContent.seoSocial) $scope.postItem.postContent.seoSocial = {};
+        // $scope.postItem.postContent.seoSocial.pictures = [];
+        // for (var i = 0; i < socialImgElements.length; i++) {
+        //     $scope.postItem.postContent.seoSocial.pictures.push(socialImgElements.eq(i).attr('src'));
+        // }
         let params = {
             method: 'POST',
             url: '/admin/post/item',
@@ -369,12 +512,41 @@ adminApp.controller("postCtrl", function($rootScope, $scope, $http, $compile, $r
         console.log(params);
         submitBackend(params, $http, function(res) {
             alert(res.mes);
-            if (res.status == true) {
-                window.location.reload();
-            }
             console.log(res);
+            if (res.status == true) {
+                if ($routeParams.action == "add")
+                    $scope.postItem._id = res.post._id;
+                // do upload image
+                if ($scope.postItem.pictures.length > 0 && $routeParams.action == "add") {
+                    Process_Add_Post_UploadImage($scope, res);
+                } else {
+                    alert('Không có ảnh để upload');
+                }
+
+                // window.location.reload();
+            }
+
         });
         e.preventDefault();
+    }
+
+    $scope.deletePost = function(id, title) {
+        var r = confirm("Bạn có chắc muốn xóa : " + title);
+        if (r == true) {
+            let params = {
+                method: 'DELETE',
+                url: '/admin/post/item/' + id,
+            }
+            submitBackend(params, $http, function(res) {
+                console.log(res);
+                alert(res.mes);
+                if (res.status == true) {
+                    // window.location.reload();
+                }
+            });
+        } else {
+
+        }
     }
 
 });

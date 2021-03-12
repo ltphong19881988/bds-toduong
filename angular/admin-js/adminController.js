@@ -133,7 +133,7 @@ var appendFilesToView = function(files, elementNode, $compile, $scope) {
     files.forEach(element => {
         var abc = element.split('\\');
         var html = `<li ng-click="" >
-                <img style="max-height:90px;" src="` + ($scope.acviteFolderPath + element).replace(/\\/g, '/').replace('public', '') + `" />
+                <img style="max-height:90px;" src="` + ($scope.acviteFolderPath + element).replace(/\\/g, '/').replace('/public', '') + `" />
                 <p>` + abc[abc.length - 1] + `</p>
         </li>`;
         angular.element(elementNode).append($compile(html)($scope));

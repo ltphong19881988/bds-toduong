@@ -92,7 +92,7 @@
                                 <div class="col-12 col-md-9">
                                     <input class="form-control" name="idCategory" ng-click='showHideCategory()' />
                                     <div id='listCategory' status="0" style="display:none;">
-    
+
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-5 form-group">
                             <div class="col-md-12"> <label class=" form-control-label"> (OG type) : </label></div>
                             <div class="col-md-12">
@@ -137,6 +137,8 @@
                             <div class="col-md-12"> <label class=" form-control-label">(OG image) : </label></div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-primary selectImage" data-toggle="modal" data-content="#seoSocialImgs" data-target="#galleryModal">Chọn từ thư viện</button>
+                                <button type="button" class="btn btn-primary btnUpload" ng-click="prepareUploadPostImg('psocial')">Tải ảnh lên</button>
+                                <input id="uploadBtn_psocial" type="file" hidden multiple onchange="angular.element(this).scope().selectedFilesUpLoad(this, 'psocial') " />
                                 <div id="seoSocialImgs" class="postImgs">
                                     <div ng-if="postItem.postContent.seoSocial.pictures" ng-repeat="src in postItem.postContent.seoSocial.pictures track by $index" class="divImg">
                                         <img src="{{src}}">
@@ -150,10 +152,15 @@
                             <div class="col col-md-3"><label class=" form-control-label">Hình ảnh : </label></div>
                             <div class="col-12 col-md-9">
                                 <button type="button" class="btn btn-primary selectImage" data-toggle="modal" data-content="#postImgs" data-target="#galleryModal">Chọn từ thư viện</button>
+                                <button type="button" class="btn btn-primary btnUpload" ng-click="prepareUploadPostImg('post')">Tải ảnh lên</button>
+                                <input id="uploadBtn_post" type="file" hidden multiple onchange="angular.element(this).scope().selectedFilesUpLoad_Post(this, 'post') " />
                                 <div id="postImgs" class="postImgs">
                                     <div ng-if="postItem.pictures" ng-repeat="src in postItem.pictures track by $index" class="divImg">
                                         <img src="{{src}}">
-                                        <i class="fa fa-close"></i>
+                                        <div class="img-btn-control">
+                                            <i class="fa fa-scissors" ng-click="cropPostImage($event)" aria-hidden="true"></i>
+                                            <i class="fa fa-close" ng-click="removePostImage($event, 'post', $index)"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

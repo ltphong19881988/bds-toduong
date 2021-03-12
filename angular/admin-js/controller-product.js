@@ -218,8 +218,8 @@ var initProductType = function($scope, $compile, $http) {
 
 adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile, $routeParams, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
     // console.log($routeParams);
-    $scope.rootFolderPath = 'public/uploads/media/';
-    $scope.acviteFolderPath = 'public/uploads/media/';
+    $scope.rootFolderPath = '/public/uploads/media/';
+    $scope.acviteFolderPath = '/public/uploads/media/';
     $scope.checkSelect = 0;
     $scope.listGallerySelect = [];
     $scope.listImgsPost = [];
@@ -639,7 +639,7 @@ adminApp.controller("productCtrl", function($rootScope, $scope, $http, $compile,
                 alert(res.mes);
                 console.log(res);
                 if (res.status == true) {
-                    if($routeParams.action == "add")
+                    if ($routeParams.action == "add")
                         $scope.productItem._id = res.product._id;
                     // do upload image
                     if ($scope.productItem.pictures.length > 0 && $routeParams.action == "add") {
