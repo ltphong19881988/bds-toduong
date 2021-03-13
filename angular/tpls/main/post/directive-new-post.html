@@ -1,0 +1,37 @@
+<section id="{{key}}" class="post">
+    <div class="container">
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2> {{title}} <a class="view-more" href="{{linkViewmore}}">Xem thêm</a> </h2>
+        </div>
+
+        <div style="clear: both;"></div>
+
+        <div class="row ">
+            <div class=" col-lg-6 col-md-12 " ng-repeat="item in newPosts">
+                <div class="post-item">
+                    <div class="pi-title">
+                        <a href="/news/{{item.postContent.oneLvlUrl}}-{{item.nameKey}}" title="{{item.postContent.title}}" style="text-rendering: optimizelegibility;">
+                            {{item.postContent.title}}
+                        </a>
+                    </div>
+                    <div class="pi-img">
+                        <img ng-if="item.pictures.length > 0" ng-src="{{item.pictures[0]}}" alt="{{item.postContent.title}}" orientimgload />
+                        <img ng-if="item.pictures.length == 0" ng-src="/front-page/assets/img/logo_fb.png" alt="{{item.postContent.title}}" orientimgload />
+                    </div>
+                    <div class="pi-content">
+
+                        <div class="datetime" style="font-size: 13px;">
+                            Ngày đăng : {{item.datePost | date:'dd/MM/yyyy'}}
+                        </div>
+                        <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') != 3 && item.postContent.descriptions != '' " ng-bind-html="item.postContent.descriptions | removeHTMLTags | subString: postCateContentNumer | trust">
+                        </div>
+                        <div class="des" ng-if="item.postContent.descriptions.indexOf('Mô tả ngắn') == 3 || item.postContent.descriptions == '' " ng-bind-html="item.postContent.content | removeHTMLTags | subString: postCateContentNumer | trust ">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -52,6 +52,7 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
         $scope.sliders = res.listSliders;
         $scope.listHotProjects = res.listHotProjects;
         $rootScope.newProducts = res.newProducts;
+        $rootScope.newPosts = res.newPosts;
         console.log(res);
 
         setTimeout(() => {
@@ -129,6 +130,36 @@ app.controller("dashboardCtrl", function($rootScope, $scope, $http, browser) {
             $scope.linkViewmore = '/san-pham-moi';
             $rootScope.$watch('newProducts', function() {
                 $scope.newProducts = $rootScope.newProducts;
+            }, true);
+            // let filter_ban = {
+            //     idCategoryType: "5f166a011ab04a0e50f990b3",
+            //     skip: 0,
+            //     limit: 6
+            // };
+            // GetHotProduct(filter_ban, $http, function(res) {
+            //     $scope.newProducts = res;
+            // })
+        },
+
+    }
+}).directive('newPost', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            title: '@',
+            key: "@",
+        },
+        templateUrl: '/tpls/main/post/directive-new-post.html',
+        controller: function($scope, $window, $compile, $http, $rootScope) {
+            $scope.linkViewmore = '/news/tin-tuc';
+            if ($window.innerWidth >= 992)
+                $scope.postCateContentNumer = 260;
+            if ($window.innerWidth < 992)
+                $scope.postCateContentNumer = 250;
+            if ($window.innerWidth <= 450)
+                $scope.postCateContentNumer = 120;
+            $rootScope.$watch('newPosts', function() {
+                $scope.newPosts = $rootScope.newPosts;
             }, true);
             // let filter_ban = {
             //     idCategoryType: "5f166a011ab04a0e50f990b3",
