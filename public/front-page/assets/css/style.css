@@ -55,9 +55,11 @@ h6 {
     z-index: 12;
 }
 
+
 /* .ads-left {
     left: 100px;
 } */
+
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -1768,6 +1770,39 @@ section {
     margin-left: -5px;
 }
 
+.giuseart-pc-contact-bar {
+    right: 20px;
+    bottom: 20px;
+    position: fixed;
+    z-index: 998;
+    margin-bottom: 0;
+}
+
+.giuseart-pc-contact-bar li {
+    width: 44px;
+    height: 46px;
+    overflow: hidden;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.giuseart-pc-contact-bar li.facebook {
+    margin-bottom: 8px;
+    background: url(https://giuseart.com/wp-content/uploads/2020/03/fb.png);
+    background-repeat: no-repeat;
+}
+
+.giuseart-pc-contact-bar li.zalo {
+    background: url(https://giuseart.com/wp-content/uploads/2020/03/zl.png);
+    background-repeat: no-repeat;
+}
+
+.giuseart-pc-contact-bar li a {
+    display: block;
+    width: 44px;
+    height: 44px;
+}
+
 a.footer-logo img {
     max-width: 70%;
 }
@@ -1927,7 +1962,8 @@ a.footer-logo img {
     font-size: 14px;
 }
 
-.post_detail img, #product_detail img {
+.post_detail img,
+#product_detail img {
     max-width: 100%;
 }
 
@@ -2166,10 +2202,10 @@ a.footer-logo img {
     }
     #header .search_btn {
         top: 6px;
-        left:0px;
-        right : auto;
+        left: 0px;
+        right: auto;
     }
-    #header .search_btn span{
+    #header .search_btn span {
         font-size: 14px;
     }
     .mobile-nav-toggle {
@@ -2178,7 +2214,8 @@ a.footer-logo img {
     .breadcrumbs h1 {
         font-size: 17px;
     }
-    .post_detail img, #product_detail img {
+    .post_detail img,
+    #product_detail img {
         max-width: 100%;
     }
     .post-item {
