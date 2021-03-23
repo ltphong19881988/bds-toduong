@@ -16,53 +16,41 @@
 
 <hot-product title="Nhà đất bán hot" key="ban_hot"></hot-product>
 
-<hot-product title="Cho thuê hot" key="thue_hot"></hot-product>
+<!-- <hot-product title="Cho thuê hot" key="thue_hot"></hot-product> -->
 
 
 <!-- ======= Portfolio Section ======= -->
 <new-product title="Sản phẩm mới" key="new_product"></new-product>
 <!-- End Portfolio Section -->
 
-<!-- ======= Team Section ======= -->
-<section id="hotProject" class="team" style="padding-bottom: 15px;">
-    <div class="container">
-
-        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-            <h2>Dự án hot <a class="view-more" href="/du-an">Xem thêm</a> </h2>
-            <!-- <p>Thông tin sẽ sớm được cập nhật</p> -->
-        </div>
-
-        <div class="row">
-            <div ng-if="!listHotProjects">Đang tải ...</div>
-            <div ng-if="listHotProjects" ng-repeat="item in listHotProjects" class="col-lg-4 col-md-6">
-                <div class="member" data-aos="fade-up">
-                    <div class="pic">
-                        <img ng-if="item.pictures.length > 0" ng-src="{{item.pictures[0]}}" class="img-fluid" alt="{{item.projectContent.title}}" orientimgload />
-                        <img ng-if="item.pictures.length == 0" ng-src="/front-page/assets/img/logo_fb.png" alt="{{item.projectContent.title}}" orientimgload />
-                    </div>
-                    <div class="member-info">
-                        <a href="/du-an/{{item.projectContent.oneLvlUrl}}-{{item.nameKey}}">
-                            <h4><span ng-bind="item.projectContent.title"></span></h4>
-                            <span>Giá thấp nhất từ : {{item.normalPrice | productPrice}}</span>
-                        </a>
-
-                        <!-- <span>Chief Executive Officer</span> -->
-                        <div class="social">
-                            <a href=""><i class="icofont-twitter"></i></a>
-                            <a href=""><i class="icofont-facebook"></i></a>
-                            <a href=""><i class="icofont-instagram"></i></a>
-                            <a href=""><i class="icofont-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+<div class="container" id="tim_bds_theo_quan">
+    <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Tìm bất động sản theo quận </h2>
     </div>
-</section>
-<!-- End Team Section -->
+    <div style="clear: both;"></div>
+    <ul>
+        <li ng-repeat="dis in menuDistrict" ng-if="dis.ID != 657">
+            <a href="/nha-dat-ban-{{dis.link}}">{{dis.title}}</a>
+        </li>
+    </ul>
+</div>
 
+<div class="container" id="tim_bds_theo_quan">
+    <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h2> Bất động sản tỉnh khác </h2>
+    </div>
+    <div style="clear: both;"></div>
+    <ul>
+        <li >
+            <a href="/nha-dat-ban-binh-duong">Bình Dương</a>
+        </li>
+        <li >
+            <a href="/nha-dat-ban-long-an">Long An</a>
+        </li>
+    </ul>
+</div>
+
+<new-post title="Tin tức mới" key="new_post"></new-post>
 
 <script>
     // Testimonials carousel(uses the Owl Carousel library)

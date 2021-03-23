@@ -6,13 +6,11 @@
         </div>
         <div style="clear: both;"></div>
         <div class="owl-carousel testimonials-carousel">
-
             <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100" ng-repeat="item in productHot">
                 <div class="nd">
                     <!-- <h3>
                         <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><span ng-bind="item.productContent.title"></span></a>
                     </h3> -->
-
                     <p>
                         <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                         <a href="/{{item.productContent.oneLvlUrl}}-{{item.nameKey}}"><span ng-bind="item.productContent.title | titleFilter"></span></a>

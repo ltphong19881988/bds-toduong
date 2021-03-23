@@ -1043,6 +1043,26 @@ section {
     bottom: 0;
 }
 
+#tim_bds_theo_quan {
+
+}
+
+#tim_bds_theo_quan ul {
+    padding-left: 0px;
+}
+
+#tim_bds_theo_quan ul li {
+    width: 33%;
+    display: inline-flex;
+    list-style: square inside !important;
+}
+
+#tim_bds_theo_quan ul li a{
+    font-size: 15px;
+    color: #02518c;
+    padding: 3px 0px;
+    padding-left: 30px;
+}
 
 /*--------------------------------------------------------------
 # Portfolio Details
@@ -2237,6 +2257,9 @@ a.footer-logo img {
         right: -2px;
         top: 42px;
     }
+    /* #tim_bds_theo_quan ul li {
+        width: 49%;
+    } */
 }
 
 @media (max-width: 420px) {

@@ -205,6 +205,11 @@ router.post('/init-web', async(req, res, next) => {
             },
             { $sort: { type: 1, priority: 1, ID: 1 } }
         ]).exec(function(err, result) {
+            result.map(x => {
+                if(x.title.length > 8){
+                    x.title = x.title.replace("Quận ", "").replace("Huyện ", "");
+                }
+            })
             resolve(result);
         });
     });
@@ -345,8 +350,33 @@ router.post('/data-index', async(req, res, next) => {
         });
     });
 
-    Promise.all([listSliders, listHotProjects, newProducts]).then(values => {
-        res.json({ listSliders: values[0], listHotProjects: values[1], newProducts: values[2] });
+    var optionsPost = { visible: 1 };
+    var newPosts = new Promise(resolve => {
+        Post.aggregate([{
+                $match: optionsPost,
+            },
+            {
+                $sort: { datecreate: -1 }
+            },
+            {
+                $lookup: {
+                    from: "postcontents",
+                    localField: "_id",
+                    foreignField: "idPost",
+                    as: "postContent"
+                },
+            },
+            { $unwind: "$postContent" },
+            { "$skip": 0 },
+            { "$limit": 4 },
+
+        ], function(err, result) {
+            resolve(result);
+        });
+    });
+
+    Promise.all([listSliders, listHotProjects, newProducts, newPosts]).then(values => {
+        res.json({ listSliders: values[0], listHotProjects: values[1], newProducts: values[2], newPosts : values[3] });
     })
 
 })
